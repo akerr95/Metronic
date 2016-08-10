@@ -20848,8 +20848,39 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  */
 var React = require("react");
 
-var Header = function (_React$Component) {
-  _inherits(Header, _React$Component);
+var UI = function (_React$Component) {
+  _inherits(UI, _React$Component);
+
+  function UI(props) {
+    _classCallCheck(this, UI);
+
+    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(UI).call(this, props));
+
+    _this.state = { name: props.name };
+    return _this;
+  }
+
+  _createClass(UI, [{
+    key: "render",
+    value: function render() {
+      return React.createElement(
+        "div",
+        null,
+        React.createElement(
+          "p",
+          null,
+          "Hello ",
+          this.state.name
+        )
+      );
+    }
+  }]);
+
+  return UI;
+}(React.Component);
+
+var Header = function (_React$Component2) {
+  _inherits(Header, _React$Component2);
 
   function Header() {
     _classCallCheck(this, Header);
@@ -20860,7 +20891,16 @@ var Header = function (_React$Component) {
   _createClass(Header, [{
     key: "render",
     value: function render() {
-      return React.createElement("div", null);
+      return React.createElement(
+        "div",
+        null,
+        React.createElement(
+          "p",
+          null,
+          "Hello ",
+          this.state.name
+        )
+      );
     }
   }]);
 
@@ -20875,11 +20915,11 @@ module.exports = Header;
 /**
  * Created by akerr on 8/8/16.
  */
-var Header = require('./Metro.js');
+var UI = require('./Metro.js');
 var React = require('react');
 var ReactDom = require('react-dom');
 
-ReactDom.render(React.createElement(Header, { name: 'Sebastian' }), document.getElementById('Header'));
+ReactDom.render(React.createElement(UI, { name: 'Sebastian' }), document.getElementById('Header'));
 
 },{"./Metro.js":175,"react":174,"react-dom":29}]},{},[176])
 
