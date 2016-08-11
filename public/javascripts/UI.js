@@ -20848,66 +20848,137 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  */
 var React = require("react");
 
-var UI = function (_React$Component) {
-  _inherits(UI, _React$Component);
+var Navigation = function (_React$Component) {
+    _inherits(Navigation, _React$Component);
 
-  function UI(props) {
-    _classCallCheck(this, UI);
+    function Navigation() {
+        _classCallCheck(this, Navigation);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(UI).call(this, props));
-
-    _this.state = { name: props.name };
-    return _this;
-  }
-
-  _createClass(UI, [{
-    key: "render",
-    value: function render() {
-      return React.createElement(
-        "div",
-        null,
-        React.createElement(
-          "p",
-          null,
-          "Hello ",
-          this.state.name
-        )
-      );
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(Navigation).apply(this, arguments));
     }
-  }]);
 
-  return UI;
+    _createClass(Navigation, [{
+        key: "render",
+        value: function render() {
+            return React.createElement(
+                "div",
+                null,
+                React.createElement(Identity, { data: this.props.data }),
+                React.createElement(Menu, null),
+                React.createElement(Main_Menu, { text: this.props.data.text })
+            );
+        }
+    }]);
+
+    return Navigation;
 }(React.Component);
 
-var Header = function (_React$Component2) {
-  _inherits(Header, _React$Component2);
+var Identity = function (_React$Component2) {
+    _inherits(Identity, _React$Component2);
 
-  function Header() {
-    _classCallCheck(this, Header);
+    function Identity() {
+        _classCallCheck(this, Identity);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Header).apply(this, arguments));
-  }
-
-  _createClass(Header, [{
-    key: "render",
-    value: function render() {
-      return React.createElement(
-        "div",
-        null,
-        React.createElement(
-          "p",
-          null,
-          "Hello ",
-          this.state.name
-        )
-      );
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(Identity).apply(this, arguments));
     }
-  }]);
 
-  return Header;
+    _createClass(Identity, [{
+        key: "render",
+        value: function render() {
+            return React.createElement(
+                "a",
+                { href: this.props.data.index },
+                React.createElement("img", { src: this.props.data.logo_Img, alt: this.props.data.alt })
+            );
+        }
+    }]);
+
+    return Identity;
 }(React.Component);
 
-module.exports = Header;
+var Menu = function (_React$Component3) {
+    _inherits(Menu, _React$Component3);
+
+    function Menu() {
+        _classCallCheck(this, Menu);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(Menu).apply(this, arguments));
+    }
+
+    _createClass(Menu, [{
+        key: "render",
+        value: function render() {
+            return React.createElement(
+                "a",
+                { href: "#" },
+                React.createElement(
+                    "p",
+                    null,
+                    "Vision"
+                )
+            );
+        }
+    }]);
+
+    return Menu;
+}(React.Component);
+
+var Main_Menu = function (_React$Component4) {
+    _inherits(Main_Menu, _React$Component4);
+
+    function Main_Menu() {
+        _classCallCheck(this, Main_Menu);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(Main_Menu).apply(this, arguments));
+    }
+
+    _createClass(Main_Menu, [{
+        key: "render",
+        value: function render() {
+            return React.createElement(
+                "ul",
+                null,
+                React.createElement(Icon, { text: this.props.text })
+            );
+        }
+    }]);
+
+    return Main_Menu;
+}(React.Component);
+
+var Icon = function (_React$Component5) {
+    _inherits(Icon, _React$Component5);
+
+    function Icon() {
+        _classCallCheck(this, Icon);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(Icon).apply(this, arguments));
+    }
+
+    _createClass(Icon, [{
+        key: "render",
+        value: function render() {
+            return React.createElement(
+                "li",
+                null,
+                this.props.text
+            );
+        }
+    }]);
+
+    return Icon;
+}(React.Component);
+
+Navigation.propTypes = {
+    name: React.PropTypes.string
+};
+Navigation.defaultProps = {
+    name: "Alec"
+};
+
+module.exports = {
+    Navigation: Navigation
+};
 
 },{"react":174}],176:[function(require,module,exports){
 'use strict';
@@ -20918,8 +20989,13 @@ module.exports = Header;
 var UI = require('./Metro.js');
 var React = require('react');
 var ReactDom = require('react-dom');
-
-ReactDom.render(React.createElement(UI, { name: 'Sebastian' }), document.getElementById('Header'));
+var data = {
+    index: '#',
+    logo_Img: "https://d13yacurqjgara.cloudfront.net/users/109605/screenshots/2891300/bourbon_1x.png",
+    alt: "Image of Bourbon",
+    text: "Random text"
+};
+ReactDom.render(React.createElement(UI.Navigation, { data: data }), document.getElementById('example'));
 
 },{"./Metro.js":175,"react":174,"react-dom":29}]},{},[176])
 
