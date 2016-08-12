@@ -4,11 +4,14 @@
 var React = require("react");
 
 class Navigation extends React.Component {
+    constructor(props){
+     super(props);
+    }
     render() {
         return (<div>
-            <Identity data= {this.props.data}/>
+            <Identity info = {this.props.info.identityInfo}/>
             <Menu/>
-            <Main_Menu text = {this.props.data.text}/>
+            <Main_Menu info = {this.props.info.mainMenuInfo}/>
         </div>);
     }
 }
@@ -17,8 +20,8 @@ class Navigation extends React.Component {
 class Identity extends React.Component {
     render() {
         return (
-            <a href={this.props.data.index}>
-                <img src={this.props.data.logo_Img} alt={this.props.data.alt}/>
+            <a href={this.props.info.index}>
+                <img src={this.props.info.logo_Img} alt={this.props.info.alt}/>
             </a>
         );
     }
@@ -34,9 +37,13 @@ class Menu extends React.Component {
 }
 class Main_Menu extends React.Component {
     render() {
+        var icons = [];
+        this.props.info.icons.forEach(function(icon){
+            icons.push(<Icon info = {icon}/>);
+        });
         return (
             <ul>
-                <Icon text={this.props.text}></Icon>
+                {icons}
             </ul>
         );
     }
@@ -45,17 +52,30 @@ class Main_Menu extends React.Component {
 class Icon extends React.Component {
     render() {
         return (
-            <li>{this.props.text}</li>
+            <li>
+                <a href="#">
+                    <i className={this.props.info.name}>{this.props.info.iconImg}</i>
+                </a>
+                <Notice info={this.props.info.notify}/>
+            </li>
+        );
+    }
+}
+
+class Notice extends React.Component{
+    render(){
+        return(
+            <span>{this.props.info}</span>
         );
     }
 }
 
 
 Navigation.propTypes = {
-    name: React.PropTypes.string
+    iconNotification: React.PropTypes.bool
 };
 Navigation.defaultProps = {
-    name: "Alec"
+    iconNotification: false
 };
 
 
