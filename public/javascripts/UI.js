@@ -1350,17 +1350,45 @@ var cachedClearTimeout;
 } ())
 function runTimeout(fun) {
     if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
         return setTimeout(fun, 0);
-    } else {
-        return cachedSetTimeout.call(null, fun, 0);
     }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
 }
 function runClearTimeout(marker) {
     if (cachedClearTimeout === clearTimeout) {
-        clearTimeout(marker);
-    } else {
-        cachedClearTimeout.call(null, marker);
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
     }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
 }
 var queue = [];
 var draining = false;
@@ -20851,10 +20879,10 @@ var React = require("react");
 var Navigation = function (_React$Component) {
     _inherits(Navigation, _React$Component);
 
-    function Navigation() {
+    function Navigation(props) {
         _classCallCheck(this, Navigation);
 
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(Navigation).apply(this, arguments));
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(Navigation).call(this, props));
     }
 
     _createClass(Navigation, [{
@@ -20863,9 +20891,9 @@ var Navigation = function (_React$Component) {
             return React.createElement(
                 "div",
                 null,
-                React.createElement(Identity, { data: this.props.data }),
+                React.createElement(Identity, { info: this.props.info.identityInfo }),
                 React.createElement(Menu, null),
-                React.createElement(Main_Menu, { text: this.props.data.text })
+                React.createElement(Main_Menu, { info: this.props.info.mainMenuInfo })
             );
         }
     }]);
@@ -20887,8 +20915,8 @@ var Identity = function (_React$Component2) {
         value: function render() {
             return React.createElement(
                 "a",
-                { href: this.props.data.index },
-                React.createElement("img", { src: this.props.data.logo_Img, alt: this.props.data.alt })
+                { href: this.props.info.index },
+                React.createElement("img", { src: this.props.info.logo_Img, alt: this.props.info.alt })
             );
         }
     }]);
@@ -20935,10 +20963,14 @@ var Main_Menu = function (_React$Component4) {
     _createClass(Main_Menu, [{
         key: "render",
         value: function render() {
+            var icons = [];
+            this.props.info.icons.forEach(function (icon) {
+                icons.push(React.createElement(Icon, { info: icon }));
+            });
             return React.createElement(
                 "ul",
                 null,
-                React.createElement(Icon, { text: this.props.text })
+                icons
             );
         }
     }]);
@@ -20961,7 +20993,16 @@ var Icon = function (_React$Component5) {
             return React.createElement(
                 "li",
                 null,
-                this.props.text
+                React.createElement(
+                    "a",
+                    { href: "#" },
+                    React.createElement(
+                        "i",
+                        { className: this.props.info.name },
+                        this.props.info.iconImg
+                    )
+                ),
+                React.createElement(Notice, { info: this.props.info.notify })
             );
         }
     }]);
@@ -20969,11 +21010,34 @@ var Icon = function (_React$Component5) {
     return Icon;
 }(React.Component);
 
+var Notice = function (_React$Component6) {
+    _inherits(Notice, _React$Component6);
+
+    function Notice() {
+        _classCallCheck(this, Notice);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(Notice).apply(this, arguments));
+    }
+
+    _createClass(Notice, [{
+        key: "render",
+        value: function render() {
+            return React.createElement(
+                "span",
+                null,
+                this.props.info
+            );
+        }
+    }]);
+
+    return Notice;
+}(React.Component);
+
 Navigation.propTypes = {
-    name: React.PropTypes.string
+    iconNotification: React.PropTypes.bool
 };
 Navigation.defaultProps = {
-    name: "Alec"
+    iconNotification: false
 };
 
 module.exports = {
@@ -20990,12 +21054,16 @@ var UI = require('./Metro.js');
 var React = require('react');
 var ReactDom = require('react-dom');
 var data = {
-    index: '#',
-    logo_Img: "https://d13yacurqjgara.cloudfront.net/users/109605/screenshots/2891300/bourbon_1x.png",
-    alt: "Image of Bourbon",
-    text: "Random text"
+    identityInfo: {
+        index: '#',
+        logo_Img: "https://d13yacurqjgara.cloudfront.net/users/109605/screenshots/2891300/bourbon_1x.png",
+        alt: "Image of Bourbon"
+    },
+    mainMenuInfo: {
+        icons: [{ name: 'Home', iconImg: 'example', notify: 7 }, { name: 'Settings', iconImg: 'example', notify: 7 }, { name: 'Profile', iconImg: 'example', notify: 7 }]
+    }
 };
-ReactDom.render(React.createElement(UI.Navigation, { data: data }), document.getElementById('example'));
+ReactDom.render(React.createElement(UI.Navigation, { info: data }), document.getElementById('example'));
 
 },{"./Metro.js":175,"react":174,"react-dom":29}]},{},[176])
 
