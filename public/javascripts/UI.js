@@ -1350,45 +1350,17 @@ var cachedClearTimeout;
 } ())
 function runTimeout(fun) {
     if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
         return setTimeout(fun, 0);
+    } else {
+        return cachedSetTimeout.call(null, fun, 0);
     }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
 }
 function runClearTimeout(marker) {
     if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
+        clearTimeout(marker);
+    } else {
+        cachedClearTimeout.call(null, marker);
     }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
 }
 var queue = [];
 var draining = false;
@@ -20879,10 +20851,14 @@ var React = require("react");
 var Navigation = function (_React$Component) {
     _inherits(Navigation, _React$Component);
 
-    function Navigation(props) {
+    function Navigation() {
         _classCallCheck(this, Navigation);
 
-        return _possibleConstructorReturn(this, Object.getPrototypeOf(Navigation).call(this, props));
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Navigation).call(this));
+
+        _this.state = { notifyMessage: "No Message" };
+        _this._handleButton = _this._handleButton.bind(_this);
+        return _this;
     }
 
     _createClass(Navigation, [{
@@ -20893,16 +20869,58 @@ var Navigation = function (_React$Component) {
                 null,
                 React.createElement(Identity, { info: this.props.info.identityInfo }),
                 React.createElement(Menu, null),
-                React.createElement(Main_Menu, { info: this.props.info.mainMenuInfo })
+                React.createElement(Main_Menu, { info: this.props.info.mainMenuInfo, special: this.state.notifyMessage }),
+                React.createElement(Button, { Clicked: this._handleButton })
             );
+        }
+    }, {
+        key: "_handleButton",
+        value: function _handleButton(message) {
+            this.setState({ notifyMessage: message });
         }
     }]);
 
     return Navigation;
 }(React.Component);
 
-var Identity = function (_React$Component2) {
-    _inherits(Identity, _React$Component2);
+var Button = function (_React$Component2) {
+    _inherits(Button, _React$Component2);
+
+    function Button() {
+        _classCallCheck(this, Button);
+
+        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Button).call(this));
+
+        _this2._sendNotification = _this2._sendNotification.bind(_this2);
+        return _this2;
+    }
+
+    _createClass(Button, [{
+        key: "render",
+        value: function render() {
+            return React.createElement(
+                "button",
+                { onClick: this._sendNotification },
+                "Update Notification"
+            );
+        }
+    }, {
+        key: "_GenMessage",
+        value: function _GenMessage() {
+            return "Hello this is a Notification";
+        }
+    }, {
+        key: "_sendNotification",
+        value: function _sendNotification() {
+            this.props.Clicked(this._GenMessage());
+        }
+    }]);
+
+    return Button;
+}(React.Component);
+
+var Identity = function (_React$Component3) {
+    _inherits(Identity, _React$Component3);
 
     function Identity() {
         _classCallCheck(this, Identity);
@@ -20924,8 +20942,8 @@ var Identity = function (_React$Component2) {
     return Identity;
 }(React.Component);
 
-var Menu = function (_React$Component3) {
-    _inherits(Menu, _React$Component3);
+var Menu = function (_React$Component4) {
+    _inherits(Menu, _React$Component4);
 
     function Menu() {
         _classCallCheck(this, Menu);
@@ -20951,8 +20969,8 @@ var Menu = function (_React$Component3) {
     return Menu;
 }(React.Component);
 
-var Main_Menu = function (_React$Component4) {
-    _inherits(Main_Menu, _React$Component4);
+var Main_Menu = function (_React$Component5) {
+    _inherits(Main_Menu, _React$Component5);
 
     function Main_Menu() {
         _classCallCheck(this, Main_Menu);
@@ -20963,9 +20981,11 @@ var Main_Menu = function (_React$Component4) {
     _createClass(Main_Menu, [{
         key: "render",
         value: function render() {
+            var _this6 = this;
+
             var icons = [];
-            this.props.info.icons.forEach(function (icon) {
-                icons.push(React.createElement(Icon, { info: icon }));
+            this.props.info.icons.map(function (icon) {
+                icons.push(React.createElement(Icon, { key: icon.name, info: icon, special: _this6.props.special }));
             });
             return React.createElement(
                 "ul",
@@ -20978,8 +20998,8 @@ var Main_Menu = function (_React$Component4) {
     return Main_Menu;
 }(React.Component);
 
-var Icon = function (_React$Component5) {
-    _inherits(Icon, _React$Component5);
+var Icon = function (_React$Component6) {
+    _inherits(Icon, _React$Component6);
 
     function Icon() {
         _classCallCheck(this, Icon);
@@ -21000,9 +21020,10 @@ var Icon = function (_React$Component5) {
                         "i",
                         { className: this.props.info.name },
                         this.props.info.iconImg
-                    )
+                    ),
+                    React.createElement(Notice, { info: this.props.info.notify })
                 ),
-                React.createElement(Notice, { info: this.props.info.notify })
+                React.createElement(IconNotificationDisplay, { special: this.props.special })
             );
         }
     }]);
@@ -21010,8 +21031,35 @@ var Icon = function (_React$Component5) {
     return Icon;
 }(React.Component);
 
-var Notice = function (_React$Component6) {
-    _inherits(Notice, _React$Component6);
+var IconNotificationDisplay = function (_React$Component7) {
+    _inherits(IconNotificationDisplay, _React$Component7);
+
+    function IconNotificationDisplay() {
+        _classCallCheck(this, IconNotificationDisplay);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(IconNotificationDisplay).apply(this, arguments));
+    }
+
+    _createClass(IconNotificationDisplay, [{
+        key: "render",
+        value: function render() {
+            return React.createElement(
+                "ul",
+                null,
+                React.createElement(
+                    "li",
+                    null,
+                    this.props.special
+                )
+            );
+        }
+    }]);
+
+    return IconNotificationDisplay;
+}(React.Component);
+
+var Notice = function (_React$Component8) {
+    _inherits(Notice, _React$Component8);
 
     function Notice() {
         _classCallCheck(this, Notice);
@@ -21032,13 +21080,6 @@ var Notice = function (_React$Component6) {
 
     return Notice;
 }(React.Component);
-
-Navigation.propTypes = {
-    iconNotification: React.PropTypes.bool
-};
-Navigation.defaultProps = {
-    iconNotification: false
-};
 
 module.exports = {
     Navigation: Navigation
@@ -21063,6 +21104,7 @@ var data = {
         icons: [{ name: 'Home', iconImg: 'example', notify: 7 }, { name: 'Settings', iconImg: 'example', notify: 7 }, { name: 'Profile', iconImg: 'example', notify: 7 }]
     }
 };
+
 ReactDom.render(React.createElement(UI.Navigation, { info: data }), document.getElementById('example'));
 
 },{"./Metro.js":175,"react":174,"react-dom":29}]},{},[176])

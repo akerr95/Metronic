@@ -17,4 +17,5 @@ var data = {
         ]
     }
 };
+
 ReactDom.render(<UI.Navigation info={data}/>, document.getElementById('example'));
