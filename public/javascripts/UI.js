@@ -20835,6 +20835,8 @@ module.exports = require('./lib/React');
 },{"./lib/React":55}],175:[function(require,module,exports){
 "use strict";
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -20847,36 +20849,153 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
  * Created by akerr on 8/6/16.
  */
 var React = require("react");
+var style = require("./Styles/Metronic.css");
+var myFunctions = require("../Extra Functionality/componentTools.js");
 
 var Navigation = function (_React$Component) {
     _inherits(Navigation, _React$Component);
 
-    function Navigation() {
+    function Navigation(props) {
         _classCallCheck(this, Navigation);
 
-        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Navigation).call(this));
+        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Navigation).call(this, props));
 
-        _this.state = { notifyMessage: "No Message" };
+        _this._iconsHandler = _this._iconsHandler.bind(_this);
         _this._handleButton = _this._handleButton.bind(_this);
+        var myMap = _this._iconsMount();
+        var temp = _this._iconsHandler(myMap);
+        _this.state = { notifyMessage: temp };
+
         return _this;
     }
 
     _createClass(Navigation, [{
+        key: "componentWillMount",
+        value: function componentWillMount() {
+            //this._iconsHandler();
+        }
+    }, {
+        key: "_iconsMount",
+        value: function _iconsMount() {
+            var myMap = new Map();
+
+            this.props.info.mainMenuInfo.icons.map(function (icon) {
+                var mySet = new Set();
+                mySet.add("No new notifications");
+                myMap.set(icon.name, mySet);
+            });
+
+            return myMap;
+        }
+    }, {
+        key: "_iconsHandler",
+        value: function _iconsHandler(mapStructure) {
+            var arr = [];
+            var _iteratorNormalCompletion = true;
+            var _didIteratorError = false;
+            var _iteratorError = undefined;
+
+            try {
+                for (var _iterator = mapStructure[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+                    var _step$value = _slicedToArray(_step.value, 2);
+
+                    var key = _step$value[0];
+                    var value = _step$value[1];
+
+                    arr.push([key, value]);
+                }
+                //console.log(arr);
+            } catch (err) {
+                _didIteratorError = true;
+                _iteratorError = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion && _iterator.return) {
+                        _iterator.return();
+                    }
+                } finally {
+                    if (_didIteratorError) {
+                        throw _iteratorError;
+                    }
+                }
+            }
+
+            return arr;
+        }
+    }, {
         key: "render",
         value: function render() {
             return React.createElement(
                 "div",
                 null,
-                React.createElement(Identity, { info: this.props.info.identityInfo }),
-                React.createElement(Menu, null),
-                React.createElement(Main_Menu, { info: this.props.info.mainMenuInfo, special: this.state.notifyMessage }),
-                React.createElement(Button, { Clicked: this._handleButton })
+                React.createElement(
+                    "div",
+                    { className: style.page_header_navbar + " navbar-fixed-top" },
+                    React.createElement(
+                        "div",
+                        { className: "page-header-inner" },
+                        React.createElement(
+                            "div",
+                            { className: style.page_logo },
+                            React.createElement(Identity, { info: this.props.info.identityInfo }),
+                            React.createElement(
+                                "div",
+                                { className: style.menu_trigger },
+                                React.createElement(Menu, null)
+                            )
+                        ),
+                        React.createElement(
+                            "div",
+                            { className: style.top_menu },
+                            React.createElement(Main_Menu, { info: this.props.info.mainMenuInfo, special: this.state.notifyMessage })
+                        )
+                    )
+                ),
+                React.createElement(
+                    "div",
+                    { style: { position: 'relative', top: '250px' } },
+                    React.createElement(Button, { Clicked: this._handleButton, name: "Home" }),
+                    React.createElement(Button, { Clicked: this._handleButton, name: "Settings" }),
+                    React.createElement(Button, { Clicked: this._handleButton, name: "Profile" })
+                )
             );
         }
     }, {
         key: "_handleButton",
         value: function _handleButton(message) {
-            this.setState({ notifyMessage: message });
+            var temps = new Map(this.state.notifyMessage);
+
+            var _iteratorNormalCompletion2 = true;
+            var _didIteratorError2 = false;
+            var _iteratorError2 = undefined;
+
+            try {
+                for (var _iterator2 = message.keys()[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                    var key = _step2.value;
+
+                    if (temps.has(key)) {
+                        temps.delete(key);
+                        temps.set(key, message.get(key));
+                    }
+                }
+            } catch (err) {
+                _didIteratorError2 = true;
+                _iteratorError2 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                        _iterator2.return();
+                    }
+                } finally {
+                    if (_didIteratorError2) {
+                        throw _iteratorError2;
+                    }
+                }
+            }
+
+            var arr = this._iconsHandler(temps);
+            // this._iconsUpdateHandler();
+            this.setState({ notifyMessage: arr });
         }
     }]);
 
@@ -20886,12 +21005,14 @@ var Navigation = function (_React$Component) {
 var Button = function (_React$Component2) {
     _inherits(Button, _React$Component2);
 
-    function Button() {
+    function Button(props) {
         _classCallCheck(this, Button);
 
-        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Button).call(this));
+        var _this2 = _possibleConstructorReturn(this, Object.getPrototypeOf(Button).call(this, props));
 
         _this2._sendNotification = _this2._sendNotification.bind(_this2);
+        var temp = _this2._GenMessage();
+        _this2.state = { generated: temp, firstRun: true };
         return _this2;
     }
 
@@ -20905,14 +21026,33 @@ var Button = function (_React$Component2) {
             );
         }
     }, {
+        key: "_UpdateMessage",
+        value: function _UpdateMessage() {
+            var temp = this.state.generated;
+            var size = temp.get(this.props.name).size;
+            size += 1;
+            temp.get(this.props.name).add("New Notification example" + size);
+            return temp;
+        }
+    }, {
         key: "_GenMessage",
         value: function _GenMessage() {
-            return "Hello this is a Notification";
+            var myMap = new Map();
+            var mySet = new Set();
+
+            mySet.add("New Notification example");
+            myMap.set(this.props.name, mySet);
+            return myMap;
         }
     }, {
         key: "_sendNotification",
         value: function _sendNotification() {
-            this.props.Clicked(this._GenMessage());
+            if (this.state.firstRun) {
+                this.props.Clicked(this.state.generated);
+                this.state.firstRun = false;
+            } else {
+                this.props.Clicked(this._UpdateMessage());
+            }
         }
     }]);
 
@@ -20934,7 +21074,7 @@ var Identity = function (_React$Component3) {
             return React.createElement(
                 "a",
                 { href: this.props.info.index },
-                React.createElement("img", { src: this.props.info.logo_Img, alt: this.props.info.alt })
+                React.createElement("img", { className: style.logo_default, src: this.props.info.logo_Img, alt: this.props.info.alt })
             );
         }
     }]);
@@ -20954,15 +21094,7 @@ var Menu = function (_React$Component4) {
     _createClass(Menu, [{
         key: "render",
         value: function render() {
-            return React.createElement(
-                "a",
-                { href: "#" },
-                React.createElement(
-                    "p",
-                    null,
-                    "Vision"
-                )
-            );
+            return React.createElement("span", null);
         }
     }]);
 
@@ -20984,12 +21116,12 @@ var Main_Menu = function (_React$Component5) {
             var _this6 = this;
 
             var icons = [];
-            this.props.info.icons.map(function (icon) {
-                icons.push(React.createElement(Icon, { key: icon.name, info: icon, special: _this6.props.special }));
+            this.props.info.icons.map(function (icon, index) {
+                icons.push(React.createElement(Icon, { key: icon.name, info: icon, special: _this6.props.special[index] }));
             });
             return React.createElement(
                 "ul",
-                null,
+                { className: "nav " + style.navbar_nav + " pull-right" + " navbar-nav" },
                 icons
             );
         }
@@ -21010,20 +21142,22 @@ var Icon = function (_React$Component6) {
     _createClass(Icon, [{
         key: "render",
         value: function render() {
+            var temp = new Set();
+            this.props.special.forEach(function (item) {
+                if (typeof item !== 'string') {
+                    temp = item;
+                }
+            });
             return React.createElement(
                 "li",
-                null,
+                { className: "dropdown" },
                 React.createElement(
                     "a",
-                    { href: "#" },
-                    React.createElement(
-                        "i",
-                        { className: this.props.info.name },
-                        this.props.info.iconImg
-                    ),
+                    { className: style.dropdown_toggle },
+                    React.createElement("i", { className: this.props.info.name }),
                     React.createElement(Notice, { info: this.props.info.notify })
                 ),
-                React.createElement(IconNotificationDisplay, { special: this.props.special })
+                React.createElement(IconNotificationDisplay, { special: temp })
             );
         }
     }]);
@@ -21043,14 +21177,40 @@ var IconNotificationDisplay = function (_React$Component7) {
     _createClass(IconNotificationDisplay, [{
         key: "render",
         value: function render() {
+            var iconNotification = [];
+            var keys = myFunctions.UniqueId('Icon' + this.props.special, this.props.special.size);
+
+            var index = 0;
+            var _iteratorNormalCompletion3 = true;
+            var _didIteratorError3 = false;
+            var _iteratorError3 = undefined;
+
+            try {
+                for (var _iterator3 = this.props.special[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+                    var item = _step3.value;
+
+                    iconNotification.push(React.createElement(IconNotification, { key: keys[index], special: item }));
+                    index++;
+                }
+            } catch (err) {
+                _didIteratorError3 = true;
+                _iteratorError3 = err;
+            } finally {
+                try {
+                    if (!_iteratorNormalCompletion3 && _iterator3.return) {
+                        _iterator3.return();
+                    }
+                } finally {
+                    if (_didIteratorError3) {
+                        throw _iteratorError3;
+                    }
+                }
+            }
+
             return React.createElement(
                 "ul",
                 null,
-                React.createElement(
-                    "li",
-                    null,
-                    this.props.special
-                )
+                iconNotification
             );
         }
     }]);
@@ -21058,8 +21218,31 @@ var IconNotificationDisplay = function (_React$Component7) {
     return IconNotificationDisplay;
 }(React.Component);
 
-var Notice = function (_React$Component8) {
-    _inherits(Notice, _React$Component8);
+var IconNotification = function (_React$Component8) {
+    _inherits(IconNotification, _React$Component8);
+
+    function IconNotification() {
+        _classCallCheck(this, IconNotification);
+
+        return _possibleConstructorReturn(this, Object.getPrototypeOf(IconNotification).apply(this, arguments));
+    }
+
+    _createClass(IconNotification, [{
+        key: "render",
+        value: function render() {
+            return React.createElement(
+                "li",
+                { className: true },
+                this.props.special
+            );
+        }
+    }]);
+
+    return IconNotification;
+}(React.Component);
+
+var Notice = function (_React$Component9) {
+    _inherits(Notice, _React$Component9);
 
     function Notice() {
         _classCallCheck(this, Notice);
@@ -21072,7 +21255,7 @@ var Notice = function (_React$Component8) {
         value: function render() {
             return React.createElement(
                 "span",
-                null,
+                { className: "badge" },
                 this.props.info
             );
         }
@@ -21085,7 +21268,9 @@ module.exports = {
     Navigation: Navigation
 };
 
-},{"react":174}],176:[function(require,module,exports){
+},{"../Extra Functionality/componentTools.js":178,"./Styles/Metronic.css":176,"react":174}],176:[function(require,module,exports){
+module.exports = {"page_header_navbar":"_public_Components_Styles_Metronic__page_header_navbar","page_logo":"_public_Components_Styles_Metronic__page_logo","logo_default":"_public_Components_Styles_Metronic__logo_default","menu_trigger":"_public_Components_Styles_Metronic__menu_trigger","top_menu":"_public_Components_Styles_Metronic__top_menu","navbar_nav":"_public_Components_Styles_Metronic__navbar_nav","dropdown_toggle":"_public_Components_Styles_Metronic__dropdown_toggle"}
+},{}],177:[function(require,module,exports){
 'use strict';
 
 /**
@@ -21097,17 +21282,36 @@ var ReactDom = require('react-dom');
 var data = {
     identityInfo: {
         index: '#',
-        logo_Img: "https://d13yacurqjgara.cloudfront.net/users/109605/screenshots/2891300/bourbon_1x.png",
+        logo_Img: "./images/logo.png",
         alt: "Image of Bourbon"
     },
     mainMenuInfo: {
-        icons: [{ name: 'Home', iconImg: 'example', notify: 7 }, { name: 'Settings', iconImg: 'example', notify: 7 }, { name: 'Profile', iconImg: 'example', notify: 7 }]
+        icons: [{ name: 'icon-bell', iconImg: 'example', notify: 7 }, { name: 'icon-envelope-open', iconImg: 'example', notify: 7 }, { name: 'icon-calendar', iconImg: 'example', notify: 7 }, { name: "icon-logout", iconImg: "example" }, { name: "icon-user", iconImg: "example" }]
     }
 };
 
 ReactDom.render(React.createElement(UI.Navigation, { info: data }), document.getElementById('example'));
 
-},{"./Metro.js":175,"react":174,"react-dom":29}]},{},[176])
+},{"./Metro.js":175,"react":174,"react-dom":29}],178:[function(require,module,exports){
+"use strict";
+
+/**
+ * Created by akerr on 8/14/16.
+ */
+function UniqueId(name, count) {
+    var keys = [];
+    for (var i = 0; i < count; i++) {
+        keys.push(name + i);
+    }
+
+    return keys;
+}
+
+module.exports = {
+    UniqueId: UniqueId
+};
+
+},{}]},{},[177])
 
 
 //# sourceMappingURL=UI.js.map
