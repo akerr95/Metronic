@@ -7,13 +7,15 @@ var ReactDom = require('react-dom');
 var data = {
     identityInfo: {
         index: '#',
-        logo_Img: "https://d13yacurqjgara.cloudfront.net/users/109605/screenshots/2891300/bourbon_1x.png",
+        logo_Img: "./images/logo.png",
         alt: "Image of Bourbon",
     },
     mainMenuInfo: {
-        icons: [{name: 'Home', iconImg: 'example',notify: 7},
-            {name: 'Settings', iconImg: 'example',notify: 7},
-            {name: 'Profile', iconImg: 'example',notify: 7}
+        icons: [{name: 'icon-bell', iconImg: 'example',notify: 7},
+            {name: 'icon-envelope-open', iconImg: 'example',notify: 7},
+            {name: 'icon-calendar', iconImg: 'example',notify: 7},
+            {name:"icon-logout", iconImg:"example"},
+            {name:"icon-user", iconImg:"example"}
         ]
     }
 };
