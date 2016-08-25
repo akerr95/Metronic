@@ -8,11 +8,11 @@ var StatsPlugin = require('stats-webpack-plugin');
 
 module.exports = {
   entry: [
-    path.join(__dirname, 'public/js/Components/main.js')
+    path.join(__dirname, 'public/js/Components/Metro.js')
   ],
   output: {
     path: path.join(__dirname, '/dist/'),
-    filename: '[name]-[hash].min.js',
+    filename: '[name].min.js',
     publicPath: '/'
   },
   plugins: [

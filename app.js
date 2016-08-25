@@ -14,7 +14,7 @@ const app = express();
 
 console.log('test');
 
-app.use(express.static(__dirname + '/public'));//TODO Why doesnt express load these static files
+app.use(express.static(__dirname + '/public'));
 if (isDeveloping) {
   const compiler = webpack(config);
   const middleware = webpackMiddleware(compiler, {
@@ -38,9 +38,9 @@ if (isDeveloping) {
     res.end();
   });
   // app.get('/bootstrap.min.css', function response(req, res){
-  //   res.set('content-type','text/css');
+  //   res.set('content-type','teScreenshot from 2016-08-23 19-23-36xt/css');
   //   res.send(fs.readFileSync(path.join(__dirname,'public/css/bootstrap.min.css')));
-  //   //res.end();
+  //   //res.enScreenshot from 2016-08-23 19-23-36d();Screenshot from 2016-08-23 19-23-36
   // });
   // app.get('/simple-line-icons.css', function response(req, res){
   //   res.set('content-type','text/css');
