@@ -141,3 +141,8 @@ export const SearchBar = ({placeHolder, iconName})=>(
         </div>
     </form>
 );
+
+//Todo Interesting idea about static function
+// function addNotification(notifObj) {
+//     myComponent.setState(({ list }) => ({ list: [notifObj, ...list] }));
+// }
