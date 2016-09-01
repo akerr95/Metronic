@@ -17,7 +17,6 @@ export class MenuSideBarWidget extends React.Component{
         );
     }
     _handleChange(previousState){
-        console.log(previousState);
         this.setState({isCollapsed:previousState});
     }
 }
@@ -83,11 +82,12 @@ export const IconNotificationDisplay = ({messages})=> {
 export const SidebarMenu = ({searchBar, sidebarHeading, sidebarMenuIcons,isCollapsed})=> {
     let active = "active";
     let icons = [];
+    let classes = "nav-item " + "active";
     sidebarMenuIcons.map((sidebarMenuIcon, i)=> {
         if (i === 0) {
-            icons.push(<li className={"nav-item " + active}><SidebarMenuIcon key={i}{...sidebarMenuIcon}/></li>);
+            icons.push(<SidebarMenuIcon classes ={classes} key={i}{...sidebarMenuIcon}/>);
         } else {
-            icons.push(<li className="nav-item"><SidebarMenuIcon key={i}{...sidebarMenuIcon}/></li>);
+            icons.push(<SidebarMenuIcon key={i}{...sidebarMenuIcon}/>);
         }
 
     });
@@ -112,13 +112,27 @@ export const SidebarMenu = ({searchBar, sidebarHeading, sidebarMenuIcons,isColla
 };
 
 //TODO Examine what properties should be passed add Proptypes and default types.
-export const SidebarMenuIcon = ({mainIconName, menuName, dropDownIconName})=>(
-    <a className="nav-link nav-toggle">
-        <i className={ "large "+mainIconName}></i>
-        <span className="selected"></span>
-        <span className="title completely-hidden">{menuName}</span>
-        <span className="myarrow completely-hidden"><i className={dropDownIconName}></i></span>
-    </a>
+export const SidebarMenuIcon = ({classes,mainIconName, menuName, ...data})=>(
+    <li className={classes}>
+        <a className="nav-link nav-toggle">
+            <i className={ "large "+mainIconName}></i>
+            <span className="selected"></span>
+            <span className="title completely-hidden">{menuName}</span>
+            <DropDownIcon {...data}/>
+        </a>
+    </li>
+
+);
+
+// export const SideBarMenuDrop =({})=>(
+//     <a className="nav-link nav-toggle">
+//         <i className={ "large "+mainIconName}></i>
+//         <span className="selected"></span>
+//         <span className="title completely-hidden">{menuName}</span>
+//     </a>
+// );
+export const DropDownIcon = ({dropDownIconName})=>(
+    <span className="myarrow completely-hidden"><i className={dropDownIconName}></i></span>
 );
 
 //TODO Examine what properties should be passed add Proptypes and default types.

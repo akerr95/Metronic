@@ -2,33 +2,32 @@
  * Created by akerr on 8/6/16.
  */
 import React from "react";
-import * as TopNav from "./Top_Navigation";
+import * as TopNav from "./FixedHeaderNavMenu";
 import * as SideBar from "./SideBar";
 
 
-export const Navigation = ({leftNavigation, rightNavigation})=>(
+export const Navigation = ({leftNavigation, fixedNavigation, classes})=>(
     <div className="navbar-fixed-top page-header navbar">
         <div className="page-header-inner">
-            <SideBar.MenuSideBarWidget {...leftNavigation}/>
-            <TopNav.TopMenuNavigation rightNavigation={rightNavigation}/>
+            {/*<SideBar.MenuSideBarWidget {...leftNavigation}/>*/}
+            <TopNav.TopMenuNavigation classes ={classes} fixedNavigation={fixedNavigation}/>
         </div>
     </div>
 );
 
-/**
- * Top Menu Navigation Component
- * Holds state for all Top menu Navigation
- */
+export class Central extends React.Component{
+    constructor(props){
+        super(props);
+    }
+    render(){
 
-/**
- *Side Bar Navigation Component
- * Two main components
- * Side Bar and (Menu Logo and Trigger)
- */
-
+        return <Navigation classes = {this.props.classes}{...this.props.data}/>
+    }
+}
 
 
 
 
-export {Navigation as default}
+
+export {Central as default}
 
