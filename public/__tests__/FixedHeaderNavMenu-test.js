@@ -5,7 +5,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import TestUtils from "react-addons-test-utils";
-import {Slider,ClickableList,ActionDropDownTask,ActionDropDownNotify,ActionDropDownInbox} from "../js/Components/FixedHeaderNavMenu.js";
+import {ActionDropDownError,Slider,ClickableList,ActionDropDownTask,ActionDropDownNotify,ActionDropDownInbox} from "../js/Components/FixedHeaderNavMenu.js";
 
 var elements=[];
 const walkNode = (node,func)=>{
@@ -259,6 +259,17 @@ describe("ActionDropDownNotify",()=>{
 
 describe("Slider",()=>{
 
+    var custom ={
+        classNames:()=>{
+          return {slider:"default",
+              ul:"default",
+              bar:"default",
+              rail:"default"};
+        },
+        data:()=>(
+          <div><p>Hello World</p></div>
+        )
+    };
     const sliderNode = (data,myStyles={})=>{
         let slider = TestUtils.renderIntoDocument(
           <div><Slider data ={data || <div></div>} styles={myStyles}/></div>
@@ -277,6 +288,43 @@ describe("Slider",()=>{
         let structure =["DIV","UL","DIV","DIV","DIV"];
         expect(elements).toEqual(structure);
 
-    })
+    });
+    it("has correct default class names",()=>{
+        walkNode(sliderNode(),elementClassName);
+        let structure =["slimScrollDiv","dropdown-menu-list","slimScrollBar","slimScrollRail"];
+        expect(elements).toEqual(structure);
+    });
+    it("has custom class names",()=>{
+        walkNode(sliderNode(null,custom.classNames()),elementClassName);
+        let structure = ["default","default","default","default"];
+        expect(elements).toEqual(structure);
+    });
+    it("has custom data",()=>{
+        walkNode(sliderNode(custom.data()),elementContent);
+        let structure = ["Hello World"];
+        expect(elements).toEqual(structure);
+    });
+});
+describe("ActionDropDownError",()=>{
+
+    const actionDropDownErrorNode =(data,myStyles={})=>{
+        let actionDropDownErr = TestUtils.renderIntoDocument(
+            <div><ActionDropDownError data={data || <div></div>} styles={myStyles}/></div>
+        );
+
+        return ReactDOM.findDOMNode(actionDropDownErr).firstChild;
+    };
+    beforeEach(()=>{
+        elements =[];
+    });
+
+    it("added to the dom successfully",()=>{
+      expect(actionDropDownErrorNode()).not.toBeNull();
+    });
+    it("has assumed structure",()=>{
+        walkNode(actionDropDownErrorNode(),elementCheck);
+        let structure =["SPAN","SPAN","UL","LI","SPAN"];
+        expect(elements).toEqual(structure);
+    });
 });
 

@@ -237,33 +237,31 @@ export const ActionDropDownHeader = ({pending,message,classes})=> {
     );
 };
 
-export const ActionDropDownError =({errorMessage,solution})=> {
-    return (
-    <li>
-        <a>
-            <span className="error">{errorMessage}</span>
 
-            <ul><Divider/></ul>
-            <span className="solution">{solution} </span>
-        </a>
-    </li>);
-};
-ActionDropDownError.propTypes ={
-    errorMessage:React.PropTypes.string.isRequired,
-    solution:React.PropTypes.string.isRequired
-};
 //TODO Examine what properties should be passed add Proptypes and default types..
 
 /***************************
 * Pure Stateless Components*
 ***************************/
+
+export const ActionDropDownError =({errorMessage,solution})=> (
+        <span>
+                <span className="error">{errorMessage}</span>
+                <ul><Divider/></ul>
+                <span className="solution">{solution} </span>
+        </span>
+);
+ActionDropDownError.propTypes ={
+    errorMessage:React.PropTypes.string.isRequired,
+    solution:React.PropTypes.string.isRequired
+};
 export const Slider = ({data,styles})=> (
-    <div className={styles.slider || ""}>
-        <ul className={styles.ul || ""}>
+    <div className={styles.slider || "slimScrollDiv"}>
+        <ul className={styles.ul || "dropdown-menu-list"}>
             {data}
         </ul>
-        <div className={styles.bar || ""}></div>
-        <div className={styles.rail || ""}></div>
+        <div className={styles.bar || "slimScrollBar"}></div>
+        <div className={styles.rail || "slimScrollRail"}></div>
     </div>
 );
 export const ClickableList = ({data,styles}) =>(
