@@ -280,48 +280,74 @@ Slider.defaultProps={
             rail:"slimScrollRail"}
 };
 export const ClickableList = ({data,styles}) =>(
-    <li className={styles.liClassName || "empty"}>
-        <a className={styles.aClassName || "empty"}>
+    <li className={styles.liClassName}>
+        <a className={styles.aClassName}>
             {data}
         </a>
     </li>
 );
-
+ClickableList.propTypes = {
+  data:React.PropTypes.element.isRequired,
+    styles:React.PropTypes.object
+};
+ClickableList.defaultProps ={
+  styles:{liClassName:"",aClassName:""}
+};
 export const ActionDropDownTask = ({data,styles})=>(
    <span>
-       <span className={styles.task || "task"}>
-           <span className={styles.desc || "desc"}>{data.desc}</span>
-           <span className={styles.percent || "percent"}>{data.percent + '%'}</span>
+       <span className={styles.task}>
+           <span className={styles.desc}>{data.desc}</span>
+           <span className={styles.percent}>{data.percent + '%'}</span>
        </span>
-       <span className={styles.progress || "progress"}>
-           <span className={styles.progressbar || "progress-bar progress-bar-success"}>
-               <span className={styles.sr || "sr-only"}></span>
+       <span className={styles.progress}>
+           <span className={styles.progressbar}>
+               <span className={styles.sr}></span>
            </span>
        </span>
    </span>
 );
 ActionDropDownTask.propTypes ={
-    desc:React.PropTypes.string.isRequired,
-    percent:React.PropTypes.number.isRequired,
+    data:React.PropTypes.object,
+    styles:React.PropTypes.object
+};
+ActionDropDownTask.defaultProps={
+    data:{desc:"Metronic V1.0",percent:40},
+  styles:{task:"task",
+      desc:"desc",
+      percent:"percent",
+      progress:"progress",
+      progressbar:"progress-bar progress-bar-success",
+      sr:"sr-only"},
 };
 export const ActionDropDownInbox = ({data,styles})=>(
     <span>
-        <span className={styles.photo || "photo"}><img src={data.imgLocation} className={styles.img || "img-circle"}/></span>
-        <span className={styles.subject || "subject"}>
-            <span className={styles.time || "time"}>{data.time}</span>
-            <span className={styles.from || "from"}>{data.sender}</span>
+        <span className={styles.photo}><img src={data.imgLocation} className={styles.img || "img-circle"}/></span>
+        <span className={styles.subject}>
+            <span className={styles.time}>{data.time}</span>
+            <span className={styles.from}>{data.sender}</span>
         </span>
-        <span className={styles.message || "message"}>{data.message}</span>
+        <span className={styles.message}>{data.message}</span>
     </span>
 );
 ActionDropDownInbox.propTypes ={
-    imgLocation: React.PropTypes.string,
-    sender:React.PropTypes.string.isRequired,
-    time:React.PropTypes.string.isRequired,
-    message:React.PropTypes.string.isRequired,
+   data:React.PropTypes.object,
+    styles:React.PropTypes.object
 };
-ActionDropDownInbox.defaultProps ={
-    imgLocation:"https://d13yacurqjgara.cloudfront.net/users/559591/screenshots/2928328/wild_west_bandit_tubik_illustration_art_design_colors_character_brush_adobe_arthur_avakyan_1x.jpg",
+ActionDropDownInbox.defaultProps = {
+    data: {
+        imgLocation: "https://d13yacurqjgara.cloudfront.net/users/559591/screenshots/2928328/wild_west_bandit_tubik_illustration_art_design_colors_character_brush_adobe_arthur_avakyan_1x.jpg",
+        sender: "Alec",
+        time: "just now",
+        message: "Default message.",
+    },
+    styles: {
+        photo: "photo",
+        img: "img-circle",
+        subject: "subject",
+        time: "time",
+        from: "from",
+        message: "message"
+    }
 };
 export const ActionDropDownNotify = ({data,styles})=>(
  <span>

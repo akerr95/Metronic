@@ -28,6 +28,58 @@ exports[`ActionDropDownError has custom Props 1`] = `
 </span>
 `;
 
+exports[`ActionDropDownInbox added to the dom successfully 1`] = `
+<span>
+  <span
+    className="photo">
+    <img
+      className="img-circle"
+      src="https://d13yacurqjgara.cloudfront.net/users/559591/screenshots/2928328/wild_west_bandit_tubik_illustration_art_design_colors_character_brush_adobe_arthur_avakyan_1x.jpg" />
+  </span>
+  <span
+    className="subject">
+    <span
+      className="time">
+      just now
+    </span>
+    <span
+      className="from">
+      Alec
+    </span>
+  </span>
+  <span
+    className="message">
+    Default message.
+  </span>
+</span>
+`;
+
+exports[`ActionDropDownInbox has custom Props 1`] = `
+<span>
+  <span
+    className="Test1">
+    <img
+      className="Test2"
+      src="test.png" />
+  </span>
+  <span
+    className="Test3">
+    <span
+      className="Test4">
+      just now
+    </span>
+    <span
+      className="Test5">
+      alec
+    </span>
+  </span>
+  <span
+    className="Test6">
+    default message
+  </span>
+</span>
+`;
+
 exports[`ActionDropDownNotify added to the dom successfully 1`] = `
 <span>
   <span
@@ -62,6 +114,78 @@ exports[`ActionDropDownNotify has custom Props 1`] = `
     default message
   </span>
 </span>
+`;
+
+exports[`ActionDropDownTask added to the dom successfully 1`] = `
+<span>
+  <span
+    className="task">
+    <span
+      className="desc">
+      Metronic V1.0
+    </span>
+    <span
+      className="percent">
+      40%
+    </span>
+  </span>
+  <span
+    className="progress">
+    <span
+      className="progress-bar progress-bar-success">
+      <span
+        className="sr-only" />
+    </span>
+  </span>
+</span>
+`;
+
+exports[`ActionDropDownTask has custom Props 1`] = `
+<span>
+  <span
+    className="Test1">
+    <span
+      className="Test2">
+      Metronic V1.0
+    </span>
+    <span
+      className="Test3">
+      40%
+    </span>
+  </span>
+  <span
+    className="Test4">
+    <span
+      className="Test5">
+      <span
+        className="Test6" />
+    </span>
+  </span>
+</span>
+`;
+
+exports[`ClickableList added to the dom successfully 1`] = `
+<li
+  className="">
+  <a
+    className="" />
+</li>
+`;
+
+exports[`ClickableList has custom Props 1`] = `
+<li
+  className="test1">
+  <a
+    className="test2">
+    <div
+      className="alec">
+      <p
+        className="hello">
+        Hello World
+      </p>
+    </div>
+  </a>
+</li>
 `;
 
 exports[`Divider has custom Props 1`] = `
