@@ -1,0 +1,105 @@
+exports[`ActionDropDownError added to the dom successfully 1`] = `
+<span>
+  <span
+    className="error" />
+  <ul>
+    <li
+      className="divider" />
+  </ul>
+  <span
+    className="solution" />
+</span>
+`;
+
+exports[`ActionDropDownError has custom Props 1`] = `
+<span>
+  <span
+    className="err">
+    test1
+  </span>
+  <ul>
+    <li
+      className="divider" />
+  </ul>
+  <span
+    className="sol">
+    test2
+  </span>
+</span>
+`;
+
+exports[`ActionDropDownNotify added to the dom successfully 1`] = `
+<span>
+  <span
+    className="time">
+    just now
+  </span>
+  <span
+    className="details">
+    <span
+      className="label label-sm label-icon label-success edited-label">
+      <i
+        className="fa fa-plus" />
+    </span>
+    this is a default message
+  </span>
+</span>
+`;
+
+exports[`ActionDropDownNotify has custom Props 1`] = `
+<span>
+  <span
+    className="Test1">
+    just now
+  </span>
+  <span
+    className="Test2">
+    <span
+      className="Test3">
+      <i
+        className="icon-arrow" />
+    </span>
+    default message
+  </span>
+</span>
+`;
+
+exports[`Divider has custom Props 1`] = `
+<li
+  className="Alec" />
+`;
+
+exports[`Divider successfully added into dom 1`] = `
+<li
+  className="divider" />
+`;
+
+exports[`Slider added to the dom successfully 1`] = `
+<div
+  className="slimScrollDiv">
+  <ul
+    className="dropdown-menu-list" />
+  <div
+    className="slimScrollBar" />
+  <div
+    className="slimScrollRail" />
+</div>
+`;
+
+exports[`Slider has custom Props 1`] = `
+<div
+  className="default">
+  <ul
+    className="default">
+    <div>
+      <p>
+        Hello World
+      </p>
+    </div>
+  </ul>
+  <div
+    className="default" />
+  <div
+    className="default" />
+</div>
+`;
