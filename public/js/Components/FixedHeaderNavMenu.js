@@ -184,17 +184,8 @@ export const IconProfile = ({iconName, href, stringName, notify,classes})=> {
             {notify > 0 ? span : false}
         </a>);
 };
-//TODO Examine what properties should be passed add Proptypes and default types..
-export const Divider = ({classes})=>(
 
-    <li className={classes.liClassName}></li>
-);
-Divider.propTypes ={
-    classes:React.PropTypes.object
-};
-Divider.defaultProps ={
-    classes:{liClassName:"divider"}
-};
+
 export class ActionDropDown extends React.Component{
     constructor(props){
         super(props);
@@ -243,27 +234,51 @@ export const ActionDropDownHeader = ({pending,message,classes})=> {
 /***************************
 * Pure Stateless Components*
 ***************************/
-
-export const ActionDropDownError =({errorMessage,solution})=> (
+export const Divider = ({styles})=>(
+    <li className={styles.liClassName}></li>
+);
+Divider.propTypes ={
+    styles:React.PropTypes.object
+};
+Divider.defaultProps ={
+    styles:{liClassName:"divider"}
+};
+export const ActionDropDownError =({data,styles})=> (
         <span>
-                <span className="error">{errorMessage}</span>
+                <span className={styles.err}>{data.errorMessage}</span>
                 <ul><Divider/></ul>
-                <span className="solution">{solution} </span>
+                <span className={styles.solution}>{data.solution}</span>
         </span>
 );
 ActionDropDownError.propTypes ={
-    errorMessage:React.PropTypes.string.isRequired,
-    solution:React.PropTypes.string.isRequired
+   data:React.PropTypes.shape({
+       errorMessage:React.PropTypes.string.isRequired,
+       solution:React.PropTypes.string.isRequired
+   }),
+    styles:React.PropTypes.object
+};
+ActionDropDownError.defaultProps={
+    styles:{err:"error",solution:"solution"}
 };
 export const Slider = ({data,styles})=> (
-    <div className={styles.slider || "slimScrollDiv"}>
-        <ul className={styles.ul || "dropdown-menu-list"}>
+    <div className={styles.slider}>
+        <ul className={styles.ul}>
             {data}
         </ul>
-        <div className={styles.bar || "slimScrollBar"}></div>
-        <div className={styles.rail || "slimScrollRail"}></div>
+        <div className={styles.bar}></div>
+        <div className={styles.rail}></div>
     </div>
 );
+Slider.propTypes={
+  data:React.PropTypes.element.isRequired,
+    styles:React.PropTypes.object,
+};
+Slider.defaultProps={
+    styles:{slider:"slimScrollDiv",
+            ul:"dropdown-menu-list",
+            bar:"slimScrollBar",
+            rail:"slimScrollRail"}
+};
 export const ClickableList = ({data,styles}) =>(
     <li className={styles.liClassName || "empty"}>
         <a className={styles.aClassName || "empty"}>
@@ -310,9 +325,9 @@ ActionDropDownInbox.defaultProps ={
 };
 export const ActionDropDownNotify = ({data,styles})=>(
  <span>
-            <span className={styles.time ||"time" } >{data.time}</span>
-            <span className={styles.details || "details"}>
-                <span  className={styles.label || "label label-sm label-icon label-success edited-label"}>
+            <span className={styles.time}>{data.time}</span>
+            <span className={styles.details}>
+                <span  className={styles.label}>
                     <i className={data.iconName}></i>
                 </span>
                 {data.message}
@@ -320,10 +335,10 @@ export const ActionDropDownNotify = ({data,styles})=>(
      </span>
 );
 ActionDropDownNotify.propTypes={
-    time:React.PropTypes.string.isRequired,
-    message: React.PropTypes.string.isRequired,
-    iconName:React.PropTypes.string
+   data:React.PropTypes.object,
+    styles:React.PropTypes.object
 };
 ActionDropDownNotify.defaultProps ={
-    iconName:"fa fa-plus"
+    data:{time:"just now",message:"this is a default message",iconName:"fa fa-plus"},
+    styles:{time:"time",details:"details",label:"label label-sm label-icon label-success edited-label"}
 };
