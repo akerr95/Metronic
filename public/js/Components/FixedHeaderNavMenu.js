@@ -7,87 +7,97 @@ import React from "react";
 var _dropDownMap = new Map();
 
 //TODO Examine what properties should be passed add Proptypes and default types..
-export class TopMenuNavigation extends React.Component{
-    constructor(props){
+export class TopMenuNavigation extends React.Component {
+    constructor(props) {
         super(props);
-        this._handleChange= this._handleChange.bind(this);
+        this._handleChange = this._handleChange.bind(this);
         let len = props.fixedNavigation.iconMapper.length;
-        this.state={};
+        this.state = {};
         this.state = this._createState(len);
     }
-    render(){
-        let {topMenuNavigation, icon,userProfile} = this.props.classes;
+
+    render() {
+        let {topMenuNavigation, icon, userProfile} = this.props.classes;
         let stateMap = this._convertArrToMap(this.state.whoIsOpen);
         let icons = this._populateIcons(stateMap, icon);
-        return(<div className={topMenuNavigation.divClassName}>
+        return (<div className={topMenuNavigation.divClassName}>
             <ul className={topMenuNavigation.ulClassName}>
                 {icons}
-                <UserProfile classes ={userProfile} updateOpened={this._handleChange} iconState={stateMap} userIcon={this.props.fixedNavigation.userIcon}
+                <UserProfile classes={userProfile} updateOpened={this._handleChange} iconState={stateMap}
+                             userIcon={this.props.fixedNavigation.userIcon}
                              iconProfiles={this.props.fixedNavigation.iconProfiles}/>
             </ul>
         </div>)
     }
-    _populateIcons(stateMap, classes){
-        let icons =[];
-        this.props.fixedNavigation.iconMapper.map((icon)=>{
-            icons.push(<Icon key={icon.iconName} classes ={classes} updateOpened={this._handleChange} iconState={stateMap} {...icon}/>);
+
+    _populateIcons(stateMap, classes) {
+        let icons = [];
+        this.props.fixedNavigation.iconMapper.map((icon)=> {
+            icons.push(<Icon key={icon.iconName} classes={classes} updateOpened={this._handleChange}
+                             iconState={stateMap} {...icon}/>);
         });
         return icons;
 
     }
-    _createState(count){
-        let iconStateParameters =[];
-        for(let i =0; i<count;i++){
+
+    _createState(count) {
+        let iconStateParameters = [];
+        for (let i = 0; i < count; i++) {
             let names = this.props.fixedNavigation.iconMapper[i].iconName;
-            iconStateParameters.push([names,false]);
+            iconStateParameters.push([names, false]);
         }
         let names = this.props.fixedNavigation.userIcon.iconName;
-        iconStateParameters.push([names,false]);
-        return {whoIsOpen:iconStateParameters};
+        iconStateParameters.push([names, false]);
+        return {whoIsOpen: iconStateParameters};
     }
-    _convertArrToMap(iconStateParameters){
+
+    _convertArrToMap(iconStateParameters) {
         let stateMap = new Map(iconStateParameters);
         return stateMap;
     }
-    _convertMapToArr(stateMap){
-        let iconStateParameters =[];
-        for(let [key,value] of stateMap){
-            iconStateParameters.push([key,value]);
+
+    _convertMapToArr(stateMap) {
+        let iconStateParameters = [];
+        for (let [key,value] of stateMap) {
+            iconStateParameters.push([key, value]);
         }
         return iconStateParameters;
     }
-    _handleChange(state){
+
+    _handleChange(state) {
         let iconStateParameters = this._convertMapToArr(state);
-        this.setState({whoIsOpen:iconStateParameters});
+        this.setState({whoIsOpen: iconStateParameters});
     }
 }
 
 //TODO Examine what properties should be passed add Proptypes and default types..
-export class UserProfile extends React.Component{
-    constructor(props){
+export class UserProfile extends React.Component {
+    constructor(props) {
         super(props);
         this._handleIconClick = IconClicked;
         this._handleIconClick = this._handleIconClick.bind(this);
     }
-    render(){
-        let {liClassName,userIcon,profileMenu}=this.props.classes;
+
+    render() {
+        let {liClassName, userIcon, profileMenu}=this.props.classes;
         let classes = liClassName;
-        if (this._isTrue()){
-            classes+=" isOpen";
+        if (this._isTrue()) {
+            classes += " isOpen";
         }
 
-        return(
+        return (
             <li onClick={this._handleIconClick} className={classes}>
                 <UserIcon classes={userIcon} {...this.props.userIcon}/>
                 <ProfileMenu classes={profileMenu}
-                             updateOpened ={this.props.updateOpened}
+                             updateOpened={this.props.updateOpened}
                              iconState={this.props.iconState}
                              triggerName={this.props.userIcon.iconName}
                              {...this.props.iconProfiles}/>
             </li>);
 
     }
-    _isTrue(){
+
+    _isTrue() {
         let iconName = this.props.userIcon.iconName;
         let stateMap = this.props.iconState;
         return stateMap.get(iconName);
@@ -96,34 +106,35 @@ export class UserProfile extends React.Component{
 }
 
 //TODO Examine what properties should be passed add Proptypes and default types..
-export class Icon extends React.Component{
+export class Icon extends React.Component {
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this._handleIconClick = IconClicked;
-        this._handleIconClick =this._handleIconClick.bind(this);
+        this._handleIconClick = this._handleIconClick.bind(this);
     }
-    render(){
-        let {liClassName,aClassName,notify,actionDropDown} = this.props.classes;
-        liClassName +=  this.props.liClassName;
-        if(this._isClosedTrue()){
+
+    render() {
+        let {liClassName, aClassName, notify, actionDropDown} = this.props.classes;
+        liClassName += this.props.liClassName;
+        if (this._isClosedTrue()) {
             liClassName += " isOpen";
         }
-        return(<li onClick={this._handleIconClick} className={liClassName}>
+        return (<li onClick={this._handleIconClick} className={liClassName}>
             <a className={aClassName}>
                 <i className={this.props.iconName}></i>
                 <Notice totalNotifications={this.props.notify} {...notify}/>
             </a>
             <ActionDropDown dropDownOpt={this.props.liClassName}
                             actionDropDown={this.props.actionDropDown}
-                            triggerName ={this.props.iconName}
+                            triggerName={this.props.iconName}
                             updateOpened={this.props.updateOpened}
-                            iconState ={this.props.iconState}
+                            iconState={this.props.iconState}
                             classes={actionDropDown}/>
         </li>);
     }
 
-    _isClosedTrue(){
+    _isClosedTrue() {
         let iconName = this.props.iconName;
         let stateMap = this.props.iconState;
         return stateMap.get(iconName);
@@ -132,37 +143,39 @@ export class Icon extends React.Component{
 }
 
 //TODO Examine what properties should be passed add Proptypes and default types..
-export class ProfileMenu extends React.Component{
-    constructor(props){
+export class ProfileMenu extends React.Component {
+    constructor(props) {
         super(props);
-        this._LostFocus =  IconClicked;
+        this._LostFocus = IconClicked;
         this._LostFocus = this._LostFocus.bind(this);
     }
-    render(){
-        let {ulClassName,divider,iconProfile} = this.props.classes;
+
+    render() {
+        let {ulClassName, divider, iconProfile} = this.props.classes;
         let iconProfiles = this._PopulateIconProfile(divider, iconProfile);
 
-        return(
+        return (
             <ul onMouseLeave={this._LostFocus} className={ulClassName}>
                 {iconProfiles}
             </ul>
         );
     }
-    _PopulateIconProfile(divider,iconClasses){
+
+    _PopulateIconProfile(divider, iconClasses) {
         let iconProfiles = [];
         this.props.icons.map((icon, i)=> {
             if (this.props.count !== i) {
-                iconProfiles.push(<li key={icon.iconName}><IconProfile classes ={iconClasses}{...icon}/></li>);
+                iconProfiles.push(<li key={icon.iconName}><IconProfile classes={iconClasses}{...icon}/></li>);
             } else {
                 iconProfiles.push(<Divider classes={divider} key={"Divider"}/>);
-                iconProfiles.push(<li key={icon.iconName}><IconProfile classes ={iconClasses}{...icon}/></li>);
+                iconProfiles.push(<li key={icon.iconName}><IconProfile classes={iconClasses}{...icon}/></li>);
             }
         });
         return iconProfiles;
     }
 }
 //TODO Examine what properties should be passed add Proptypes and default types..
-export const UserIcon = ({imgLocation, stringName, iconName,classes})=>(
+export const UserIcon = ({imgLocation, stringName, iconName, classes})=>(
     <a className={classes.aClassName}>
         <img className={classes.imgClassName} src={imgLocation} alt="Image of User"/>
         <span className={classes.spanClassName}>{stringName}</span>
@@ -174,9 +187,10 @@ UserIcon.propTypes = {
     stringName: React.PropTypes.string.isRequired,
     iconName: React.PropTypes.string.isRequired
 };
-export const Notice = ({totalNotifications,spanClassName})=>(<span className={spanClassName}>{totalNotifications}</span>);
+export const Notice = ({totalNotifications, spanClassName})=>(
+    <span className={spanClassName}>{totalNotifications}</span>);
 //TODO Examine what properties should be passed add Proptypes and default types..
-export const IconProfile = ({iconName, href, stringName, notify,classes})=> {
+export const IconProfile = ({iconName, href, stringName, notify, classes})=> {
     let span = <Notice spanClassName={classes.noticeClassName} totalNotifications={notify}/>;
     return (
         <a href={href}>
@@ -185,82 +199,119 @@ export const IconProfile = ({iconName, href, stringName, notify,classes})=> {
         </a>);
 };
 
-
-export class ActionDropDown extends React.Component{
-    constructor(props){
-        super(props);
-        this._LostFocus = IconClicked;
-        this._LostFocus = this._LostFocus.bind(this);
-    }
-    render(){
-        let {ulClassName,actionDropDownHeader,slider} =this.props.classes;
-
-        return( <ul onMouseLeave={this._LostFocus} className={ulClassName}>
-            <ActionDropDownHeader classes={actionDropDownHeader} {...this.props.actionDropDown.headings}/>
-               <li><Slider classes ={slider}
-                    dropDownOpt={this.props.dropDownOpt}
-                     messages={this.props.actionDropDown.messages}/>
-               </li>
-        </ul>);
-    }
-}
-//TODO Better alternative than OR's
-function IconClicked (){
-    let stateMap = new Map();
-    let triggerName = this.props.iconName ||this.props.triggerName || this.props.userIcon.iconName;
-    for (let [key, value] of this.props.iconState){
-        key===triggerName ? stateMap.set(key,!value):stateMap.set(key,false);
-    }
-    this.props.updateOpened(stateMap);
-}
-
 //TODO Examine what properties should be passed add Proptypes and default types..
-export const ActionDropDownHeader = ({pending,message,classes})=> {
-    let {spanClassName,liClassName } = classes;
-    let newNotifications = <h3><span className={spanClassName}>{pending +" "+ message + " "}</span>notifications</h3>;
-    let noNewNotifications = <h3><span className={spanClassName}>{message}</span></h3>;
-    return (
+// export const ActionDropDownHeader = ({pending,message,classes})=> {
+//     let {spanClassName,liClassName } = classes;
+//     let newNotifications = <h3><span className={spanClassName}>{pending +" "+ message + " "}</span>notifications</h3>;
+//     let noNewNotifications = <h3><span className={spanClassName}>{message}</span></h3>;
+//     return (
+//
+//         <li className={liClassName}>
+//             {pending > 0 ? newNotifications : noNewNotifications }
+//             <a className={pending > 0 ? "":"hide"} href="#">view all</a>
+//         </li>
+//     );
+// };
 
-        <li className={liClassName}>
-            {pending > 0 ? newNotifications : noNewNotifications }
-            <a className={pending > 0 ? "":"hide"} href="#">view all</a>
-        </li>
-    );
-};
 
+/************************
+ * State-Full Components*
+ ***********************/
 
-//TODO Examine what properties should be passed add Proptypes and default types..
+// export class ActionDropDown extends React.Component {
+//     constructor(props) {
+//         super(props);
+//         this._LostFocus = IconClicked;
+//         this._LostFocus = this._LostFocus.bind(this);
+//     }
+//
+//     render() {
+//         let {ulClassName, actionDropDownHeader, slider} =this.props.classes;
+//
+//         return ( <ul onMouseLeave={()=> {
+//             this._LostFocus(this.props.triggerName, this.props.iconState, this.props.updateOpened);
+//         }} className={ulClassName}>
+//             <ActionDropDownHeader classes={actionDropDownHeader} {...this.props.actionDropDown.headings}/>
+//             <li><Slider classes={slider}
+//                         dropDownOpt={this.props.dropDownOpt}
+//                         messages={this.props.actionDropDown.messages}/>
+//             </li>
+//         </ul>);
+//     }
+// }
 
 /***************************
-* Pure Stateless Components*
-***************************/
+ * Pure Stateless Components*
+ ***************************/
+export const ActionDropDown = ({data,el,el2, callback, passedState, styles})=>(
+    <ul onMouseLeave={function () {
+        IconClicked(data.triggerName,
+            passedState.iconState,
+            callback);
+    }} className={styles.ulClassName}>
+        {el}
+        <li>{el2}</li>
+    </ul>
+);
+ActionDropDown.propTypes = {
+    data:React.PropTypes.object,
+    el:React.PropTypes.element,
+    el2:React.PropTypes.element,
+    passedState: React.PropTypes.object.isRequired,
+    styles: React.PropTypes.object,
+    callback: React.PropTypes.func
+};
+ActionDropDown.defaultProps = {
+    data:{triggerName:"icon-fire"},
+    el:<div></div>,
+    el2:<div></div>,
+    styles:{ulClassName:"dropdown-menu"},
+    callback:()=>{console.error("Please specify a callback function")},
+};
+export const ActionDropDownHeader = ({data, styles})=>(
+    <li className={styles.liClassName}>
+        <h3 className={styles.head}>
+            <span className={styles.bold}>{data.pending + " " + data.subject + " "}</span>
+            {data.heading}
+        </h3>
+        <a className={styles.aClassName}>{data.actionMessage}</a>
+    </li>
+);
+ActionDropDownHeader.propTypes = {
+    data: React.PropTypes.object,
+    styles: React.PropTypes.object
+};
+ActionDropDownHeader.defaultProps = {
+    data: {pending: "one", subject: "Default", heading: "view all"},
+    styles: {head: "", bold: "bold", liClassName: "external", aClassName: ""}
+};
 export const Divider = ({styles})=>(
     <li className={styles.liClassName}></li>
 );
-Divider.propTypes ={
-    styles:React.PropTypes.object
+Divider.propTypes = {
+    styles: React.PropTypes.object
 };
-Divider.defaultProps ={
-    styles:{liClassName:"divider"}
+Divider.defaultProps = {
+    styles: {liClassName: "divider"}
 };
-export const ActionDropDownError =({data,styles})=> (
-        <span>
+export const ActionDropDownError = ({data, styles})=> (
+    <span>
                 <span className={styles.err}>{data.errorMessage}</span>
                 <ul><Divider/></ul>
                 <span className={styles.solution}>{data.solution}</span>
         </span>
 );
-ActionDropDownError.propTypes ={
-   data:React.PropTypes.shape({
-       errorMessage:React.PropTypes.string.isRequired,
-       solution:React.PropTypes.string.isRequired
-   }),
-    styles:React.PropTypes.object
+ActionDropDownError.propTypes = {
+    data: React.PropTypes.shape({
+        errorMessage: React.PropTypes.string.isRequired,
+        solution: React.PropTypes.string.isRequired
+    }),
+    styles: React.PropTypes.object
 };
-ActionDropDownError.defaultProps={
-    styles:{err:"error",solution:"solution"}
+ActionDropDownError.defaultProps = {
+    styles: {err: "error", solution: "solution"}
 };
-export const Slider = ({data,styles})=> (
+export const Slider = ({data, styles})=> (
     <div className={styles.slider}>
         <ul className={styles.ul}>
             {data}
@@ -269,17 +320,19 @@ export const Slider = ({data,styles})=> (
         <div className={styles.rail}></div>
     </div>
 );
-Slider.propTypes={
-  data:React.PropTypes.element.isRequired,
-    styles:React.PropTypes.object,
+Slider.propTypes = {
+    data: React.PropTypes.element.isRequired,
+    styles: React.PropTypes.object,
 };
-Slider.defaultProps={
-    styles:{slider:"slimScrollDiv",
-            ul:"dropdown-menu-list",
-            bar:"slimScrollBar",
-            rail:"slimScrollRail"}
+Slider.defaultProps = {
+    styles: {
+        slider: "slimScrollDiv",
+        ul: "dropdown-menu-list",
+        bar: "slimScrollBar",
+        rail: "slimScrollRail"
+    }
 };
-export const ClickableList = ({data,styles}) =>(
+export const ClickableList = ({data, styles}) =>(
     <li className={styles.liClassName}>
         <a className={styles.aClassName}>
             {data}
@@ -287,14 +340,14 @@ export const ClickableList = ({data,styles}) =>(
     </li>
 );
 ClickableList.propTypes = {
-  data:React.PropTypes.element.isRequired,
-    styles:React.PropTypes.object
+    data: React.PropTypes.element.isRequired,
+    styles: React.PropTypes.object
 };
-ClickableList.defaultProps ={
-  styles:{liClassName:"",aClassName:""}
+ClickableList.defaultProps = {
+    styles: {liClassName: "", aClassName: ""}
 };
-export const ActionDropDownTask = ({data,styles})=>(
-   <span>
+export const ActionDropDownTask = ({data, styles})=>(
+    <span>
        <span className={styles.task}>
            <span className={styles.desc}>{data.desc}</span>
            <span className={styles.percent}>{data.percent + '%'}</span>
@@ -306,20 +359,22 @@ export const ActionDropDownTask = ({data,styles})=>(
        </span>
    </span>
 );
-ActionDropDownTask.propTypes ={
-    data:React.PropTypes.object,
-    styles:React.PropTypes.object
+ActionDropDownTask.propTypes = {
+    data: React.PropTypes.object,
+    styles: React.PropTypes.object
 };
-ActionDropDownTask.defaultProps={
-    data:{desc:"Metronic V1.0",percent:40},
-  styles:{task:"task",
-      desc:"desc",
-      percent:"percent",
-      progress:"progress",
-      progressbar:"progress-bar progress-bar-success",
-      sr:"sr-only"},
+ActionDropDownTask.defaultProps = {
+    data: {desc: "Metronic V1.0", percent: 40},
+    styles: {
+        task: "task",
+        desc: "desc",
+        percent: "percent",
+        progress: "progress",
+        progressbar: "progress-bar progress-bar-success",
+        sr: "sr-only"
+    },
 };
-export const ActionDropDownInbox = ({data,styles})=>(
+export const ActionDropDownInbox = ({data, styles})=>(
     <span>
         <span className={styles.photo}><img src={data.imgLocation} className={styles.img || "img-circle"}/></span>
         <span className={styles.subject}>
@@ -329,9 +384,9 @@ export const ActionDropDownInbox = ({data,styles})=>(
         <span className={styles.message}>{data.message}</span>
     </span>
 );
-ActionDropDownInbox.propTypes ={
-   data:React.PropTypes.object,
-    styles:React.PropTypes.object
+ActionDropDownInbox.propTypes = {
+    data: React.PropTypes.object,
+    styles: React.PropTypes.object
 };
 ActionDropDownInbox.defaultProps = {
     data: {
@@ -349,22 +404,33 @@ ActionDropDownInbox.defaultProps = {
         message: "message"
     }
 };
-export const ActionDropDownNotify = ({data,styles})=>(
- <span>
+export const ActionDropDownNotify = ({data, styles})=>(
+    <span>
             <span className={styles.time}>{data.time}</span>
             <span className={styles.details}>
-                <span  className={styles.label}>
+                <span className={styles.label}>
                     <i className={data.iconName}></i>
                 </span>
                 {data.message}
             </span>
      </span>
 );
-ActionDropDownNotify.propTypes={
-   data:React.PropTypes.object,
-    styles:React.PropTypes.object
+ActionDropDownNotify.propTypes = {
+    data: React.PropTypes.object,
+    styles: React.PropTypes.object
 };
-ActionDropDownNotify.defaultProps ={
-    data:{time:"just now",message:"this is a default message",iconName:"fa fa-plus"},
-    styles:{time:"time",details:"details",label:"label label-sm label-icon label-success edited-label"}
+ActionDropDownNotify.defaultProps = {
+    data: {time: "just now", message: "this is a default message", iconName: "fa fa-plus"},
+    styles: {time: "time", details: "details", label: "label label-sm label-icon label-success edited-label"}
 };
+
+/*****************
+ * Pure Functions*
+ *****************/
+function IconClicked(triggerName, iconState, fn) {
+    let stateMap = new Map();
+    for (let [key, value] of iconState) {
+        key === triggerName ? stateMap.set(key, !value) : stateMap.set(key, false);
+    }
+    fn(stateMap);
+}

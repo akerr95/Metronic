@@ -1,3 +1,25 @@
+exports[`ActionDropDown added custom components 1`] = `
+<ul
+  className="dropdown-menu"
+  onMouseLeave={[Function onMouseLeave]}>
+  <div />
+  <li>
+    <div />
+  </li>
+</ul>
+`;
+
+exports[`ActionDropDown added to the dom successfully 1`] = `
+<ul
+  className="dropdown-menu"
+  onMouseLeave={[Function onMouseLeave]}>
+  <div />
+  <li>
+    <div />
+  </li>
+</ul>
+`;
+
 exports[`ActionDropDownError added to the dom successfully 1`] = `
 <span>
   <span
@@ -26,6 +48,40 @@ exports[`ActionDropDownError has custom Props 1`] = `
     test2
   </span>
 </span>
+`;
+
+exports[`ActionDropDownHeader added to the dom successfully 1`] = `
+<li
+  className="external">
+  <h3
+    className="">
+    <span
+      className="bold">
+      one Default 
+    </span>
+    view all
+  </h3>
+  <a
+    className="" />
+</li>
+`;
+
+exports[`ActionDropDownHeader has custom component 1`] = `
+<li
+  className="external">
+  <h3
+    className="">
+    <span
+      className="bold">
+      12 New 
+    </span>
+    notifications
+  </h3>
+  <a
+    className="hide">
+    view all
+  </a>
+</li>
 `;
 
 exports[`ActionDropDownInbox added to the dom successfully 1`] = `

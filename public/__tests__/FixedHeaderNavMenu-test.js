@@ -2,9 +2,10 @@
  * Created by akerr on 8/29/16.
  */
 "use-strict"
+jest.mock('react/lib/ReactDefaultInjection');
 import React from "react";
 // import ReactDOM from "react-dom";
-// import TestUtils from "react-addons-test-utils";
+import TestUtils from "react-addons-test-utils";
 import renderer from 'react-test-renderer';
 import * as FixedHeader from "../js/Components/FixedHeaderNavMenu.js";
 
@@ -218,4 +219,67 @@ describe("Divider",()=>{
         expect(tree).not.toEqual(defaultTree);
     });
 });
+describe("ActionDropDownHeader",()=>{
 
+    let custom = {
+        data:{pending:12,actionMessage:"view all",subject:"New",heading:"notifications"},
+        styles:{liClassName:"external",head:"",bold:"bold",aClassName:"hide"}
+    };
+
+    const defaultComponent = renderer.create(
+        <FixedHeader.ActionDropDownHeader/>
+    );
+    const customComponent = renderer.create(
+        <FixedHeader.ActionDropDownHeader data ={custom.data} styles={custom.styles}/>
+    );
+
+    it("added to the dom successfully",()=>{
+        let tree = defaultComponent.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+    it("has custom component",()=>{
+        let tree = customComponent.toJSON();
+        let defaultTree = defaultComponent.toJSON();
+        expect(tree).toMatchSnapshot();
+        expect(tree).not.toEqual(defaultTree);
+    });
+});
+describe("ActionDropDown",()=>{
+
+    var custom={
+        state:()=>{
+            let testState = new Map();
+            testState.set("icon-fire",true);
+            testState.set("icon-ice",false);
+            return {iconState:testState};
+        },
+        data:{triggerName:"icon-fire"},
+        callback:()=>{
+            var x;
+            return x = 2;
+        },
+        element:()=>{
+            let el1 = renderer.create(<FixedHeader.ActionDropDownHeader/>);
+            let el2 = renderer.create(<FixedHeader.Slider/>);
+            return {el1:el1,el2:el2};
+        }
+    };
+    const defaultComponent =renderer.create(
+        <FixedHeader.ActionDropDown/>
+    );
+    const customComponent =renderer.create(
+        <FixedHeader.ActionDropDown passedState={custom.state()} element={custom.element()} callback={custom.callback} />
+    );
+    it("added to the dom successfully",()=>{
+        let tree=defaultComponent.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+    it("added custom components",()=>{
+        let tree= customComponent.toJSON();
+        let defaultTree=defaultComponent.toJSON();
+        expect(tree).toMatchSnapshot();
+        // expect(tree).not.toEqual(defaultTree);
+    });
+
+
+});
