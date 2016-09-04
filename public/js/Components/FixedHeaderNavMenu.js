@@ -243,28 +243,26 @@ export const IconProfile = ({iconName, href, stringName, notify, classes})=> {
 /***************************
  * Pure Stateless Components*
  ***************************/
-export const ActionDropDown = ({data,el,el2, callback, passedState, styles})=>(
+export const ActionDropDown = ({data,element, callback, passedState, styles})=>(
     <ul onMouseLeave={function () {
         IconClicked(data.triggerName,
             passedState.iconState,
             callback);
     }} className={styles.ulClassName}>
-        {el}
-        <li>{el2}</li>
+        {element.header}
+        <li>{element.body}</li>
     </ul>
 );
 ActionDropDown.propTypes = {
     data:React.PropTypes.object,
-    el:React.PropTypes.element,
-    el2:React.PropTypes.element,
+    element:React.PropTypes.object,
     passedState: React.PropTypes.object.isRequired,
     styles: React.PropTypes.object,
     callback: React.PropTypes.func
 };
 ActionDropDown.defaultProps = {
     data:{triggerName:"icon-fire"},
-    el:<div></div>,
-    el2:<div></div>,
+    element:{header:<div></div>,body:<div></div>},
     styles:{ulClassName:"dropdown-menu"},
     callback:()=>{console.error("Please specify a callback function")},
 };

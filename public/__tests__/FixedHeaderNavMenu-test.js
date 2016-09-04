@@ -259,9 +259,9 @@ describe("ActionDropDown",()=>{
             return x = 2;
         },
         element:()=>{
-            let el1 = renderer.create(<FixedHeader.ActionDropDownHeader/>);
-            let el2 = renderer.create(<FixedHeader.Slider/>);
-            return {el1:el1,el2:el2};
+            let el1 = <FixedHeader.ActionDropDownHeader/>;
+            let el2 = <FixedHeader.Slider/>;
+            return {header:el1,body:el2};
         }
     };
     const defaultComponent =renderer.create(
@@ -278,7 +278,7 @@ describe("ActionDropDown",()=>{
         let tree= customComponent.toJSON();
         let defaultTree=defaultComponent.toJSON();
         expect(tree).toMatchSnapshot();
-        // expect(tree).not.toEqual(defaultTree);
+        expect(tree).not.toEqual(defaultTree);
     });
 
 
