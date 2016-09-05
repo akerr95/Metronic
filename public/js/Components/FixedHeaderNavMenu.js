@@ -187,17 +187,9 @@ UserIcon.propTypes = {
     stringName: React.PropTypes.string.isRequired,
     iconName: React.PropTypes.string.isRequired
 };
-export const Notice = ({totalNotifications, spanClassName})=>(
-    <span className={spanClassName}>{totalNotifications}</span>);
+
 //TODO Examine what properties should be passed add Proptypes and default types..
-export const IconProfile = ({iconName, href, stringName, notify, classes})=> {
-    let span = <Notice spanClassName={classes.noticeClassName} totalNotifications={notify}/>;
-    return (
-        <a href={href}>
-            <i className={iconName}>{stringName}</i>
-            {notify > 0 ? span : false}
-        </a>);
-};
+
 
 //TODO Examine what properties should be passed add Proptypes and default types..
 // export const ActionDropDownHeader = ({pending,message,classes})=> {
@@ -218,31 +210,29 @@ export const IconProfile = ({iconName, href, stringName, notify, classes})=> {
  * State-Full Components*
  ***********************/
 
-// export class ActionDropDown extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this._LostFocus = IconClicked;
-//         this._LostFocus = this._LostFocus.bind(this);
-//     }
-//
-//     render() {
-//         let {ulClassName, actionDropDownHeader, slider} =this.props.classes;
-//
-//         return ( <ul onMouseLeave={()=> {
-//             this._LostFocus(this.props.triggerName, this.props.iconState, this.props.updateOpened);
-//         }} className={ulClassName}>
-//             <ActionDropDownHeader classes={actionDropDownHeader} {...this.props.actionDropDown.headings}/>
-//             <li><Slider classes={slider}
-//                         dropDownOpt={this.props.dropDownOpt}
-//                         messages={this.props.actionDropDown.messages}/>
-//             </li>
-//         </ul>);
-//     }
-// }
 
 /***************************
  * Pure Stateless Components*
  ***************************/
+export const IconProfile = ({data,styles,iconName, href, stringName, notify, classes})=> {
+    let span = <Notice spanClassName={classes.noticeClassName} totalNotifications={notify}/>;
+    return (
+        <a href={href}>
+            <i className={iconName}>{stringName}</i>
+            {notify > 0 ? span : false}
+        </a>);
+};
+export const Notice = ({data,style})=>(
+    <span className={style.notice}>{data.notifyCount}</span>
+);
+Notice.propTypes = {
+    data:React.PropTypes.object.isRequired,
+    style:React.PropTypes.object
+};
+Notice.defaultProps = {
+    data:{notifyCount:7},
+    style:{notice:"badge badge-default"}
+};
 export const ActionDropDown = ({data,element, callback, passedState, styles})=>(
     <ul onMouseLeave={function () {
         IconClicked(data.triggerName,

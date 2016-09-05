@@ -1,4 +1,4 @@
-exports[`ActionDropDown added custom components 1`] = `
+exports[`ActionDropDown added data succesfully 1`] = `
 <ul
   className="dropdown-menu"
   onMouseLeave={[Function onMouseLeave]}>
@@ -272,6 +272,13 @@ exports[`Divider has custom Props 1`] = `
 exports[`Divider successfully added into dom 1`] = `
 <li
   className="divider" />
+`;
+
+exports[`Notice added to the dom successfully 1`] = `
+<span
+  className="badge badge-default">
+  7
+</span>
 `;
 
 exports[`Slider added to the dom successfully 1`] = `

@@ -274,12 +274,22 @@ describe("ActionDropDown",()=>{
         let tree=defaultComponent.toJSON();
         expect(tree).toMatchSnapshot();
     });
-    it("added custom components",()=>{
+    it("added data succesfully",()=>{
         let tree= customComponent.toJSON();
         expect(tree).toMatchSnapshot();
-        tree.children.map((child)=> console.log(child));
+        expect(tree.children.length).toEqual(2);
     });
 
+});
+describe("Notice",()=>{
+
+    const defaultComponent = renderer.create(
+      <FixedHeader.Notice/>
+    );
+    it("added to the dom successfully",()=>{
+        let tree=defaultComponent.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
 });
 describe("Pure functions suite test",()=>{
     function stateCreate(triggerName) {
