@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "node app",
+    "watch": "jest --watch",
     "test": "jest --verbose",
     "build": "NODE_ENV=production webpack --config ./webpack.production.config.js --progress --profile --colors",
     "build-main": "browserify ./public/Components/main.js -o ./public/javascripts/bundle.js -d",

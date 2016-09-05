@@ -425,7 +425,7 @@ ActionDropDownNotify.defaultProps = {
 /*****************
  * Pure Functions*
  *****************/
-function IconClicked(triggerName, iconState, fn) {
+export function IconClicked(triggerName, iconState, fn) {
     let stateMap = new Map();
     for (let [key, value] of iconState) {
         key === triggerName ? stateMap.set(key, !value) : stateMap.set(key, false);

@@ -268,7 +268,7 @@ describe("ActionDropDown",()=>{
         <FixedHeader.ActionDropDown/>
     );
     const customComponent =renderer.create(
-        <FixedHeader.ActionDropDown passedState={custom.state()} element={custom.element()} callback={custom.callback} />
+        <FixedHeader.ActionDropDown data={custom.data} passedState={custom.state()} element={custom.element()} callback={custom.callback} />
     );
     it("added to the dom successfully",()=>{
         let tree=defaultComponent.toJSON();
@@ -276,10 +276,26 @@ describe("ActionDropDown",()=>{
     });
     it("added custom components",()=>{
         let tree= customComponent.toJSON();
-        let defaultTree=defaultComponent.toJSON();
         expect(tree).toMatchSnapshot();
-        expect(tree).not.toEqual(defaultTree);
+        tree.children.map((child)=> console.log(child));
     });
 
+});
+describe("Pure functions suite test",()=>{
+    function stateCreate(triggerName) {
+        let state = new Map();
+        for (let i = 0; i < 4; i += 1) {
+            i === 0 ? state.set(triggerName, false) : state.set(triggerName + i, false);
+        }
+        return state;
+    }
+    it("IconClicked function",()=>{
+        var triggerName = "icon-test";
+        let state=stateCreate(triggerName);
+        let form = false;
 
+        const callBack= x => state=x;
+        FixedHeader.IconClicked(triggerName,state,callBack);
+        expect(state.get(triggerName)).not.toEqual(form);
+    });
 });
