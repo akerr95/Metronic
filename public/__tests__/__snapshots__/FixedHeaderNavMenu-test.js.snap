@@ -110,7 +110,7 @@ exports[`ActionDropDownInbox added to the dom successfully 1`] = `
     className="photo">
     <img
       className="img-circle"
-      src="https://d13yacurqjgara.cloudfront.net/users/559591/screenshots/2928328/wild_west_bandit_tubik_illustration_art_design_colors_character_brush_adobe_arthur_avakyan_1x.jpg" />
+      src="http://bit.ly/2bSKJyn" />
   </span>
   <span
     className="subject">
@@ -272,6 +272,22 @@ exports[`Divider has custom Props 1`] = `
 exports[`Divider successfully added into dom 1`] = `
 <li
   className="divider" />
+`;
+
+exports[`IconProfile added to the dom successfully 1`] = `
+<a
+  className="dropdown-toggle">
+  <img
+    alt="Image of User"
+    className="img-circle"
+    src="http://bit.ly/2bSKJyn" />
+  <span
+    className="username">
+    Alec
+  </span>
+  <i
+    className="icon-lock" />
+</a>
 `;
 
 exports[`Notice added to the dom successfully 1`] = `

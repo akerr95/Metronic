@@ -142,56 +142,6 @@ export class Icon extends React.Component {
 
 }
 
-//TODO Examine what properties should be passed add Proptypes and default types..
-export class ProfileMenu extends React.Component {
-    constructor(props) {
-        super(props);
-        this._LostFocus = IconClicked;
-        this._LostFocus = this._LostFocus.bind(this);
-    }
-
-    render() {
-        let {ulClassName, divider, iconProfile} = this.props.classes;
-        let iconProfiles = this._PopulateIconProfile(divider, iconProfile);
-
-        return (
-            <ul onMouseLeave={this._LostFocus} className={ulClassName}>
-                {iconProfiles}
-            </ul>
-        );
-    }
-
-    _PopulateIconProfile(divider, iconClasses) {
-        let iconProfiles = [];
-        this.props.icons.map((icon, i)=> {
-            if (this.props.count !== i) {
-                iconProfiles.push(<li key={icon.iconName}><IconProfile classes={iconClasses}{...icon}/></li>);
-            } else {
-                iconProfiles.push(<Divider classes={divider} key={"Divider"}/>);
-                iconProfiles.push(<li key={icon.iconName}><IconProfile classes={iconClasses}{...icon}/></li>);
-            }
-        });
-        return iconProfiles;
-    }
-}
-//TODO Examine what properties should be passed add Proptypes and default types..
-export const UserIcon = ({imgLocation, stringName, iconName, classes})=>(
-    <a className={classes.aClassName}>
-        <img className={classes.imgClassName} src={imgLocation} alt="Image of User"/>
-        <span className={classes.spanClassName}>{stringName}</span>
-        <i className={iconName}></i>
-    </a>
-);
-UserIcon.propTypes = {
-    imgLocation: React.PropTypes.string,
-    stringName: React.PropTypes.string.isRequired,
-    iconName: React.PropTypes.string.isRequired
-};
-
-//TODO Examine what properties should be passed add Proptypes and default types..
-
-
-//TODO Examine what properties should be passed add Proptypes and default types..
 // export const ActionDropDownHeader = ({pending,message,classes})=> {
 //     let {spanClassName,liClassName } = classes;
 //     let newNotifications = <h3><span className={spanClassName}>{pending +" "+ message + " "}</span>notifications</h3>;
@@ -209,31 +159,80 @@ UserIcon.propTypes = {
 /************************
  * State-Full Components*
  ***********************/
-
+// export class ProfileMenu extends React.Component {
+//     constructor(props) {
+//         super(props);
+//         this._LostFocus = IconClicked;
+//         this._LostFocus = this._LostFocus.bind(this);
+//     }
+//
+//     render() {
+//         let {ulClassName, divider, iconProfile} = this.props.classes;
+//         let iconProfiles = this._PopulateIconProfile(divider, iconProfile);
+//
+//         return (
+//             <ul onMouseLeave={this._LostFocus} className={ulClassName}>
+//                 {iconProfiles}
+//             </ul>
+//         );
+//     }
+//
+// }
+export const ProfileMenu = ({data,passedState,callback,styles})=>(
+    <ul onMouseLeave={this._LostFocus} className={styles.ulClassName}>
+        {iconProfiles}
+    </ul>
+);
 
 /***************************
  * Pure Stateless Components*
  ***************************/
-export const IconProfile = ({data,styles,iconName, href, stringName, notify, classes})=> {
-    let span = <Notice spanClassName={classes.noticeClassName} totalNotifications={notify}/>;
-    return (
-        <a href={href}>
-            <i className={iconName}>{stringName}</i>
-            {notify > 0 ? span : false}
-        </a>);
+export const UserIcon = ({data, styles})=>(
+    <a className={styles.aClassName}>
+        <img className={styles.imgClassName} src={data.imgLocation} alt="Image of User"/>
+        <span className={styles.spanClassName}>{data.stringName}</span>
+        <i className={data.iconName}></i>
+    </a>
+);
+UserIcon.propTypes = {
+    data: React.PropTypes.object,
+    styles: React.PropTypes.object
 };
-export const Notice = ({data,style})=>(
+UserIcon.defaultProps = {
+    data: {
+        imgLocation: "http://bit.ly/2bSKJyn",
+        stringName: "Alec",
+        iconName: "icon-lock"
+    },
+    styles: {
+        aClassName: "dropdown-toggle",
+        imgClassName: "img-circle",
+        spanClassName: "username"
+    }
+};
+export const IconProfile = ({data})=> (
+    <a href={data.href}>
+        <i className={data.iconName}>{data.stringName}</i>
+    </a>
+);
+IconProfile.propTypes = {
+    data: React.PropTypes.object,
+};
+IconProfile.defaultProps = {
+    data: {href: "#", iconName: "icon-lock", stringName: "Lock"}
+};
+export const Notice = ({data, style})=>(
     <span className={style.notice}>{data.notifyCount}</span>
 );
 Notice.propTypes = {
-    data:React.PropTypes.object.isRequired,
-    style:React.PropTypes.object
+    data: React.PropTypes.object.isRequired,
+    style: React.PropTypes.object
 };
 Notice.defaultProps = {
-    data:{notifyCount:7},
-    style:{notice:"badge badge-default"}
+    data: {notifyCount: 7},
+    style: {notice: "badge badge-default"}
 };
-export const ActionDropDown = ({data,element, callback, passedState, styles})=>(
+export const ActionDropDown = ({data, element, callback, passedState, styles})=>(
     <ul onMouseLeave={function () {
         IconClicked(data.triggerName,
             passedState.iconState,
@@ -244,17 +243,19 @@ export const ActionDropDown = ({data,element, callback, passedState, styles})=>(
     </ul>
 );
 ActionDropDown.propTypes = {
-    data:React.PropTypes.object,
-    element:React.PropTypes.object,
+    data: React.PropTypes.object,
+    element: React.PropTypes.object,
     passedState: React.PropTypes.object.isRequired,
     styles: React.PropTypes.object,
     callback: React.PropTypes.func
 };
 ActionDropDown.defaultProps = {
-    data:{triggerName:"icon-fire"},
-    element:{header:<div></div>,body:<div></div>},
-    styles:{ulClassName:"dropdown-menu"},
-    callback:()=>{console.error("Please specify a callback function")},
+    data: {triggerName: "icon-fire"},
+    element: {header: <div></div>, body: <div></div>},
+    styles: {ulClassName: "dropdown-menu"},
+    callback: ()=> {
+        console.error("Please specify a callback function")
+    },
 };
 export const ActionDropDownHeader = ({data, styles})=>(
     <li className={styles.liClassName}>
@@ -378,7 +379,7 @@ ActionDropDownInbox.propTypes = {
 };
 ActionDropDownInbox.defaultProps = {
     data: {
-        imgLocation: "https://d13yacurqjgara.cloudfront.net/users/559591/screenshots/2928328/wild_west_bandit_tubik_illustration_art_design_colors_character_brush_adobe_arthur_avakyan_1x.jpg",
+        imgLocation: "http://bit.ly/2bSKJyn",
         sender: "Alec",
         time: "just now",
         message: "Default message.",
@@ -421,4 +422,16 @@ export function IconClicked(triggerName, iconState, fn) {
         key === triggerName ? stateMap.set(key, !value) : stateMap.set(key, false);
     }
     fn(stateMap);
+}
+export function populatElement(element, data){
+
+    // this.props.icons.map((icon, i)=> {
+    //     if (this.props.count !== i) {
+    //         iconProfiles.push(<li key={icon.iconName}><IconProfile classes={iconClasses}{...icon}/></li>);
+    //     } else {
+    //         iconProfiles.push(<Divider classes={divider} key={"Divider"}/>);
+    //         iconProfiles.push(<li key={icon.iconName}><IconProfile classes={iconClasses}{...icon}/></li>);
+    //     }
+    // });
+    return React.createElement(element,null);
 }

@@ -291,6 +291,27 @@ describe("Notice",()=>{
         expect(tree).toMatchSnapshot();
     });
 });
+
+describe("IconProfile",()=>{
+    // const defaultComponent = renderer.create(
+    //     <FixedHeader.IconProfile/>
+    // );
+    //
+    // it("added to the dom successfully",()=>{
+    //     let tree = defaultComponent.toJSON();
+    //     expect(tree).toMatchSnapshot();
+    // });
+});
+describe("IconProfile",()=>{
+    const defaultComponent = renderer.create(
+        <FixedHeader.UserIcon/>
+    );
+
+    it("added to the dom successfully",()=>{
+        let tree = defaultComponent.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});
 describe("Pure functions suite test",()=>{
     function stateCreate(triggerName) {
         let state = new Map();
@@ -307,5 +328,13 @@ describe("Pure functions suite test",()=>{
         const callBack= x => state=x;
         FixedHeader.IconClicked(triggerName,state,callBack);
         expect(state.get(triggerName)).not.toEqual(form);
+    });
+
+    it("takes in data spits out elements",()=>{
+        let data = {notifyCount:9};
+        let element ="Notice";
+        let createdElement = renderer.create(<FixedHeader.Notice/>).toJSON();
+        let result=renderer.create(FixedHeader.populatElement(element,data)).toJSON();
+        expect(result).toEqual(createdElement);
     });
 });
