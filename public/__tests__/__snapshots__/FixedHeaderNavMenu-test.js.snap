@@ -274,20 +274,64 @@ exports[`Divider successfully added into dom 1`] = `
   className="divider" />
 `;
 
+exports[`Icon added custom to the dom successfully 1`] = `
+<li
+  className="dropdown dropdown-extended nav-dropdown isClosedisClosed"
+  onClick={[Function onClick]}>
+  <a
+    className="dropdown-toggle">
+    <i
+      className="icon-fire" />
+    <span
+      className="badge badge-default">
+      7
+    </span>
+  </a>
+  <ul
+    className="dropdown-menu"
+    onMouseLeave={[Function onMouseLeave]}>
+    <div />
+    <li>
+      <div />
+    </li>
+  </ul>
+</li>
+`;
+
+exports[`Icon added to the dom successfully 1`] = `
+<li
+  className="dropdown dropdown-extended nav-dropdown isClosed"
+  onClick={[Function onClick]}>
+  <a
+    className="dropdown-toggle">
+    <i
+      className="icon-plus" />
+    <span
+      className="badge badge-default">
+      7
+    </span>
+  </a>
+  <ul
+    className="dropdown-menu"
+    onMouseLeave={[Function onMouseLeave]}>
+    <div />
+    <li>
+      <div />
+    </li>
+  </ul>
+</li>
+`;
+
 exports[`IconProfile added to the dom successfully 1`] = `
-<a
-  className="dropdown-toggle">
-  <img
-    alt="Image of User"
-    className="img-circle"
-    src="http://bit.ly/2bSKJyn" />
-  <span
-    className="username">
-    Alec
-  </span>
-  <i
-    className="icon-lock" />
-</a>
+<li>
+  <a
+    href="#">
+    <i
+      className="icon-lock">
+      Lock
+    </i>
+  </a>
+</li>
 `;
 
 exports[`Notice added to the dom successfully 1`] = `
@@ -295,6 +339,67 @@ exports[`Notice added to the dom successfully 1`] = `
   className="badge badge-default">
   7
 </span>
+`;
+
+exports[`ProfileMenu added custom to the  dom successfully 1`] = `
+<ul
+  className="dropdown-menu dropdown-menu-default"
+  onMouseLeave={[Function onMouseLeave]}>
+  <li>
+    <a
+      href="#">
+      <i
+        className="icon-lock">
+        Lock
+      </i>
+    </a>
+  </li>
+  <li>
+    <a
+      href="#">
+      <i
+        className="icon-lock">
+        Lock
+      </i>
+    </a>
+  </li>
+  <li
+    className="divider" />
+  <li>
+    <a
+      href="#">
+      <i
+        className="icon-lock">
+        Lock
+      </i>
+    </a>
+  </li>
+</ul>
+`;
+
+exports[`ProfileMenu added to the dom successfully 1`] = `
+<ul
+  className="dropdown-menu dropdown-menu-default"
+  onMouseLeave={[Function onMouseLeave]}>
+  <li>
+    <a
+      href="#">
+      <i
+        className="icon-lock">
+        Lock
+      </i>
+    </a>
+  </li>
+  <li>
+    <a
+      href="#">
+      <i
+        className="icon-lock">
+        Lock
+      </i>
+    </a>
+  </li>
+</ul>
 `;
 
 exports[`Slider added to the dom successfully 1`] = `
@@ -325,4 +430,112 @@ exports[`Slider has custom Props 1`] = `
   <div
     className="default" />
 </div>
+`;
+
+exports[`TopMenuNav added to the dom successfully 1`] = `
+<div
+  className="top-menu">
+  <ul
+    className="nav pull-right navbar-nav">
+    <li
+      className="divider" />
+    <li
+      className="dropdown dropdown-user nav-dropdown isClosed"
+      onClick={[Function onClick]}>
+      <a
+        className="dropdown-toggle">
+        <img
+          alt="Image of User"
+          className="img-circle"
+          src="http://bit.ly/2bSKJyn" />
+        <span
+          className="username">
+          Alec
+        </span>
+        <i
+          className="icon-lock" />
+      </a>
+      <ul
+        className="dropdown-menu dropdown-menu-default"
+        onMouseLeave={[Function onMouseLeave]}>
+        <li>
+          <a
+            href="#">
+            <i
+              className="icon-lock">
+              Lock
+            </i>
+          </a>
+        </li>
+        <li>
+          <a
+            href="#">
+            <i
+              className="icon-lock">
+              Lock
+            </i>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`UserIcon added to the dom successfully 1`] = `
+<a
+  className="dropdown-toggle">
+  <img
+    alt="Image of User"
+    className="img-circle"
+    src="http://bit.ly/2bSKJyn" />
+  <span
+    className="username">
+    Alec
+  </span>
+  <i
+    className="icon-lock" />
+</a>
+`;
+
+exports[`UserProfile added to the dom successfully 1`] = `
+<li
+  className="dropdown dropdown-user nav-dropdown isClosed"
+  onClick={[Function onClick]}>
+  <a
+    className="dropdown-toggle">
+    <img
+      alt="Image of User"
+      className="img-circle"
+      src="http://bit.ly/2bSKJyn" />
+    <span
+      className="username">
+      Alec
+    </span>
+    <i
+      className="icon-lock" />
+  </a>
+  <ul
+    className="dropdown-menu dropdown-menu-default"
+    onMouseLeave={[Function onMouseLeave]}>
+    <li>
+      <a
+        href="#">
+        <i
+          className="icon-lock">
+          Lock
+        </i>
+      </a>
+    </li>
+    <li>
+      <a
+        href="#">
+        <i
+          className="icon-lock">
+          Lock
+        </i>
+      </a>
+    </li>
+  </ul>
+</li>
 `;

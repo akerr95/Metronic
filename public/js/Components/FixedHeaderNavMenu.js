@@ -4,40 +4,22 @@
  */
 import React from "react";
 
-var _dropDownMap = new Map();
+
 
 //TODO Examine what properties should be passed add Proptypes and default types..
 export class TopMenuNavigation extends React.Component {
     constructor(props) {
         super(props);
         this._handleChange = this._handleChange.bind(this);
-        let len = props.fixedNavigation.iconMapper.length;
         this.state = {};
         this.state = this._createState(len);
     }
 
     render() {
-        let {topMenuNavigation, icon, userProfile} = this.props.classes;
-        let stateMap = this._convertArrToMap(this.state.whoIsOpen);
-        let icons = this._populateIcons(stateMap, icon);
-        return (<div className={topMenuNavigation.divClassName}>
-            <ul className={topMenuNavigation.ulClassName}>
-                {icons}
-                <UserProfile classes={userProfile} updateOpened={this._handleChange} iconState={stateMap}
-                             userIcon={this.props.fixedNavigation.userIcon}
-                             iconProfiles={this.props.fixedNavigation.iconProfiles}/>
-            </ul>
-        </div>)
-    }
-
-    _populateIcons(stateMap, classes) {
-        let icons = [];
-        this.props.fixedNavigation.iconMapper.map((icon)=> {
-            icons.push(<Icon key={icon.iconName} classes={classes} updateOpened={this._handleChange}
-                             iconState={stateMap} {...icon}/>);
-        });
-        return icons;
-
+        // let stateMap = ConvertArrToMap(this.state.whoIsOpen);
+        return (
+            <TopMenuNav passedState={stateMap} callback={this._handleChange}/>
+        )
     }
 
     _createState(count) {
@@ -51,142 +33,101 @@ export class TopMenuNavigation extends React.Component {
         return {whoIsOpen: iconStateParameters};
     }
 
-    _convertArrToMap(iconStateParameters) {
-        let stateMap = new Map(iconStateParameters);
-        return stateMap;
-    }
-
-    _convertMapToArr(stateMap) {
-        let iconStateParameters = [];
-        for (let [key,value] of stateMap) {
-            iconStateParameters.push([key, value]);
-        }
-        return iconStateParameters;
-    }
-
     _handleChange(state) {
-        let iconStateParameters = this._convertMapToArr(state);
+        let iconStateParameters = ConvertMapToArr(state);
         this.setState({whoIsOpen: iconStateParameters});
     }
 }
 
-//TODO Examine what properties should be passed add Proptypes and default types..
-export class UserProfile extends React.Component {
-    constructor(props) {
-        super(props);
-        this._handleIconClick = IconClicked;
-        this._handleIconClick = this._handleIconClick.bind(this);
-    }
-
-    render() {
-        let {liClassName, userIcon, profileMenu}=this.props.classes;
-        let classes = liClassName;
-        if (this._isTrue()) {
-            classes += " isOpen";
-        }
-
-        return (
-            <li onClick={this._handleIconClick} className={classes}>
-                <UserIcon classes={userIcon} {...this.props.userIcon}/>
-                <ProfileMenu classes={profileMenu}
-                             updateOpened={this.props.updateOpened}
-                             iconState={this.props.iconState}
-                             triggerName={this.props.userIcon.iconName}
-                             {...this.props.iconProfiles}/>
-            </li>);
-
-    }
-
-    _isTrue() {
-        let iconName = this.props.userIcon.iconName;
-        let stateMap = this.props.iconState;
-        return stateMap.get(iconName);
-    }
-
-}
-
-//TODO Examine what properties should be passed add Proptypes and default types..
-export class Icon extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this._handleIconClick = IconClicked;
-        this._handleIconClick = this._handleIconClick.bind(this);
-    }
-
-    render() {
-        let {liClassName, aClassName, notify, actionDropDown} = this.props.classes;
-        liClassName += this.props.liClassName;
-        if (this._isClosedTrue()) {
-            liClassName += " isOpen";
-        }
-        return (<li onClick={this._handleIconClick} className={liClassName}>
-            <a className={aClassName}>
-                <i className={this.props.iconName}></i>
-                <Notice totalNotifications={this.props.notify} {...notify}/>
-            </a>
-            <ActionDropDown dropDownOpt={this.props.liClassName}
-                            actionDropDown={this.props.actionDropDown}
-                            triggerName={this.props.iconName}
-                            updateOpened={this.props.updateOpened}
-                            iconState={this.props.iconState}
-                            classes={actionDropDown}/>
-        </li>);
-    }
-
-    _isClosedTrue() {
-        let iconName = this.props.iconName;
-        let stateMap = this.props.iconState;
-        return stateMap.get(iconName);
-    }
-
-}
-
-// export const ActionDropDownHeader = ({pending,message,classes})=> {
-//     let {spanClassName,liClassName } = classes;
-//     let newNotifications = <h3><span className={spanClassName}>{pending +" "+ message + " "}</span>notifications</h3>;
-//     let noNewNotifications = <h3><span className={spanClassName}>{message}</span></h3>;
-//     return (
-//
-//         <li className={liClassName}>
-//             {pending > 0 ? newNotifications : noNewNotifications }
-//             <a className={pending > 0 ? "":"hide"} href="#">view all</a>
-//         </li>
-//     );
-// };
-
-
 /************************
  * State-Full Components*
  ***********************/
-// export class ProfileMenu extends React.Component {
-//     constructor(props) {
-//         super(props);
-//         this._LostFocus = IconClicked;
-//         this._LostFocus = this._LostFocus.bind(this);
-//     }
-//
-//     render() {
-//         let {ulClassName, divider, iconProfile} = this.props.classes;
-//         let iconProfiles = this._PopulateIconProfile(divider, iconProfile);
-//
-//         return (
-//             <ul onMouseLeave={this._LostFocus} className={ulClassName}>
-//                 {iconProfiles}
-//             </ul>
-//         );
-//     }
-//
-// }
-export const ProfileMenu = ({data,passedState,callback,styles})=>(
-    <ul onMouseLeave={this._LostFocus} className={styles.ulClassName}>
-        {iconProfiles}
-    </ul>
-);
 
 /***************************
  * Pure Stateless Components*
  ***************************/
+export const UserProfile = ({data,passedState,styles,callback})=>(
+    <li onClick={()=>{
+        IconTriggered(data.triggerName,passedState,callback);
+    }} className={styles.liClassName += isOpen(data.triggerName,passedState)}>
+        <UserIcon/>
+        <ProfileMenu/>
+    </li>
+);
+UserProfile.propTypes = {
+    data: React.PropTypes.object,
+    passedState: React.PropTypes.object.isRequired,
+    styles: React.PropTypes.object,
+    callback: React.PropTypes.func
+};
+UserProfile.defaultProps ={
+    data:{triggerName:"icon-plus"},
+    styles: {liClassName:"dropdown dropdown-user nav-dropdown "},
+    callback:()=>{console.log("No callback passed")}
+};
+
+export const IconProfile = ({data}) => (
+    <li>
+    <a href={data.href}>
+        <i className={data.iconName}>{data.stringName}</i>
+    </a>
+        </li>
+);
+IconProfile.propTypes = {
+    data: React.PropTypes.object,
+};
+IconProfile.defaultProps = {
+    data: {href: "#", iconName: "icon-lock", stringName: "Lock"}
+};
+
+export const Icon = ({data,styles,passedState,callback})=>(
+    <li onClick={()=>{
+        IconTriggered(data.triggerName,passedState,callback);
+    }} className={styles.liClassName += isOpen(data.triggerName,passedState)}>
+        <a className={styles.aClassName}>
+            <i className={data.iconName}></i>
+            <Notice/>
+        </a>
+        <ActionDropDown data={data.ActionDropDown} passedState={passedState} callback={callback}/>
+    </li>
+);
+Icon.propTypes = {
+    data: React.PropTypes.object,
+    passedState: React.PropTypes.object.isRequired,
+    styles: React.PropTypes.object,
+    callback: React.PropTypes.func
+};
+Icon.defaultProps ={
+  data:{iconName:"icon-plus",triggerName:"fire"},
+  callback:()=>{console.log("Me gusta");} ,
+  styles:{
+      liClassName: "dropdown dropdown-extended nav-dropdown ",
+      aClassName: "dropdown-toggle",
+  }
+};
+
+export const ProfileMenu = ({data,passedState, callback, styles})=>(
+    <ul onMouseLeave={()=>{IconTriggered(data.triggerName,
+        passedState.iconState,
+        callback);}} className={styles.ulClassName}>
+        {populateElement(data.iconProfiles)}
+    </ul>
+);
+ProfileMenu.propTypes = {
+    data: React.PropTypes.object,
+    passedState: React.PropTypes.object.isRequired,
+    styles: React.PropTypes.object,
+    callback: React.PropTypes.func
+};
+ProfileMenu.defaultProps = {
+    data:{iconProfiles:new Map([
+        [{},IconProfile],
+        [{iconName:"icon-plus",href:"#",stringName:"tester"},IconProfile]
+    ])},
+    styles: {ulClassName: "dropdown-menu dropdown-menu-default"},
+    callback:()=>{console.error("No Callback Provided")}
+};
+
 export const UserIcon = ({data, styles})=>(
     <a className={styles.aClassName}>
         <img className={styles.imgClassName} src={data.imgLocation} alt="Image of User"/>
@@ -210,17 +151,7 @@ UserIcon.defaultProps = {
         spanClassName: "username"
     }
 };
-export const IconProfile = ({data})=> (
-    <a href={data.href}>
-        <i className={data.iconName}>{data.stringName}</i>
-    </a>
-);
-IconProfile.propTypes = {
-    data: React.PropTypes.object,
-};
-IconProfile.defaultProps = {
-    data: {href: "#", iconName: "icon-lock", stringName: "Lock"}
-};
+
 export const Notice = ({data, style})=>(
     <span className={style.notice}>{data.notifyCount}</span>
 );
@@ -232,9 +163,10 @@ Notice.defaultProps = {
     data: {notifyCount: 7},
     style: {notice: "badge badge-default"}
 };
+
 export const ActionDropDown = ({data, element, callback, passedState, styles})=>(
     <ul onMouseLeave={function () {
-        IconClicked(data.triggerName,
+        IconTriggered(data.triggerName,
             passedState.iconState,
             callback);
     }} className={styles.ulClassName}>
@@ -253,10 +185,9 @@ ActionDropDown.defaultProps = {
     data: {triggerName: "icon-fire"},
     element: {header: <div></div>, body: <div></div>},
     styles: {ulClassName: "dropdown-menu"},
-    callback: ()=> {
-        console.error("Please specify a callback function")
-    },
+    callback:()=>{console.error("No Callback Provided")}
 };
+
 export const ActionDropDownHeader = ({data, styles})=>(
     <li className={styles.liClassName}>
         <h3 className={styles.head}>
@@ -274,6 +205,7 @@ ActionDropDownHeader.defaultProps = {
     data: {pending: "one", subject: "Default", heading: "view all"},
     styles: {head: "", bold: "bold", liClassName: "external", aClassName: ""}
 };
+
 export const Divider = ({styles})=>(
     <li className={styles.liClassName}></li>
 );
@@ -283,6 +215,7 @@ Divider.propTypes = {
 Divider.defaultProps = {
     styles: {liClassName: "divider"}
 };
+
 export const ActionDropDownError = ({data, styles})=> (
     <span>
                 <span className={styles.err}>{data.errorMessage}</span>
@@ -300,6 +233,7 @@ ActionDropDownError.propTypes = {
 ActionDropDownError.defaultProps = {
     styles: {err: "error", solution: "solution"}
 };
+
 export const Slider = ({data, styles})=> (
     <div className={styles.slider}>
         <ul className={styles.ul}>
@@ -321,6 +255,7 @@ Slider.defaultProps = {
         rail: "slimScrollRail"
     }
 };
+
 export const ClickableList = ({data, styles}) =>(
     <li className={styles.liClassName}>
         <a className={styles.aClassName}>
@@ -335,6 +270,7 @@ ClickableList.propTypes = {
 ClickableList.defaultProps = {
     styles: {liClassName: "", aClassName: ""}
 };
+
 export const ActionDropDownTask = ({data, styles})=>(
     <span>
        <span className={styles.task}>
@@ -363,6 +299,7 @@ ActionDropDownTask.defaultProps = {
         sr: "sr-only"
     },
 };
+
 export const ActionDropDownInbox = ({data, styles})=>(
     <span>
         <span className={styles.photo}><img src={data.imgLocation} className={styles.img || "img-circle"}/></span>
@@ -393,6 +330,7 @@ ActionDropDownInbox.defaultProps = {
         message: "message"
     }
 };
+
 export const ActionDropDownNotify = ({data, styles})=>(
     <span>
             <span className={styles.time}>{data.time}</span>
@@ -413,25 +351,60 @@ ActionDropDownNotify.defaultProps = {
     styles: {time: "time", details: "details", label: "label label-sm label-icon label-success edited-label"}
 };
 
+export const TopMenuNav =({data,passedState,styles,callback})=>(
+    <div className={styles.divClassName}>
+        <ul className={styles.ulClassName}>
+            {populateElement(data.Icons)}
+            <UserProfile  passedState={passedState}/>
+        </ul>
+    </div>
+);
+TopMenuNav.propTypes ={
+    data: React.PropTypes.object,
+    passedState: React.PropTypes.object.isRequired,
+    styles: React.PropTypes.object,
+    callback: React.PropTypes.func
+};
+TopMenuNav.defaultProps ={
+    data:{Icons:new Map([[{},Divider]])},
+    styles: {divClassName:"top-menu",ulClassName:"nav pull-right navbar-nav"},
+    callback: ()=>{console.log("No callback provided.");}
+};
+
 /*****************
  * Pure Functions*
  *****************/
-export function IconClicked(triggerName, iconState, fn) {
+export function IconTriggered(triggerName, iconState, fn) {
     let stateMap = new Map();
     for (let [key, value] of iconState) {
         key === triggerName ? stateMap.set(key, !value) : stateMap.set(key, false);
     }
     fn(stateMap);
 }
-export function populatElement(element, data){
-
-    // this.props.icons.map((icon, i)=> {
-    //     if (this.props.count !== i) {
-    //         iconProfiles.push(<li key={icon.iconName}><IconProfile classes={iconClasses}{...icon}/></li>);
-    //     } else {
-    //         iconProfiles.push(<Divider classes={divider} key={"Divider"}/>);
-    //         iconProfiles.push(<li key={icon.iconName}><IconProfile classes={iconClasses}{...icon}/></li>);
-    //     }
-    // });
-    return React.createElement(element,null);
+export function populateElement(elements) {
+    let result = [];
+    for (let [{data, styles, callback, passedState},element] of elements) {
+        result.push(React.createElement(element, {
+            data: data,
+            styles: styles,
+            callback: callback,
+            passedState: passedState
+        }));
+    }
+    return result;
+}
+export function isOpen(elClassName,elState,customClass){
+    customClass = customClass ||{};
+    return elState.get(elClassName) ? customClass.first||"isOpen": customClass.second || "isClosed";
+}
+function ConvertMapToArr(stateMap) {
+    let iconStateParameters = [];
+    for (let [key,value] of stateMap) {
+        iconStateParameters.push([key, value]);
+    }
+    return iconStateParameters;
+}
+function ConvertArrToMap(iconStateParameters) {
+    let stateMap = new Map(iconStateParameters);
+    return stateMap;
 }

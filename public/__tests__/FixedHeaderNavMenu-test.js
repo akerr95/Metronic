@@ -292,17 +292,87 @@ describe("Notice",()=>{
     });
 });
 
-describe("IconProfile",()=>{
-    // const defaultComponent = renderer.create(
-    //     <FixedHeader.IconProfile/>
-    // );
-    //
-    // it("added to the dom successfully",()=>{
-    //     let tree = defaultComponent.toJSON();
-    //     expect(tree).toMatchSnapshot();
-    // });
+describe("TopMenuNav",()=>{
+
+    let state = new Map([["icon-plus",false]]);
+    const defaultComponent = renderer.create(<FixedHeader.TopMenuNav passedState={state}/>);
+
+    it("added to the dom successfully",()=>{
+        let tree=defaultComponent.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
 });
+describe("UserProfile",()=>{
+    let state = new Map([["icon-plus",false]]);
+    const defaultComponent = renderer.create(<FixedHeader.UserProfile passedState ={state}/>);
+    it("added to the dom successfully",()=>{
+        let tree = defaultComponent.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});
+
+describe("ProfileMenu",()=>{
+
+    let iconProfiles=new Map([
+        [{href:"#",iconName:"icon-plus",stringName:"My profile"},FixedHeader.IconProfile],
+        [{href:"#",iconName:"icon-plus",stringName:"My profile"},FixedHeader.IconProfile],
+        [{},FixedHeader.Divider],
+        [{href:"#",iconName:"icon-plus",stringName:"My profile"},FixedHeader.IconProfile],
+    ]);
+
+    let data ={triggerName:"icon-plus",iconProfiles:iconProfiles};
+    let passedState = new Map([["test",false]]);
+
+    const defaultComponent = renderer.create(<FixedHeader.ProfileMenu/>);
+    const customComponent = renderer.create(<FixedHeader.ProfileMenu data={data}/>);
+
+    it("added to the dom successfully",()=>{
+        let tree = defaultComponent.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+    it("added custom to the  dom successfully",()=>{
+        let tree = customComponent.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});
+
 describe("IconProfile",()=>{
+    const defaultComponent = renderer.create(
+        <FixedHeader.IconProfile/>
+    );
+
+    it("added to the dom successfully",()=>{
+        let tree = defaultComponent.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+});
+
+describe("Icon",()=>{
+    let state = new Map([["test",false],["test1",false]]);
+    let data ={triggerName:"test",iconName:"icon-fire"};
+    const callback = (x)=>{console.log(x);};
+    const defaultComponent = renderer.create(
+        <FixedHeader.Icon passedState ={state}/>
+    );
+    const customComponent = renderer.create(
+        <FixedHeader.Icon data = {data} callback={callback} passedState ={state}/>
+    );
+
+    it("added to the dom successfully",()=>{
+
+        let tree = defaultComponent.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+    it("added custom to the dom successfully",()=>{
+
+        let tree = customComponent.toJSON();
+        expect(tree).toMatchSnapshot();
+    });
+
+
+});
+
+describe("UserIcon",()=>{
     const defaultComponent = renderer.create(
         <FixedHeader.UserIcon/>
     );
@@ -312,6 +382,7 @@ describe("IconProfile",()=>{
         expect(tree).toMatchSnapshot();
     });
 });
+
 describe("Pure functions suite test",()=>{
     function stateCreate(triggerName) {
         let state = new Map();
@@ -320,21 +391,76 @@ describe("Pure functions suite test",()=>{
         }
         return state;
     }
-    it("IconClicked function",()=>{
+    it("IconTriggered function",()=>{
         var triggerName = "icon-test";
         let state=stateCreate(triggerName);
         let form = false;
 
         const callBack= x => state=x;
-        FixedHeader.IconClicked(triggerName,state,callBack);
+        FixedHeader.IconTriggered(triggerName,state,callBack);
         expect(state.get(triggerName)).not.toEqual(form);
     });
 
-    it("takes in data spits out elements",()=>{
-        let data = {notifyCount:9};
-        let element ="Notice";
-        let createdElement = renderer.create(<FixedHeader.Notice/>).toJSON();
-        let result=renderer.create(FixedHeader.populatElement(element,data)).toJSON();
-        expect(result).toEqual(createdElement);
+    describe("populateElement",()=>{
+        function createData(amount){
+            let myMap = new Map();
+            for(let i = 0; i < amount; i += 1){
+                myMap.set({href:"test1",iconName:"icon-plus",stringName:"tester"},FixedHeader.IconProfile);
+            }
+            return myMap;
+        }
+        it("populateElement takes in element map, returns react component",()=>{
+            let elementProps = {data:{notifyCount:9}};
+            let element = new Map([[elementProps,FixedHeader.Notice]]);
+            let result= [];
+            let createdElement = [<FixedHeader.Notice data ={elementProps}/>];
+
+            result.push(FixedHeader.populateElement(element));
+            expect(result.pop().hasOwnProperty(elementProps)).toBe(createdElement.pop().hasOwnProperty(elementProps));
+        });
+
+        it("returns a 4 elements for 4 data types",()=>{
+            let result =FixedHeader.populateElement(createData(4));
+            expect(result.length).toEqual(4);
+        });
+    });
+    describe("isOpen",()=>{
+
+        it("returns isClosed based on state",()=>{
+            let state = stateCreate("test");
+            let element = "test";
+            let ans = "isClosed";
+            let result = FixedHeader.isOpen(element,state);
+            expect(result).toBe(ans);
+        });
+        it("returns isOpen based on state",()=>{
+            let state = stateCreate("test");
+            let element = "test";
+            let ans = "isOpen";
+            const changeState = (x)=>(state=x);
+            FixedHeader.IconTriggered(element,state,changeState);
+            let result = FixedHeader.isOpen(element,state);
+            expect(result).toBe(ans);
+        });
+        it("returns isCustom based on state",()=>{
+            let state = stateCreate("test");
+            let element = "test";
+            let ans = "isCustom";
+            let custom = {second:ans};
+
+            let result = FixedHeader.isOpen(element,state,custom);
+            expect(result).toBe(ans);
+        });
+        it("returns isAlsoCustom based on state",()=>{
+            let state = stateCreate("test");
+            let element = "test";
+            let ans = "isAlsoCustom";
+            let custom = {first:ans};
+
+            const changeState = (x)=>(state=x);
+            FixedHeader.IconTriggered(element,state,changeState);
+            let result = FixedHeader.isOpen(element,state,custom);
+            expect(result).toBe(ans);
+        });
     });
 });
