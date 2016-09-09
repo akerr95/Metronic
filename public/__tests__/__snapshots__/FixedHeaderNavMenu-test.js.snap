@@ -1,4 +1,4 @@
-exports[`ActionDropDown added data succesfully 1`] = `
+exports[`ActionDropDown added to the dom successfully 1`] = `
 <ul
   className="dropdown-menu"
   onMouseLeave={[Function onMouseLeave]}>
@@ -8,66 +8,41 @@ exports[`ActionDropDown added data succesfully 1`] = `
       className="">
       <span
         className="bold">
-        one Default 
+        1 Default 
       </span>
-      view all
+      notifications
     </h3>
     <a
-      className="" />
+      className="">
+      view all
+    </a>
   </li>
-  <li>
-    <div
-      className="slimScrollDiv">
-      <ul
-        className="dropdown-menu-list" />
-      <div
-        className="slimScrollBar" />
-      <div
-        className="slimScrollRail" />
-    </div>
-  </li>
-</ul>
-`;
-
-exports[`ActionDropDown added to the dom successfully 1`] = `
-<ul
-  className="dropdown-menu"
-  onMouseLeave={[Function onMouseLeave]}>
-  <div />
-  <li>
-    <div />
-  </li>
+  <span
+    className="badge badge-default">
+    7
+  </span>
 </ul>
 `;
 
 exports[`ActionDropDownError added to the dom successfully 1`] = `
-<span>
-  <span
-    className="error" />
-  <ul>
-    <li
-      className="divider" />
-  </ul>
-  <span
-    className="solution" />
-</span>
-`;
-
-exports[`ActionDropDownError has custom Props 1`] = `
-<span>
-  <span
-    className="err">
-    test1
-  </span>
-  <ul>
-    <li
-      className="divider" />
-  </ul>
-  <span
-    className="sol">
-    test2
-  </span>
-</span>
+<li>
+  <a>
+    <span>
+      <span
+        className="err">
+        test1
+      </span>
+      <ul>
+        <li
+          className="divider" />
+      </ul>
+      <span
+        className="sol">
+        test2
+      </span>
+    </span>
+  </a>
+</li>
 `;
 
 exports[`ActionDropDownHeader added to the dom successfully 1`] = `
@@ -77,12 +52,14 @@ exports[`ActionDropDownHeader added to the dom successfully 1`] = `
     className="">
     <span
       className="bold">
-      one Default 
+      1 Default 
     </span>
-    view all
+    notifications
   </h3>
   <a
-    className="" />
+    className="">
+    view all
+  </a>
 </li>
 `;
 
@@ -105,161 +82,161 @@ exports[`ActionDropDownHeader has custom component 1`] = `
 `;
 
 exports[`ActionDropDownInbox added to the dom successfully 1`] = `
-<span>
-  <span
-    className="photo">
-    <img
-      className="img-circle"
-      src="http://bit.ly/2bSKJyn" />
-  </span>
-  <span
-    className="subject">
+<li
+  className="">
+  <a
+    className="">
+    <span
+      className="photo">
+      <img
+        className="img-circle"
+        src="http://bit.ly/2bSKJyn" />
+    </span>
+    <span
+      className="subject">
+      <span
+        className="time">
+        just now
+      </span>
+      <span
+        className="from">
+        Alec
+      </span>
+    </span>
+    <span
+      className="message">
+      Default message.
+    </span>
+  </a>
+</li>
+`;
+
+exports[`ActionDropDownInbox has custom Props 1`] = `
+<li
+  className={undefined}>
+  <a
+    className={undefined}>
+    <span
+      className="Test1">
+      <img
+        className="Test2"
+        src="test.png" />
+    </span>
+    <span
+      className="Test3">
+      <span
+        className="Test4">
+        just now
+      </span>
+      <span
+        className="Test5">
+        alec
+      </span>
+    </span>
+    <span
+      className="Test6">
+      default message
+    </span>
+  </a>
+</li>
+`;
+
+exports[`ActionDropDownNotify added to the dom successfully 1`] = `
+<li
+  className="">
+  <a
+    className="">
     <span
       className="time">
       just now
     </span>
     <span
-      className="from">
-      Alec
-    </span>
-  </span>
-  <span
-    className="message">
-    Default message.
-  </span>
-</span>
-`;
-
-exports[`ActionDropDownInbox has custom Props 1`] = `
-<span>
-  <span
-    className="Test1">
-    <img
-      className="Test2"
-      src="test.png" />
-  </span>
-  <span
-    className="Test3">
-    <span
-      className="Test4">
-      just now
-    </span>
-    <span
-      className="Test5">
-      alec
-    </span>
-  </span>
-  <span
-    className="Test6">
-    default message
-  </span>
-</span>
-`;
-
-exports[`ActionDropDownNotify added to the dom successfully 1`] = `
-<span>
-  <span
-    className="time">
-    just now
-  </span>
-  <span
-    className="details">
-    <span
-      className="label label-sm label-icon label-success edited-label">
-      <i
-        className="fa fa-plus" />
-    </span>
-    this is a default message
-  </span>
-</span>
-`;
-
-exports[`ActionDropDownNotify has custom Props 1`] = `
-<span>
-  <span
-    className="Test1">
-    just now
-  </span>
-  <span
-    className="Test2">
-    <span
-      className="Test3">
-      <i
-        className="icon-arrow" />
-    </span>
-    default message
-  </span>
-</span>
-`;
-
-exports[`ActionDropDownTask added to the dom successfully 1`] = `
-<span>
-  <span
-    className="task">
-    <span
-      className="desc">
-      Metronic V1.0
-    </span>
-    <span
-      className="percent">
-      40%
-    </span>
-  </span>
-  <span
-    className="progress">
-    <span
-      className="progress-bar progress-bar-success">
+      className="details">
       <span
-        className="sr-only" />
+        className="label label-sm label-icon label-success edited-label">
+        <i
+          className="fa fa-plus" />
+      </span>
+      this is a default message
     </span>
-  </span>
-</span>
-`;
-
-exports[`ActionDropDownTask has custom Props 1`] = `
-<span>
-  <span
-    className="Test1">
-    <span
-      className="Test2">
-      Metronic V1.0
-    </span>
-    <span
-      className="Test3">
-      40%
-    </span>
-  </span>
-  <span
-    className="Test4">
-    <span
-      className="Test5">
-      <span
-        className="Test6" />
-    </span>
-  </span>
-</span>
-`;
-
-exports[`ClickableList added to the dom successfully 1`] = `
-<li
-  className="">
-  <a
-    className="" />
+  </a>
 </li>
 `;
 
-exports[`ClickableList has custom Props 1`] = `
+exports[`ActionDropDownNotify has custom Props 1`] = `
 <li
-  className="test1">
+  className={undefined}>
   <a
-    className="test2">
-    <div
-      className="alec">
-      <p
-        className="hello">
-        Hello World
-      </p>
-    </div>
+    className={undefined}>
+    <span
+      className="Test1">
+      just now
+    </span>
+    <span
+      className="Test2">
+      <span
+        className="Test3">
+        <i
+          className="icon-arrow" />
+      </span>
+      default message
+    </span>
+  </a>
+</li>
+`;
+
+exports[`ActionDropDownTask added to the dom successfully 1`] = `
+<li
+  className="">
+  <a
+    className="">
+    <span
+      className="task">
+      <span
+        className="desc">
+        Metronic V1.0
+      </span>
+      <span
+        className="percent">
+        40%
+      </span>
+    </span>
+    <span
+      className="progress">
+      <span
+        className="progress-bar progress-bar-success">
+        <span
+          className="sr-only" />
+      </span>
+    </span>
+  </a>
+</li>
+`;
+
+exports[`ActionDropDownTask has custom Props 1`] = `
+<li
+  className={undefined}>
+  <a
+    className={undefined}>
+    <span
+      className="Test1">
+      <span
+        className="Test2">
+        Metronic V1.0
+      </span>
+      <span
+        className="Test3">
+        40%
+      </span>
+    </span>
+    <span
+      className="Test4">
+      <span
+        className="Test5">
+        <span
+          className="Test6" />
+      </span>
+    </span>
   </a>
 </li>
 `;
@@ -272,30 +249,6 @@ exports[`Divider has custom Props 1`] = `
 exports[`Divider successfully added into dom 1`] = `
 <li
   className="divider" />
-`;
-
-exports[`Icon added custom to the dom successfully 1`] = `
-<li
-  className="dropdown dropdown-extended nav-dropdown isClosedisClosed"
-  onClick={[Function onClick]}>
-  <a
-    className="dropdown-toggle">
-    <i
-      className="icon-fire" />
-    <span
-      className="badge badge-default">
-      7
-    </span>
-  </a>
-  <ul
-    className="dropdown-menu"
-    onMouseLeave={[Function onMouseLeave]}>
-    <div />
-    <li>
-      <div />
-    </li>
-  </ul>
-</li>
 `;
 
 exports[`Icon added to the dom successfully 1`] = `
@@ -314,9 +267,38 @@ exports[`Icon added to the dom successfully 1`] = `
   <ul
     className="dropdown-menu"
     onMouseLeave={[Function onMouseLeave]}>
-    <div />
+    <li
+      className="external">
+      <h3
+        className="">
+        <span
+          className="bold">
+          1 Default 
+        </span>
+        notifications
+      </h3>
+      <a
+        className="">
+        view all
+      </a>
+    </li>
     <li>
-      <div />
+      <a>
+        <span>
+          <span
+            className="error">
+            1 min
+          </span>
+          <ul>
+            <li
+              className="divider" />
+          </ul>
+          <span
+            className="solution">
+            Include your own Action Drop Down element
+          </span>
+        </span>
+      </a>
     </li>
   </ul>
 </li>
@@ -341,7 +323,7 @@ exports[`Notice added to the dom successfully 1`] = `
 </span>
 `;
 
-exports[`ProfileMenu added custom to the  dom successfully 1`] = `
+exports[`ProfileMenu added to the dom successfully 1`] = `
 <ul
   className="dropdown-menu dropdown-menu-default"
   onMouseLeave={[Function onMouseLeave]}>
@@ -377,44 +359,7 @@ exports[`ProfileMenu added custom to the  dom successfully 1`] = `
 </ul>
 `;
 
-exports[`ProfileMenu added to the dom successfully 1`] = `
-<ul
-  className="dropdown-menu dropdown-menu-default"
-  onMouseLeave={[Function onMouseLeave]}>
-  <li>
-    <a
-      href="#">
-      <i
-        className="icon-lock">
-        Lock
-      </i>
-    </a>
-  </li>
-  <li>
-    <a
-      href="#">
-      <i
-        className="icon-lock">
-        Lock
-      </i>
-    </a>
-  </li>
-</ul>
-`;
-
 exports[`Slider added to the dom successfully 1`] = `
-<div
-  className="slimScrollDiv">
-  <ul
-    className="dropdown-menu-list" />
-  <div
-    className="slimScrollBar" />
-  <div
-    className="slimScrollRail" />
-</div>
-`;
-
-exports[`Slider has custom Props 1`] = `
 <div
   className="default">
   <ul
@@ -473,6 +418,241 @@ exports[`TopMenuNav added to the dom successfully 1`] = `
             <i
               className="icon-lock">
               Lock
+            </i>
+          </a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`TopMenuNavContainer added to dom successfully 1`] = `
+<div
+  className="top-menu">
+  <ul
+    className="nav pull-right navbar-nav">
+    <li
+      className="dropdown dropdown-extended nav-dropdown dropdown-notification isClosed"
+      onClick={[Function onClick]}>
+      <a
+        className="dropdown-toggle">
+        <i
+          className="icon-bell" />
+        <span
+          className="badge badge-default">
+          7
+        </span>
+      </a>
+      <ul
+        className="dropdown-menu"
+        onMouseLeave={[Function onMouseLeave]}>
+        <li
+          className="external">
+          <h3
+            className="">
+            <span
+              className="bold">
+              1 Default 
+            </span>
+            notifications
+          </h3>
+          <a
+            className="">
+            view all
+          </a>
+        </li>
+        <li
+          className="">
+          <a
+            className="">
+            <span
+              className="time">
+              1 min
+            </span>
+            <span
+              className="details">
+              <span
+                className="label label-sm label-icon label-success edited-label">
+                <i
+                  className="icon-plus" />
+              </span>
+              This was made from a test file.
+            </span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li
+      className="dropdown dropdown-extended nav-dropdown dropdown-inbox isClosed"
+      onClick={[Function onClick]}>
+      <a
+        className="dropdown-toggle">
+        <i
+          className="icon-enevelope-open" />
+        <span
+          className="badge badge-default">
+          7
+        </span>
+      </a>
+      <ul
+        className="dropdown-menu"
+        onMouseLeave={[Function onMouseLeave]}>
+        <li
+          className="external">
+          <h3
+            className="">
+            <span
+              className="bold">
+              1 Default 
+            </span>
+            notifications
+          </h3>
+          <a
+            className="">
+            view all
+          </a>
+        </li>
+        <li
+          className="">
+          <a
+            className="">
+            <span
+              className="photo">
+              <img
+                className="img-circle"
+                src="http://bit.ly/2cfaQ21" />
+            </span>
+            <span
+              className="subject">
+              <span
+                className="time">
+                just now
+              </span>
+              <span
+                className="from">
+                Alec kerr
+              </span>
+            </span>
+            <span
+              className="message">
+              This was made from a test file.
+            </span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li
+      className="dropdown dropdown-extended nav-dropdown dropdown-task isClosed"
+      onClick={[Function onClick]}>
+      <a
+        className="dropdown-toggle">
+        <i
+          className="icon-calendar" />
+        <span
+          className="badge badge-default">
+          7
+        </span>
+      </a>
+      <ul
+        className="dropdown-menu"
+        onMouseLeave={[Function onMouseLeave]}>
+        <li
+          className="external">
+          <h3
+            className="">
+            <span
+              className="bold">
+              1 Default 
+            </span>
+            notifications
+          </h3>
+          <a
+            className="">
+            view all
+          </a>
+        </li>
+        <li
+          className="">
+          <a
+            className="">
+            <span
+              className="task">
+              <span
+                className="desc">
+                Metronic V1 Test
+              </span>
+              <span
+                className="percent">
+                40%
+              </span>
+            </span>
+            <span
+              className="progress">
+              <span
+                className="progress-bar progress-bar-success">
+                <span
+                  className="sr-only" />
+              </span>
+            </span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li
+      className="dropdown dropdown-user nav-dropdown isClosed"
+      onClick={[Function onClick]}>
+      <a
+        className="dropdown-toggle">
+        <img
+          alt="Image of User"
+          className="img-circle"
+          src="http://bit.ly/2cqW9ue" />
+        <span
+          className="username">
+          Alec Kerr
+        </span>
+        <i
+          className="icon-options-vertical" />
+      </a>
+      <ul
+        className="dropdown-menu dropdown-menu-default"
+        onMouseLeave={[Function onMouseLeave]}>
+        <li>
+          <a
+            href="#">
+            <i
+              className="icon-user">
+              My Profile
+            </i>
+          </a>
+        </li>
+        <li>
+          <a
+            href="#">
+            <i
+              className="icon-Mustache">
+              My Mustache
+            </i>
+          </a>
+        </li>
+        <li>
+          <a
+            href="#">
+            <i
+              className="icon-screen-desktop">
+              My Desktop
+            </i>
+          </a>
+        </li>
+        <li
+          className="divider" />
+        <li>
+          <a
+            href="#">
+            <i
+              className="icon-key">
+              Log Out
             </i>
           </a>
         </li>
