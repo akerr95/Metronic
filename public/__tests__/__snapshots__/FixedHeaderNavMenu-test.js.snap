@@ -194,7 +194,7 @@ exports[`ActionDropDownTask added to the dom successfully 1`] = `
       className="task">
       <span
         className="desc">
-        Metronic V1.0
+        Metronic Default V1.0
       </span>
       <span
         className="percent">
@@ -377,68 +377,18 @@ exports[`Slider added to the dom successfully 1`] = `
 </div>
 `;
 
-exports[`TopMenuNav added to the dom successfully 1`] = `
-<div
-  className="top-menu">
-  <ul
-    className="nav pull-right navbar-nav">
-    <li
-      className="divider" />
-    <li
-      className="dropdown dropdown-user nav-dropdown isClosed"
-      onClick={[Function onClick]}>
-      <a
-        className="dropdown-toggle">
-        <img
-          alt="Image of User"
-          className="img-circle"
-          src="http://bit.ly/2bSKJyn" />
-        <span
-          className="username">
-          Alec
-        </span>
-        <i
-          className="icon-lock" />
-      </a>
-      <ul
-        className="dropdown-menu dropdown-menu-default"
-        onMouseLeave={[Function onMouseLeave]}>
-        <li>
-          <a
-            href="#">
-            <i
-              className="icon-lock">
-              Lock
-            </i>
-          </a>
-        </li>
-        <li>
-          <a
-            href="#">
-            <i
-              className="icon-lock">
-              Lock
-            </i>
-          </a>
-        </li>
-      </ul>
-    </li>
-  </ul>
-</div>
-`;
-
 exports[`TopMenuNavContainer added to dom successfully 1`] = `
 <div
   className="top-menu">
   <ul
     className="nav pull-right navbar-nav">
     <li
-      className="dropdown dropdown-extended nav-dropdown dropdown-notification isClosed"
+      className="dropdown dropdown-extended nav-dropdown isClosed"
       onClick={[Function onClick]}>
       <a
         className="dropdown-toggle">
         <i
-          className="icon-bell" />
+          className="icon-test" />
         <span
           className="badge badge-default">
           7
@@ -453,60 +403,9 @@ exports[`TopMenuNavContainer added to dom successfully 1`] = `
             className="">
             <span
               className="bold">
-              1 Default 
+              2 Test 
             </span>
-            notifications
-          </h3>
-          <a
-            className="">
-            view all
-          </a>
-        </li>
-        <li
-          className="">
-          <a
-            className="">
-            <span
-              className="time">
-              1 min
-            </span>
-            <span
-              className="details">
-              <span
-                className="label label-sm label-icon label-success edited-label">
-                <i
-                  className="icon-plus" />
-              </span>
-              This was made from a test file.
-            </span>
-          </a>
-        </li>
-      </ul>
-    </li>
-    <li
-      className="dropdown dropdown-extended nav-dropdown dropdown-inbox isClosed"
-      onClick={[Function onClick]}>
-      <a
-        className="dropdown-toggle">
-        <i
-          className="icon-enevelope-open" />
-        <span
-          className="badge badge-default">
-          7
-        </span>
-      </a>
-      <ul
-        className="dropdown-menu"
-        onMouseLeave={[Function onMouseLeave]}>
-        <li
-          className="external">
-          <h3
-            className="">
-            <span
-              className="bold">
-              1 Default 
-            </span>
-            notifications
+            Notifications
           </h3>
           <a
             className="">
@@ -542,122 +441,6 @@ exports[`TopMenuNavContainer added to dom successfully 1`] = `
         </li>
       </ul>
     </li>
-    <li
-      className="dropdown dropdown-extended nav-dropdown dropdown-task isClosed"
-      onClick={[Function onClick]}>
-      <a
-        className="dropdown-toggle">
-        <i
-          className="icon-calendar" />
-        <span
-          className="badge badge-default">
-          7
-        </span>
-      </a>
-      <ul
-        className="dropdown-menu"
-        onMouseLeave={[Function onMouseLeave]}>
-        <li
-          className="external">
-          <h3
-            className="">
-            <span
-              className="bold">
-              1 Default 
-            </span>
-            notifications
-          </h3>
-          <a
-            className="">
-            view all
-          </a>
-        </li>
-        <li
-          className="">
-          <a
-            className="">
-            <span
-              className="task">
-              <span
-                className="desc">
-                Metronic V1 Test
-              </span>
-              <span
-                className="percent">
-                40%
-              </span>
-            </span>
-            <span
-              className="progress">
-              <span
-                className="progress-bar progress-bar-success">
-                <span
-                  className="sr-only" />
-              </span>
-            </span>
-          </a>
-        </li>
-      </ul>
-    </li>
-    <li
-      className="dropdown dropdown-user nav-dropdown isClosed"
-      onClick={[Function onClick]}>
-      <a
-        className="dropdown-toggle">
-        <img
-          alt="Image of User"
-          className="img-circle"
-          src="http://bit.ly/2cqW9ue" />
-        <span
-          className="username">
-          Alec Kerr
-        </span>
-        <i
-          className="icon-options-vertical" />
-      </a>
-      <ul
-        className="dropdown-menu dropdown-menu-default"
-        onMouseLeave={[Function onMouseLeave]}>
-        <li>
-          <a
-            href="#">
-            <i
-              className="icon-user">
-              My Profile
-            </i>
-          </a>
-        </li>
-        <li>
-          <a
-            href="#">
-            <i
-              className="icon-Mustache">
-              My Mustache
-            </i>
-          </a>
-        </li>
-        <li>
-          <a
-            href="#">
-            <i
-              className="icon-screen-desktop">
-              My Desktop
-            </i>
-          </a>
-        </li>
-        <li
-          className="divider" />
-        <li>
-          <a
-            href="#">
-            <i
-              className="icon-key">
-              Log Out
-            </i>
-          </a>
-        </li>
-      </ul>
-    </li>
   </ul>
 </div>
 `;
@@ -676,46 +459,4 @@ exports[`UserIcon added to the dom successfully 1`] = `
   <i
     className="icon-lock" />
 </a>
-`;
-
-exports[`UserProfile added to the dom successfully 1`] = `
-<li
-  className="dropdown dropdown-user nav-dropdown isClosed"
-  onClick={[Function onClick]}>
-  <a
-    className="dropdown-toggle">
-    <img
-      alt="Image of User"
-      className="img-circle"
-      src="http://bit.ly/2bSKJyn" />
-    <span
-      className="username">
-      Alec
-    </span>
-    <i
-      className="icon-lock" />
-  </a>
-  <ul
-    className="dropdown-menu dropdown-menu-default"
-    onMouseLeave={[Function onMouseLeave]}>
-    <li>
-      <a
-        href="#">
-        <i
-          className="icon-lock">
-          Lock
-        </i>
-      </a>
-    </li>
-    <li>
-      <a
-        href="#">
-        <i
-          className="icon-lock">
-          Lock
-        </i>
-      </a>
-    </li>
-  </ul>
-</li>
 `;

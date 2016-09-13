@@ -3,7 +3,7 @@
  * Fixed Header nav Menu is always situated at the top of a navigation header.
  */
 import React from "react";
-
+import * as PureFunc from './PureFunctions.js';
 /************************
  * State-Full Components*
  ***********************/
@@ -32,7 +32,7 @@ export class TopMenuNavContainer extends React.Component {
     }
 
     _handleChange(state) {
-        let iconStateParameters = ConvertMapToArr(state);
+        let iconStateParameters = PureFunc.ConvertMapToArr(state);
         this.setState({whoIsOpen: iconStateParameters});
     }
 }
@@ -65,10 +65,10 @@ IconProfile.defaultProps = {
 
 
 export const ProfileMenu = ({data,passedState, callback, styles})=>(
-    <ul onMouseLeave={()=>{IconTriggered(data.triggerName,
+    <ul onMouseLeave={()=>{PureFunc.IconTriggered(data.triggerName,
         passedState.iconState,
         callback);}} className={styles.ulClassName}>
-        {populateElement(data.iconProfiles,passedState,callback)}
+        {PureFunc.populateElement(data.iconProfiles,passedState,callback)}
     </ul>
 );
 ProfileMenu.propTypes = {
@@ -88,7 +88,6 @@ ProfileMenu.defaultProps = {
 
 export const UserIcon = ({data, styles})=>(
     <a className={styles.aClassName}>
-        {console.log(data)}
         <img className={styles.imgClassName} src={data.imgLocation} alt="Image of User"/>
         <span className={styles.spanClassName}>{data.stringName}</span>
         <i className={data.iconName}></i>
@@ -125,12 +124,12 @@ Notice.defaultProps = {
 
 export const ActionDropDown = ({data,callback, passedState, styles})=>(
     <ul onMouseLeave={function () {
-        IconTriggered(data.triggerName,
+        PureFunc.IconTriggered(data.triggerName,
             passedState,
             callback);
     }} className={styles.ulClassName}>
-        {populateElement(data.header)}
-        {populateElement(data.body)}
+        {PureFunc.populateElement(data.header)}
+        {PureFunc.populateElement(data.body)}
     </ul>
 );
 ActionDropDown.propTypes = {
@@ -237,7 +236,7 @@ ActionDropDownTask.propTypes = {
     styles: React.PropTypes.object
 };
 ActionDropDownTask.defaultProps = {
-    data: {desc: "Metronic V1.0", percent: 40},
+    data: {desc: "Metronic Default V1.0", percent: 40},
     styles: {
         liClassName:"",
         aClassName:"",
@@ -309,10 +308,9 @@ ActionDropDownNotify.defaultProps = {
 };
 
 export const Icon = ({data,styles,passedState,callback})=>(
-
     <li  onClick={()=>{
-        IconTriggered(data.iconName,passedState,callback);
-    }} className={styles.liClassName + isOpen(data.iconName,passedState)}>
+        PureFunc.IconTriggered(data.iconName,passedState,callback);
+    }} className={styles.liClassName + PureFunc.isOpen(data.iconName,passedState)}>
         <a className={styles.aClassName}>
             <i className={data.iconName}></i>
             <Notice/>
@@ -345,8 +343,8 @@ Icon.defaultProps ={
 
 export const UserProfile = ({data,passedState,styles,callback})=>(
     <li onClick={()=>{
-        IconTriggered(data.triggerName,passedState,callback);
-    }} className={styles.liClassName + isOpen(data.triggerName,passedState)}>
+        PureFunc.IconTriggered(data.userIcon.iconName,passedState,callback);
+    }} className={styles.liClassName + PureFunc.isOpen(data.userIcon.iconName,passedState)}>
         <UserIcon data={data.userIcon}/>
         <ProfileMenu data={data.profileMenu} passedState={passedState}/>
     </li>
@@ -358,7 +356,6 @@ UserProfile.propTypes = {
     callback: React.PropTypes.func
 };
 UserProfile.defaultProps ={
-    data:{triggerName:"icon-plus"},
     styles: {liClassName:"dropdown dropdown-user nav-dropdown "},
     callback:()=>{console.log("No callback passed")}
 };
@@ -366,7 +363,7 @@ UserProfile.defaultProps ={
 export const TopMenuNav =({data,passedState,styles,callback})=>(
     <div className={styles.divClassName}>
         <ul className={styles.ulClassName}>
-            {populateElement(data.icons,passedState,callback)}
+            {PureFunc.populateElement(data.icons,passedState,callback)}
             <UserProfile data={data.userProfile}  passedState={passedState}/>
         </ul>
     </div>
@@ -383,41 +380,3 @@ TopMenuNav.defaultProps ={
     callback: ()=>{console.log("No callback provided.");}
 };
 
-/*****************
- * Pure Functions*
- *****************/
-export function IconTriggered(triggerName, iconState, fn) {
-    let stateMap = new Map();
-    for (let [key, value] of iconState) {
-        key === triggerName ? stateMap.set(key, !value) : stateMap.set(key, false);
-    }
-    fn(stateMap);
-}
-export function populateElement(elements,passedState,callback) {
-    let result = [];
-    for (let [{data, styles},element] of elements) {
-        result.push(React.createElement(element, {
-            data: data,
-            styles: styles,
-            callback: callback,
-            passedState: passedState
-        }));
-    }
-    return result;
-}
-export function isOpen(elClassName,elState,customClass){
-
-    customClass = customClass ||{};
-    return elState.get(elClassName) ? customClass.first||"isOpen": customClass.second || "isClosed";
-}
-function ConvertMapToArr(stateMap) {
-    let iconStateParameters = [];
-    for (let [key,value] of stateMap) {
-        iconStateParameters.push([key, value]);
-    }
-    return iconStateParameters;
-}
-function ConvertArrToMap(iconStateParameters) {
-    let stateMap = new Map(iconStateParameters);
-    return stateMap;
-}

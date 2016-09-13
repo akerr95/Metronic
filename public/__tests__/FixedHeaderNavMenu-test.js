@@ -4,6 +4,7 @@
 "use-strict"
 import React from "react";
 import renderer from 'react-test-renderer';
+import * as PureFunc from '../js/Components/PureFunctions.js';
 import * as FixedHeader from "../js/Components/FixedHeaderNavMenu.js";
 
 const walkNode = (node, func)=> {
@@ -206,8 +207,8 @@ describe("ActionDropDown", ()=> {
         },
         data: {
             triggerName: "icon-fire",
-            header:new Map([[{},FixedHeader.ActionDropDownHeader]]),
-            body: new Map([[{},FixedHeader.Notice]])
+            header: new Map([[{}, FixedHeader.ActionDropDownHeader]]),
+            body: new Map([[{}, FixedHeader.Notice]])
         },
         callback: ()=> {
             var x;
@@ -229,143 +230,6 @@ describe("Notice", ()=> {
     const defaultComponent = renderer.create(
         <FixedHeader.Notice/>
     );
-    it("added to the dom successfully", ()=> {
-        let tree = defaultComponent.toJSON();
-        expect(tree).toMatchSnapshot();
-    });
-});
-describe("TopMenuNav", ()=> {
-
-    let state = new Map([["icon-plus", false]]);
-    const defaultComponent = renderer.create(<FixedHeader.TopMenuNav passedState={state}/>);
-
-    it("added to the dom successfully", ()=> {
-        let tree = defaultComponent.toJSON();
-        expect(tree).toMatchSnapshot();
-    });
-});
-describe("TopMenuNavContainer", ()=> {
-
-    let header = new Map([
-            [{}, FixedHeader.ActionDropDownHeader]
-        ]);
-    let actionDropDownInbox = new Map([
-            [{data:{
-                imgLocation:"http://bit.ly/2cfaQ21",
-                time:"just now",
-                sender:"Alec kerr",
-                message:"This was made from a test file."
-            }}, FixedHeader.ActionDropDownInbox]
-        ]);
-    let actionDropDownTask = new Map([
-        [{data:{
-            desc:"Metronic V1 Test",
-            percent:40,
-        }}, FixedHeader.ActionDropDownTask]
-    ]);
-    let actionDropDownNotify = new Map([
-        [{data:{
-            time:"1 min",
-            iconName:"icon-plus",
-            message:"This was made from a test file.",
-        }}, FixedHeader.ActionDropDownNotify]
-    ]);
-    let iconProfilesMap = new Map([
-        [{data:{
-            href:"#",
-            iconName:"icon-user",
-            stringName:"My Profile"
-        }},FixedHeader.IconProfile],
-        [{data:{
-            href:"#",
-            iconName:"icon-Mustache",
-            stringName:"My Mustache"
-        }},FixedHeader.IconProfile],
-        [{data:{
-            href:"#",
-            iconName:"icon-screen-desktop",
-            stringName:"My Desktop"
-        }},FixedHeader.IconProfile],
-        [{},FixedHeader.Divider],
-        [{data:{
-            href:"#",
-            iconName:"icon-key",
-            stringName:"Log Out"
-        }},FixedHeader.IconProfile]
-    ]);
-
-
-    const data = {
-        icons: new Map([
-            [{
-                data: {
-                    iconName: "icon-bell",
-                    actionDropDown:{
-                        header: header,
-                        body:actionDropDownNotify
-                    }
-                },
-                styles: {
-                    liClassName: "dropdown dropdown-extended nav-dropdown dropdown-notification ",
-                    aClassName: "dropdown-toggle"
-                }
-            }, FixedHeader.Icon],
-            [{
-                data: {
-                    iconName: "icon-enevelope-open",
-                    actionDropDown:{
-                        header: header,
-                        body:actionDropDownInbox
-                    }
-                },
-                styles: {
-                    liClassName: "dropdown dropdown-extended nav-dropdown dropdown-inbox ",
-                    aClassName: "dropdown-toggle"
-                }
-            }, FixedHeader.Icon],
-            [{
-                data: {
-                    iconName: "icon-calendar",
-                    actionDropDown:{
-                        header: header,
-                        body:actionDropDownTask
-                    }
-                },
-                styles: {
-                    liClassName: "dropdown dropdown-extended nav-dropdown dropdown-task ",
-                    aClassName: "dropdown-toggle"
-                }
-            }, FixedHeader.Icon]
-
-        ]),
-        userProfile:{
-                triggerName:"icon-options-vertical",
-                userIcon: {
-                    imgLocation:"http://bit.ly/2cqW9ue",
-                    stringName:"Alec Kerr",
-                    iconName:"icon-options-vertical"
-                },
-                profileMenu:{
-                    iconProfiles:iconProfilesMap
-                }
-        }
-    };
-
-
-
-
-    let state = new Map([["icon-bell", false]]);
-    const defaultComponent = renderer.create(<FixedHeader.TopMenuNavContainer data={data} passedState={state}/>);
-
-    it("added to dom successfully", ()=> {
-        let tree = defaultComponent.toJSON();
-        expect(tree).toMatchSnapshot();
-    });
-
-});
-describe("UserProfile", ()=> {
-    let state = new Map([["icon-plus", false]]);
-    const defaultComponent = renderer.create(<FixedHeader.UserProfile passedState={state}/>);
     it("added to the dom successfully", ()=> {
         let tree = defaultComponent.toJSON();
         expect(tree).toMatchSnapshot();
@@ -408,10 +272,10 @@ describe("Icon", ()=> {
         console.log(x);
     };
     let style = {
-        liClassName:"dropdown dropdown-extended nav-dropdown dropdown-task"
+        liClassName: "dropdown dropdown-extended nav-dropdown dropdown-task"
     };
     const defaultComponent = renderer.create(
-        <FixedHeader.Icon callback={callback} passedState={state} />
+        <FixedHeader.Icon callback={callback} passedState={state}/>
     );
 
     it("added to the dom successfully", ()=> {
@@ -419,7 +283,6 @@ describe("Icon", ()=> {
         let tree = defaultComponent.toJSON();
         expect(tree).toMatchSnapshot();
     });
-
 
 
 });
@@ -433,86 +296,54 @@ describe("UserIcon", ()=> {
         expect(tree).toMatchSnapshot();
     });
 });
-describe("Pure functions suite test", ()=> {
-    function stateCreate(triggerName) {
-        let state = new Map();
-        for (let i = 0; i < 4; i += 1) {
-            i === 0 ? state.set(triggerName, false) : state.set(triggerName + i, false);
-        }
-        return state;
-    }
+describe("TopMenuNavContainer", ()=> {
+    let inboxes = [{
+        key: "icon-test", imgLocation: "http://bit.ly/2cfaQ21", time: "just now",
+        sender: "Alec kerr",
+        message: "This was made from a test file."
+    }];
+    let icons = [{
+        iconName: "icon-test",
+        actionDropDown:{}
+    }];
+    let userIcon = {
+        imgLocation: "http://bit.ly/2cqW9ue",
+        stringName: "Alec Kerr",
+        iconName: "icon-options-vertical"
+    };
+    let iconProfiles =[{
+        iconName: "icon-test",
+        stringName: "My Profile",
+        href: "#"
+    },{
+        iconName: "icon-test",
+        stringName: "My Profile",
+        href: "#"
+    }];
+    let headers =[{key: "icon-test",
+        pending: 2,
+        subject: "Test",
+        heading: "Notifications",
+        actionMessage: "view all"
+    }];
+    var testdata = new PureFunc.TopMenuData();
+    testdata.addHeader(headers).
+    addInboxes(inboxes).
+    addIcon(icons).
+    hasUserProfile(true).
+    hasProfileMenu(true).
+    addUserIcon(userIcon).
+    addIconProfile(iconProfiles);
 
-    it("IconTriggered function", ()=> {
-        var triggerName = "icon-test";
-        let state = stateCreate(triggerName);
-        let form = false;
 
-        const callBack = x => state = x;
-        FixedHeader.IconTriggered(triggerName, state, callBack);
-        expect(state.get(triggerName)).not.toEqual(form);
+    let state = new Map([["icon-test", false]]);
+    const defaultComponent = renderer.create(<FixedHeader.TopMenuNavContainer data={testdata.generate()}
+                                                                              passedState={state}/>);
+
+    it("added to dom successfully", ()=> {
+        let tree = defaultComponent.toJSON();
+        expect(tree).toMatchSnapshot();
     });
 
-    describe("populateElement", ()=> {
-        function createData(amount) {
-            let myMap = new Map();
-            for (let i = 0; i < amount; i += 1) {
-                myMap.set({href: "test1", iconName: "icon-plus", stringName: "tester"}, FixedHeader.IconProfile);
-            }
-            return myMap;
-        }
-
-        it("populateElement takes in element map, returns react component", ()=> {
-            let elementProps = {data: {notifyCount: 9}};
-            let element = new Map([[elementProps, FixedHeader.Notice]]);
-            let result = [];
-            let createdElement = [<FixedHeader.Notice data={elementProps}/>];
-
-            result.push(FixedHeader.populateElement(element));
-            expect(result.pop().hasOwnProperty(elementProps)).toBe(createdElement.pop().hasOwnProperty(elementProps));
-        });
-
-        it("returns a 4 elements for 4 data types", ()=> {
-            let result = FixedHeader.populateElement(createData(4));
-            expect(result.length).toEqual(4);
-        });
-    });
-    describe("isOpen", ()=> {
-
-        it("returns isClosed based on state", ()=> {
-            let state = stateCreate("test");
-            let element = "test";
-            let ans = "isClosed";
-            let result = FixedHeader.isOpen(element, state);
-            expect(result).toBe(ans);
-        });
-        it("returns isOpen based on state", ()=> {
-            let state = stateCreate("test");
-            let element = "test";
-            let ans = "isOpen";
-            const changeState = (x)=>(state = x);
-            FixedHeader.IconTriggered(element, state, changeState);
-            let result = FixedHeader.isOpen(element, state);
-            expect(result).toBe(ans);
-        });
-        it("returns isCustom based on state", ()=> {
-            let state = stateCreate("test");
-            let element = "test";
-            let ans = "isCustom";
-            let custom = {second: ans};
-
-            let result = FixedHeader.isOpen(element, state, custom);
-            expect(result).toBe(ans);
-        });
-        it("returns isAlsoCustom based on state", ()=> {
-            let state = stateCreate("test");
-            let element = "test";
-            let ans = "isAlsoCustom";
-            let custom = {first: ans};
-
-            const changeState = (x)=>(state = x);
-            FixedHeader.IconTriggered(element, state, changeState);
-            let result = FixedHeader.isOpen(element, state, custom);
-            expect(result).toBe(ans);
-        });
-    });
 });
+

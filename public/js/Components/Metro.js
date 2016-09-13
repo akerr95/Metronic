@@ -6,28 +6,20 @@ import * as TopNav from "./FixedHeaderNavMenu";
 import * as SideBar from "./SideBar";
 
 
-export const Navigation = ({leftNavigation, fixedNavigation, classes})=>(
+export const Navigation = ({data,passedState})=>(
     <div className="navbar-fixed-top page-header navbar">
         <div className="page-header-inner">
+            {console.log(data)}
             {/*<SideBar.MenuSideBarWidget {...leftNavigation}/>*/}
-            <TopNav.TopMenuNavigation classes ={classes} fixedNavigation={fixedNavigation}/>
+            <TopNav.TopMenuNavContainer data ={data} passedState = {passedState}/>
         </div>
     </div>
 );
 
-export class Central extends React.Component{
-    constructor(props){
-        super(props);
-    }
-    render(){
-
-        return <Navigation classes = {this.props.classes}{...this.props.data}/>
-    }
-}
 
 
 
 
 
-export {Central as default}
+export {Navigation as default}
 
