@@ -17,10 +17,20 @@ exports[`ActionDropDown added to the dom successfully 1`] = `
       view all
     </a>
   </li>
-  <span
-    className="badge badge-default">
-    7
-  </span>
+  <div
+    className="slimScrollDiv">
+    <ul
+      className="dropdown-menu-list">
+      <span
+        className="badge badge-default">
+        7
+      </span>
+    </ul>
+    <div
+      className="slimScrollBar" />
+    <div
+      className="slimScrollRail" />
+  </div>
 </ul>
 `;
 
@@ -282,24 +292,34 @@ exports[`Icon added to the dom successfully 1`] = `
         view all
       </a>
     </li>
-    <li>
-      <a>
-        <span>
-          <span
-            className="error">
-            1 min
-          </span>
-          <ul>
-            <li
-              className="divider" />
-          </ul>
-          <span
-            className="solution">
-            Include your own Action Drop Down element
-          </span>
-        </span>
-      </a>
-    </li>
+    <div
+      className="slimScrollDiv">
+      <ul
+        className="dropdown-menu-list">
+        <li>
+          <a>
+            <span>
+              <span
+                className="error">
+                1 min
+              </span>
+              <ul>
+                <li
+                  className="divider" />
+              </ul>
+              <span
+                className="solution">
+                Include your own Action Drop Down element
+              </span>
+            </span>
+          </a>
+        </li>
+      </ul>
+      <div
+        className="slimScrollBar" />
+      <div
+        className="slimScrollRail" />
+    </div>
   </ul>
 </li>
 `;
@@ -361,19 +381,22 @@ exports[`ProfileMenu added to the dom successfully 1`] = `
 
 exports[`Slider added to the dom successfully 1`] = `
 <div
-  className="default">
+  className="slimScrollDiv">
   <ul
-    className="default">
-    <div>
-      <p>
-        Hello World
-      </p>
-    </div>
+    className="dropdown-menu-list">
+    <span
+      className="badge badge-default">
+      7
+    </span>
+    <span
+      className="badge badge-default">
+      7
+    </span>
   </ul>
   <div
-    className="default" />
+    className="slimScrollBar" />
   <div
-    className="default" />
+    className="slimScrollRail" />
 </div>
 `;
 
@@ -412,31 +435,80 @@ exports[`TopMenuNavContainer added to dom successfully 1`] = `
             view all
           </a>
         </li>
-        <li
-          className="">
+        <div
+          className="slimScrollDiv">
+          <ul
+            className="dropdown-menu-list">
+            <li
+              className="">
+              <a
+                className="">
+                <span
+                  className="photo">
+                  <img
+                    className="img-circle"
+                    src="http://bit.ly/2cfaQ21" />
+                </span>
+                <span
+                  className="subject">
+                  <span
+                    className="time">
+                    just now
+                  </span>
+                  <span
+                    className="from">
+                    Alec kerr
+                  </span>
+                </span>
+                <span
+                  className="message">
+                  This was made from a test file.
+                </span>
+              </a>
+            </li>
+          </ul>
+          <div
+            className="slimScrollBar" />
+          <div
+            className="slimScrollRail" />
+        </div>
+      </ul>
+    </li>
+    <li
+      className="dropdown dropdown-user nav-dropdown isClosed"
+      onClick={[Function onClick]}>
+      <a
+        className="dropdown-toggle">
+        <img
+          alt="Image of User"
+          className="img-circle"
+          src="http://bit.ly/2cqW9ue" />
+        <span
+          className="username">
+          Alec Kerr
+        </span>
+        <i
+          className="icon-options-vertical" />
+      </a>
+      <ul
+        className="dropdown-menu dropdown-menu-default"
+        onMouseLeave={[Function onMouseLeave]}>
+        <li>
           <a
-            className="">
-            <span
-              className="photo">
-              <img
-                className="img-circle"
-                src="http://bit.ly/2cfaQ21" />
-            </span>
-            <span
-              className="subject">
-              <span
-                className="time">
-                just now
-              </span>
-              <span
-                className="from">
-                Alec kerr
-              </span>
-            </span>
-            <span
-              className="message">
-              This was made from a test file.
-            </span>
+            href="#">
+            <i
+              className="icon-test">
+              My Profile
+            </i>
+          </a>
+        </li>
+        <li>
+          <a
+            href="#">
+            <i
+              className="icon-test">
+              My Profile
+            </i>
           </a>
         </li>
       </ul>

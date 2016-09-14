@@ -11,29 +11,18 @@ export class TopMenuNavContainer extends React.Component {
     constructor(props) {
         super(props);
         this._handleChange = this._handleChange.bind(this);
-        this.state = {};
+        this.state = PureFunc.CreateBooleanState(this.props.data.stateKeys);
+    }
+    _handleChange(state) {
+        let iconStateParameters = PureFunc.ConvertMapToArr(state);
+        this.setState({elementBool: iconStateParameters});
     }
 
     render() {
+        let stateMap =PureFunc.ConvertArrToMap(this.state.elementBool);
         return (
-            <TopMenuNav data={this.props.data} passedState={this.props.passedState} callback={this._handleChange}/>
+            <TopMenuNav data={this.props.data} passedState={stateMap} callback={this._handleChange}/>
         )
-    }
-
-    _createState(count) {
-        let iconStateParameters = [];
-        for (let i = 0; i < count; i++) {
-            let names = this.props.data.Icon.iconName;
-            iconStateParameters.push([names, false]);
-        }
-        let names = this.props.fixedNavigation.userIcon.iconName;
-        iconStateParameters.push([names, false]);
-        return {whoIsOpen: iconStateParameters};
-    }
-
-    _handleChange(state) {
-        let iconStateParameters = PureFunc.ConvertMapToArr(state);
-        this.setState({whoIsOpen: iconStateParameters});
     }
 }
 TopMenuNavContainer.propTypes={
@@ -66,9 +55,8 @@ IconProfile.defaultProps = {
 
 export const ProfileMenu = ({data,passedState, callback, styles})=>(
     <ul onMouseLeave={()=>{PureFunc.IconTriggered(data.triggerName,
-        passedState.iconState,
-        callback);}} className={styles.ulClassName}>
-        {PureFunc.populateElement(data.iconProfiles,passedState,callback)}
+        passedState,callback);}} className={styles.ulClassName}>
+        {PureFunc.populateElement(data.iconProfiles)}
     </ul>
 );
 ProfileMenu.propTypes = {
@@ -129,7 +117,7 @@ export const ActionDropDown = ({data,callback, passedState, styles})=>(
             callback);
     }} className={styles.ulClassName}>
         {PureFunc.populateElement(data.header)}
-        {PureFunc.populateElement(data.body)}
+        <Slider data ={PureFunc.populateElement(data.body)}/>
     </ul>
 );
 ActionDropDown.propTypes = {
@@ -204,7 +192,7 @@ export const Slider = ({data, styles})=> (
     </div>
 );
 Slider.propTypes = {
-    data: React.PropTypes.element.isRequired,
+    data: React.PropTypes.array.isRequired,
     styles: React.PropTypes.object,
 };
 Slider.defaultProps = {
@@ -346,7 +334,7 @@ export const UserProfile = ({data,passedState,styles,callback})=>(
         PureFunc.IconTriggered(data.userIcon.iconName,passedState,callback);
     }} className={styles.liClassName + PureFunc.isOpen(data.userIcon.iconName,passedState)}>
         <UserIcon data={data.userIcon}/>
-        <ProfileMenu data={data.profileMenu} passedState={passedState}/>
+        <ProfileMenu data={data.profileMenu} passedState={passedState} callback={callback}/>
     </li>
 );
 UserProfile.propTypes = {
@@ -364,7 +352,7 @@ export const TopMenuNav =({data,passedState,styles,callback})=>(
     <div className={styles.divClassName}>
         <ul className={styles.ulClassName}>
             {PureFunc.populateElement(data.icons,passedState,callback)}
-            <UserProfile data={data.userProfile}  passedState={passedState}/>
+            <UserProfile data={data.userProfile}  passedState={passedState} callback={callback}/>
         </ul>
     </div>
 );

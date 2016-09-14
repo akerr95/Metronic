@@ -18,6 +18,7 @@ var testSideBarMenu = {
     ]
 };
 let calendar = "icon-calendar";
+let user = "icon-user";
 let envelop = "icon-envelope-open";
 let bell = "icon-bell";
 let inboxes = [{
@@ -38,13 +39,25 @@ let notify =[{
 }];
 let icons = [{
     iconName: envelop,
-    actionDropDown:{}
+    actionDropDown:{},
+    styles:{
+        liClassName: "dropdown dropdown-extended nav-dropdown dropdown-inbox ",
+        aClassName: "dropdown-toggle",
+    }
 },{
     iconName: calendar,
-    actionDropDown:{}
+    actionDropDown:{},
+    styles:{
+        liClassName: "dropdown dropdown-extended nav-dropdown dropdown-tasks ",
+        aClassName: "dropdown-toggle",
+    }
 },{
     iconName: bell,
-    actionDropDown:{}
+    actionDropDown:{},
+    styles:{
+        liClassName: "dropdown dropdown-extended nav-dropdown dropdown-notification ",
+        aClassName: "dropdown-toggle",
+    }
 }];
 let userIcon = {
     imgLocation: "http://bit.ly/2cbi5bL",
@@ -53,11 +66,11 @@ let userIcon = {
 };
 let iconProfiles =[{
     iconName: envelop,
-    stringName: "My Profile",
+    stringName: " My Profile",
     href: "#"
 },{
     iconName: "icon-calendar",
-    stringName: "My Profile",
+    stringName: " My Profile",
     href: "#"
 }];
 let headers =[{key: envelop,

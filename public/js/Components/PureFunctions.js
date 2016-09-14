@@ -42,8 +42,18 @@ export function ConvertArrToMap(iconStateParameters) {
     let stateMap = new Map(iconStateParameters);
     return stateMap;
 }
+export function CreateBooleanState(states) {
+    let iconStateParameters = [];
+    let sorted  = new Set(states);
+    let arr = [...sorted];
+    arr.map((state)=>{
+        iconStateParameters.push([state,false]);
+    });
+    return {elementBool: iconStateParameters};
+}
 
 export function TopMenuData(){
+    this.stateKeys=[];
     this.tasks = new Map();
     this.inboxes =new Map();
     this.notifies =new Map();
@@ -85,11 +95,13 @@ export function TopMenuData(){
     this.addIcon =(data)=>{
         data.map((dataEntry)=>{
             let key = dataEntry.iconName;
+            this.stateKeys.push(key);
             this.icons.set(key,{data:dataEntry});
         });
         return this;
     };
     this.addUserIcon =(data)=>{
+        this.stateKeys.push(data.iconName);
         this.userIcon =data;
         return this;
     };
@@ -108,21 +120,21 @@ export function TopMenuData(){
         return this;
     };
     this.generate=()=>{
-        return {icons:this._makeIcons(),userProfile:this._makeUserProfile()};
+        return {icons:this._makeIcons(),userProfile:this._makeUserProfile(),stateKeys:this.stateKeys};
 
     };
 
     this._makeIcons=()=>{
         let icons = new Map();
         for(let [key,value] of this.icons){
-            let {actionDropDown,...rest} = value.data;
+            let {actionDropDown,styles,...rest} = value.data;
             let tempHeader = this._determineHeader(key);
             let tempBody = this._determineDropDown(key);
             actionDropDown={
                 header:new Map([[{data:tempHeader.data},tempHeader.fn]]),
                 body:new Map([[{data:tempBody.data},tempBody.fn]])};
             rest.actionDropDown=actionDropDown;
-            icons.set({data:rest},FixedHeader.Icon);
+            icons.set({data:rest,styles:styles},FixedHeader.Icon);
         }
 
         return icons;

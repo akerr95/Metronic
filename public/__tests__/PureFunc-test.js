@@ -21,7 +21,45 @@ describe("Pure functions suite test", ()=> {
         PureFunc.IconTriggered(triggerName, state, callBack);
         expect(state.get(triggerName)).not.toEqual(form);
     });
+    describe("CreateBooleanState",()=>{
+        let states = ["Test","Test1","Test1","Test2"];
 
+        it("Returns an array containing an array of size 2",()=>{
+            let result =PureFunc.CreateBooleanState(states);
+            expect(Array.isArray(result.elementBool)).toBeTruthy();
+            expect(Array.isArray(result.elementBool[0])).toBeTruthy();
+            expect(result.elementBool[0].length).toEqual(2);
+        });
+        it("Returns array containing no repeats",()=>{
+            let result = PureFunc.CreateBooleanState(states).elementBool;
+            let myArr = [["Test",false],["Test1",false],["Test2",false]];
+            expect(result).toEqual(myArr);
+        });
+    });
+    describe("ConvertArrToMap", ()=> {
+        let arr = [["test", false]];
+        let map = new Map([["test", false]]);
+        it("return map object", ()=> {
+            let result = PureFunc.ConvertArrToMap(arr);
+            expect(typeof result).toEqual("object");
+        });
+        it("return correct map object", ()=> {
+            let result = PureFunc.ConvertArrToMap(arr);
+            expect(result).toEqual(map);
+        });
+    });
+    describe("ConvertMapToArr", ()=> {
+        let arr = [["test", false]];
+        let map = new Map([["test", false]]);
+        it("return arr object", ()=> {
+            let result = PureFunc.ConvertMapToArr(map);
+            expect(typeof result).toEqual("object");
+        });
+        it("return correct map object", ()=> {
+            let result = PureFunc.ConvertMapToArr(map);
+            expect(result).toEqual(arr);
+        });
+    });
     describe("populateElement", ()=> {
         function createData(amount) {
             let myMap = new Map();

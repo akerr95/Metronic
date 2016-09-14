@@ -114,18 +114,11 @@ describe("ActionDropDownNotify", ()=> {
     });
 });
 describe("Slider", ()=> {
-    var custom = {
-        styles: {
-            slider: "default",
-            ul: "default",
-            bar: "default",
-            rail: "default"
-        },
-        data: <div><p>Hello World</p></div>
 
-    };
+    let testdata = new Map([[{},FixedHeader.Notice],[{},FixedHeader.Notice]]);
+    let data = PureFunc.populateElement(testdata);
     const defaultComponent = renderer.create(
-        <FixedHeader.Slider data={custom.data} styles={custom.styles}/>
+        <FixedHeader.Slider data={data}/>
     );
 
     it("added to the dom successfully", ()=> {
@@ -197,30 +190,21 @@ describe("ActionDropDownHeader", ()=> {
     });
 });
 describe("ActionDropDown", ()=> {
-
-    var custom = {
-        state: ()=> {
-            let testState = new Map();
-            testState.set("icon-fire", true);
-            testState.set("icon-ice", false);
-            return {iconState: testState};
-        },
-        data: {
-            triggerName: "icon-fire",
-            header: new Map([[{}, FixedHeader.ActionDropDownHeader]]),
-            body: new Map([[{}, FixedHeader.Notice]])
-        },
-        callback: ()=> {
-            var x;
-            return x = 2;
-        }
+    let data = {
+        triggerName: "icon-fire",
+        header: new Map([[{}, FixedHeader.ActionDropDownHeader]]),
+        body: new Map([[{}, FixedHeader.Notice]])
     };
+    let state =new Map([["icon-fire",false]]);
+    let callback= jest.fn();
     const defaultComponent = renderer.create(
-        <FixedHeader.ActionDropDown data={custom.data} passedState={custom.state()} callback={custom.callback}/>
+        <FixedHeader.ActionDropDown data={data} passedState={state} callback={callback}/>
     );
     it("added to the dom successfully", ()=> {
         let tree = defaultComponent.toJSON();
+        tree.props.onMouseLeave();
         expect(tree).toMatchSnapshot();
+        expect(callback).toBeCalled();
     });
 
 
@@ -267,13 +251,7 @@ describe("IconProfile", ()=> {
 });
 describe("Icon", ()=> {
     let state = new Map([["test", false], ["test1", false]]);
-    let data = {triggerName: "test", iconName: "icon-fire"};
-    const callback = (x)=> {
-        console.log(x);
-    };
-    let style = {
-        liClassName: "dropdown dropdown-extended nav-dropdown dropdown-task"
-    };
+    const callback =jest.fn();
     const defaultComponent = renderer.create(
         <FixedHeader.Icon callback={callback} passedState={state}/>
     );
@@ -282,6 +260,12 @@ describe("Icon", ()=> {
 
         let tree = defaultComponent.toJSON();
         expect(tree).toMatchSnapshot();
+    });
+
+    it("called callback function ",()=>{
+        let tree = defaultComponent.toJSON();
+        tree.props.onClick();
+        expect(callback).toBeCalled();
     });
 
 
@@ -294,6 +278,41 @@ describe("UserIcon", ()=> {
     it("added to the dom successfully", ()=> {
         let tree = defaultComponent.toJSON();
         expect(tree).toMatchSnapshot();
+    });
+});
+describe("UserProfile",()=>{
+    let envelop = "icon-envelope-open";
+    let userIcon = {
+        imgLocation: "http://bit.ly/2cbi5bL",
+        stringName: "Alec Kerr",
+        iconName: "icon-options-vertical"
+    };
+    let iconProfiles =[{
+        iconName: envelop,
+        stringName: " My Profile",
+        href: "#"
+    },{
+        iconName: "icon-calendar",
+        stringName: " My Profile",
+        href: "#"
+    }];
+    let genData = new PureFunc.TopMenuData();
+    let  data = genData.
+    addIconProfile(iconProfiles).
+    addUserIcon(userIcon).
+    hasProfileMenu(true).
+    hasUserProfile(true).
+    generate().userProfile;
+
+    let state = new Map([[envelop,false]]);
+    let callback = jest.fn();
+    const defaultComponent = renderer.create(
+        <FixedHeader.UserProfile data={data} passedState={state} callback={callback}/>
+    );
+    it("called callback function ",()=>{
+        let tree = defaultComponent.toJSON();
+        tree.props.onClick();
+        expect(callback).toBeCalled();
     });
 });
 describe("TopMenuNavContainer", ()=> {
@@ -336,12 +355,11 @@ describe("TopMenuNavContainer", ()=> {
     addIconProfile(iconProfiles);
 
 
-    let state = new Map([["icon-test", false]]);
-    const defaultComponent = renderer.create(<FixedHeader.TopMenuNavContainer data={testdata.generate()}
-                                                                              passedState={state}/>);
+    const defaultComponent = renderer.create(<FixedHeader.TopMenuNavContainer data={testdata.generate()}/>);
 
     it("added to dom successfully", ()=> {
         let tree = defaultComponent.toJSON();
+        tree.children[0].children[0].props.onClick();
         expect(tree).toMatchSnapshot();
     });
 
