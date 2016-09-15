@@ -31,5 +31,5 @@ The Structure for this component follows:
   - ProfileMenu
     * IconProfiles
 
-#### <a name="sidebar-menu-navigation"></a>Sidebar Menu Navigation
+## <a name="sidebar-menu-navigation"></a>Sidebar Menu Navigation
 
