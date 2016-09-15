@@ -43,6 +43,49 @@ import {TopMenuNavContainer} from "./FixedHeaderNavMenu.js";
 import React from "react";
 import ReactDOM from "react-dom";
 
+let user = "icon-user";
+let bell = "icon-bell";
+let notify =[{
+    key:bell,
+    time:"just now",
+    iconName:"icon-plus",
+    message:"This was a message generated from some serve ....jokes"
+}];
+let icons = [{
+    iconName: bell,
+    actionDropDown:{},
+    styles:{
+        liClassName: "dropdown dropdown-extended nav-dropdown dropdown-notification ",
+        aClassName: "dropdown-toggle",
+    }
+}];
+let userIcon = {
+    imgLocation: "http://bit.ly/2cbi5bL",
+    stringName: "Alec Kerr",
+    iconName: "icon-options-vertical"
+};
+let iconProfiles =[{
+    iconName: envelop,
+    stringName: " My Profile",
+    href: "#"
+}];
+let headers =[{
+    key: bell,
+    pending: 2,
+    subject: "Test2",
+    heading: "Notifications",
+    actionMessage: "view all"
+}];
+var testdata = new PureFunc.TopMenuData();
+testdata.addHeader(headers).
+addInboxes(inboxes).
+addIcon(icons).
+addTasks(task).
+addNotifies(notify).
+hasUserProfile(true).
+hasProfileMenu(true).
+addUserIcon(userIcon).
+addIconProfile(iconProfiles);
 let data =//some data
 ReactDOM.render(<TopMenuNavContainer data={data}/>,document.body);
 ```
