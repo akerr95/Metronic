@@ -2,9 +2,13 @@
 Rehaul of UI components for other projects
 
 
-# Table of Contents
+## Table of Contents
+* [Getting Started](#team-members)
+* [API Refernece ](#team-members)
+  * [Top Menu Navigation](#team-members)
+  * [Side Bar Menu Navigation](#team-members)
 
-* [Team Members](#team-members)
 
-# <a name="team-members"></a>Team Members
+
+# <a name="team-members">Team Members</a>
 * "J. Jesus. P. Aguinaga" <admin@listforks.com>
