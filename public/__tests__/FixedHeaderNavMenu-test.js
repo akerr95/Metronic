@@ -37,6 +37,7 @@ const elementContent = node => {
     }
 };
 
+
 describe("ActionDropDownTask", ()=> {
 
 
@@ -63,6 +64,18 @@ describe("ActionDropDownTask", ()=> {
         expect(tree).toMatchSnapshot();
     });
 
+    describe("Slider", ()=> {
+
+        let testdata = new Map([[{},FixedHeader.Notice],[{},FixedHeader.Notice]]);
+        const defaultComponent = renderer.create(
+            <FixedHeader.Slider data={testdata}/>
+        );
+
+        it("added to the dom successfully", ()=> {
+            let tree = defaultComponent.toJSON();
+            expect(tree).toMatchSnapshot();
+        });
+    });
 
 });
 describe("ActionDropDownInbox", ()=> {
@@ -113,19 +126,7 @@ describe("ActionDropDownNotify", ()=> {
         expect(tree).toMatchSnapshot();
     });
 });
-describe("Slider", ()=> {
 
-    let testdata = new Map([[{},FixedHeader.Notice],[{},FixedHeader.Notice]]);
-    let data = PureFunc.populateElement(testdata);
-    const defaultComponent = renderer.create(
-        <FixedHeader.Slider data={data}/>
-    );
-
-    it("added to the dom successfully", ()=> {
-        let tree = defaultComponent.toJSON();
-        expect(tree).toMatchSnapshot();
-    });
-});
 describe("ActionDropDownError", ()=> {
     var custom = {
         styles: {err: "err", solution: "sol"},
@@ -206,7 +207,6 @@ describe("ActionDropDown", ()=> {
         expect(tree).toMatchSnapshot();
         expect(callback).toBeCalled();
     });
-
 
 });
 describe("Notice", ()=> {
@@ -316,12 +316,19 @@ describe("UserProfile",()=>{
     });
 });
 describe("TopMenuNavContainer", ()=> {
-    let inboxes = [{
-        key: "icon-test", imgLocation: "http://bit.ly/2cfaQ21", time: "just now",
-        sender: "Alec kerr",
-        message: "This was made from a test file."
-    }];
+    let inboxes = [
+        {
+            imgLocation: "http://bit.ly/2cfaQ21", time: "just now",
+            sender: "Alec kerr",
+            message: "This was made from a test file."
+        },
+        {
+            imgLocation: "http://bit.ly/2cfaQ21", time: "just now",
+            sender: "John Wayne",
+            message: "This was made from a test file."
+        }];
     let icons = [{
+        key:"inbox",
         iconName: "icon-test",
         actionDropDown:{}
     }];
@@ -339,7 +346,7 @@ describe("TopMenuNavContainer", ()=> {
         stringName: "My Profile",
         href: "#"
     }];
-    let headers =[{key: "icon-test",
+    let headers =[{key:"inbox",
         pending: 2,
         subject: "Test",
         heading: "Notifications",

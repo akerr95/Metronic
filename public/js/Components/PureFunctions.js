@@ -27,7 +27,6 @@ export function populateElement(elements,passedState,callback) {
     return result;
 }
 export function isOpen(elClassName,elState,customClass){
-
     customClass = customClass ||{};
     return elState.get(elClassName) ? customClass.first||"isOpen": customClass.second || "isClosed";
 }
@@ -54,7 +53,7 @@ export function CreateBooleanState(states) {
 
 export function TopMenuData(){
     this.stateKeys=[];
-    this.tasks = new Map();
+    this.tasks =new Map();
     this.inboxes =new Map();
     this.notifies =new Map();
     this.header =new Map();
@@ -65,23 +64,20 @@ export function TopMenuData(){
     this.userProfile=false;
 
     this.addTasks =(data)=>{
-        data.map((dataEntry)=>{
-            let {key,...data} = dataEntry;
-            this.tasks.set(key,{data:data,fn:FixedHeader.ActionDropDownTask});
+        data.map((data)=>{
+            this.tasks.set({data},FixedHeader.ActionDropDownTask);
         });
         return this;
     };
     this.addInboxes =(data)=>{
-        data.map((dataEntry)=>{
-            let {key,...data} = dataEntry;
-            this.inboxes.set(key,{data:data, fn:FixedHeader.ActionDropDownInbox});
+        data.map((data)=>{
+            this.inboxes.set({data},FixedHeader.ActionDropDownInbox);
         });
         return this;
     };
     this.addNotifies =(data)=>{
-        data.map((dataEntry)=>{
-            let {key,...data} = dataEntry;
-            this.notifies.set(key,{data:data,fn:FixedHeader.ActionDropDownNotify});
+        data.map((data)=>{
+            this.notifies.set({data},FixedHeader.ActionDropDownNotify);
         });
         return this;
     };
@@ -94,8 +90,8 @@ export function TopMenuData(){
     };
     this.addIcon =(data)=>{
         data.map((dataEntry)=>{
-            let key = dataEntry.iconName;
-            this.stateKeys.push(key);
+            let key = dataEntry.key;
+            this.stateKeys.push(dataEntry.iconName);
             this.icons.set(key,{data:dataEntry});
         });
         return this;
@@ -127,13 +123,17 @@ export function TopMenuData(){
     this._makeIcons=()=>{
         let icons = new Map();
         for(let [key,value] of this.icons){
-            let {actionDropDown,styles,...rest} = value.data;
+            let {actionDropDown,notice,styles,...rest} = value.data;
             let tempHeader = this._determineHeader(key);
             let tempBody = this._determineDropDown(key);
+            notice={
+              notifyCount:tempBody.size
+            };
             actionDropDown={
                 header:new Map([[{data:tempHeader.data},tempHeader.fn]]),
-                body:new Map([[{data:tempBody.data},tempBody.fn]])};
+                body:tempBody};
             rest.actionDropDown=actionDropDown;
+            rest.notice=notice;
             icons.set({data:rest,styles:styles},FixedHeader.Icon);
         }
 
@@ -146,14 +146,14 @@ export function TopMenuData(){
         }
     };
     this._determineDropDown=(key)=>{
-        if(this.notifies.has(key)){
-            return this.notifies.get(key);
+        if(key==="notifications"){
+            return this.notifies;
         }
-        if(this.inboxes.has(key)){
-            return this.inboxes.get(key);
+        if(key==="inbox"){
+            return this.inboxes;
         }
-        if(this.tasks.has(key)){
-            return this.tasks.get(key);
+        if(key==="tasks"){
+            return this.tasks;
         }
     };
 

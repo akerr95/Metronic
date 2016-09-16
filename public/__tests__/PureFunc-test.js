@@ -116,59 +116,114 @@ describe("Pure functions suite test", ()=> {
     });
     describe("TopMenuData", ()=> {
 
-        let data = {};
-        let topMenuData = new PureFunc.TopMenuData(data);
+        let topMenuData = new PureFunc.TopMenuData();
         it("returns new object data", ()=> {
             expect(topMenuData).toBeDefined();
         });
         it("added task elements to topMenuData ", ()=> {
-            let result = topMenuData.addTasks([{key: "icon-test", desc: "Metronic v1.1", percent: "10"}]);
+            let result = topMenuData.addTasks([
+                {desc: "Metronic v1.1", percent: "10"},
+                {desc: "Metronic v1.1", percent: "20"},
+                {desc: "Metronic v1.1", percent: "30"}
+                ]);
             expect(result).toBeDefined();
-            expect(result.tasks.size).toBeGreaterThanOrEqual(1);
+            expect(result.tasks.size).toEqual(3);
         });
         it("added inbox elements to topMenuData", ()=> {
-            let result = topMenuData.addInboxes([{
-                key: "icon-test",
+            let result = topMenuData.addInboxes([
+                {
                 imgLocation: "http://bit.ly/2cfaQ21",
                 time: "just now",
                 sender: "Alec kerr",
                 message: "This was made from a test file."
-            }]);
+            },{
+                imgLocation: "http://bit.ly/2cfaQ21",
+                time: "just now",
+                sender: "Alec kerr",
+                message: "This was made from a test file."
+            },{
+                imgLocation: "http://bit.ly/2cfaQ21",
+                time: "just now",
+                sender: "Alec kerr",
+                message: "This was made from a test file."
+            }
+            ]);
             expect(result).toBeDefined();
-            expect(result.inboxes.size).toBeGreaterThanOrEqual(1);
+            expect(result.inboxes.size).toEqual(3);
         });
         it("added notification elements to topMenuData", ()=> {
             let result = topMenuData.addNotifies([{
-                key: "icon-plus",
+                time: "1 min",
+                iconName: "icon-plus",
+                message: "This was made from a test file.",
+            },{
+                time: "1 min",
+                iconName: "icon-plus",
+                message: "This was made from a test file.",
+            },{
                 time: "1 min",
                 iconName: "icon-plus",
                 message: "This was made from a test file.",
             }]);
             expect(result).toBeDefined();
-            expect(result.notifies.size).toBeGreaterThanOrEqual(1);
+            expect(result.notifies.size).toEqual(3);
         });
         it("added header element to topMenuData", ()=> {
-            let result = topMenuData.addHeader([{
-                key: "icon-test",
+            let result = topMenuData.addHeader([
+                {
+                key: "tasks",
+                pending: 2,
+                subject: "Test",
+                heading: "Notifications",
+                actionMessage: "view all"
+            },{
+                key: "inbox",
+                pending: 2,
+                subject: "Test",
+                heading: "Notifications",
+                actionMessage: "view all"
+            },{
+                key: "notifications",
                 pending: 2,
                 subject: "Test",
                 heading: "Notifications",
                 actionMessage: "view all"
             }]);
             expect(result).toBeDefined();
-            expect(result.header.size).toBeGreaterThanOrEqual(1);
+            expect(result.header.size).toEqual(3);
         });
         it("added Icon element to topMenuData", ()=> {
             let result = topMenuData.addIcon([{
-                iconName: "icon-test",
+                iconName: "icon-bell",
+                key:"tasks",
+                notice:{},
+                actionDropDown: {},
+                styles: {
+                    liClassName: "dropdown dropdown-extended nav-dropdown dropdown-task ",
+                    aClassName: "dropdown-toggle"
+                }
+            },{
+                iconName: "icon-envelope-open",
+                key:"inbox",
+                notice:{},
                 actionDropDown: {},
                 styles: {
                     liClassName: "dropdown dropdown-extended nav-dropdown dropdown-inbox ",
                     aClassName: "dropdown-toggle"
                 }
+            },{
+                iconName: "icon-calendar",
+                key:"notifications",
+                notice:{},
+                actionDropDown: {},
+                styles: {
+                    liClassName: "dropdown dropdown-extended nav-dropdown dropdown-notification",
+                    aClassName: "dropdown-toggle"
+                }
             }]);
             expect(result).toBeDefined();
-            expect(result.icons.size).toBeGreaterThanOrEqual(1);
+            expect(result.icons.size).toEqual(3);
+            expect(result.stateKeys.length).toEqual(3);
         });
         it("added UserIcon element to topMenuData", ()=> {
             let result = topMenuData.addUserIcon({
@@ -184,10 +239,14 @@ describe("Pure functions suite test", ()=> {
                 iconName: "icon-test",
                 stringName: "My Profile",
                 href: "#"
+            },{
+                iconName: "icon-test",
+                stringName: "My Profile",
+                href: "#"
             }
             ]);
             expect(result).toBeDefined();
-            expect(result.iconProfiles.size).toBeGreaterThanOrEqual(1);
+            expect(result.iconProfiles.size).toEqual(2);
         });
         it("added ProfileMenu element to topMenuData", ()=> {
             let result = topMenuData.hasProfileMenu(true);
@@ -201,7 +260,7 @@ describe("Pure functions suite test", ()=> {
         });
         it("generates TopMenuNav", ()=> {
             let result = topMenuData.generate();
-            expect(result).toBeDefined();
+            expect(result).toMatchSnapshot();
         });
     });
 });

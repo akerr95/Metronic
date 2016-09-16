@@ -22,7 +22,8 @@ exports[`ActionDropDown added to the dom successfully 1`] = `
     <ul
       className="dropdown-menu-list">
       <span
-        className="badge badge-default">
+        className="badge badge-default"
+        style={null}>
         7
       </span>
     </ul>
@@ -195,6 +196,29 @@ exports[`ActionDropDownNotify has custom Props 1`] = `
 </li>
 `;
 
+exports[`ActionDropDownTask Slider added to the dom successfully 1`] = `
+<div
+  className="slimScrollDiv">
+  <ul
+    className="dropdown-menu-list">
+    <span
+      className="badge badge-default"
+      style={null}>
+      7
+    </span>
+    <span
+      className="badge badge-default"
+      style={null}>
+      7
+    </span>
+  </ul>
+  <div
+    className="slimScrollBar" />
+  <div
+    className="slimScrollRail" />
+</div>
+`;
+
 exports[`ActionDropDownTask added to the dom successfully 1`] = `
 <li
   className="">
@@ -214,7 +238,12 @@ exports[`ActionDropDownTask added to the dom successfully 1`] = `
     <span
       className="progress">
       <span
-        className="progress-bar progress-bar-success">
+        className="progress-bar progress-bar-success"
+        style={
+          Object {
+            "width": "40%"
+          }
+        }>
         <span
           className="sr-only" />
       </span>
@@ -242,7 +271,12 @@ exports[`ActionDropDownTask has custom Props 1`] = `
     <span
       className="Test4">
       <span
-        className="Test5">
+        className="Test5"
+        style={
+          Object {
+            "width": "40%"
+          }
+        }>
         <span
           className="Test6" />
       </span>
@@ -270,7 +304,8 @@ exports[`Icon added to the dom successfully 1`] = `
     <i
       className="icon-plus" />
     <span
-      className="badge badge-default">
+      className="badge badge-default"
+      style={null}>
       7
     </span>
   </a>
@@ -338,7 +373,8 @@ exports[`IconProfile added to the dom successfully 1`] = `
 
 exports[`Notice added to the dom successfully 1`] = `
 <span
-  className="badge badge-default">
+  className="badge badge-default"
+  style={null}>
   7
 </span>
 `;
@@ -379,27 +415,6 @@ exports[`ProfileMenu added to the dom successfully 1`] = `
 </ul>
 `;
 
-exports[`Slider added to the dom successfully 1`] = `
-<div
-  className="slimScrollDiv">
-  <ul
-    className="dropdown-menu-list">
-    <span
-      className="badge badge-default">
-      7
-    </span>
-    <span
-      className="badge badge-default">
-      7
-    </span>
-  </ul>
-  <div
-    className="slimScrollBar" />
-  <div
-    className="slimScrollRail" />
-</div>
-`;
-
 exports[`TopMenuNavContainer added to dom successfully 1`] = `
 <div
   className="top-menu">
@@ -413,8 +428,9 @@ exports[`TopMenuNavContainer added to dom successfully 1`] = `
         <i
           className="icon-test" />
         <span
-          className="badge badge-default">
-          7
+          className="badge badge-default"
+          style={null}>
+          2
         </span>
       </a>
       <ul
@@ -458,6 +474,33 @@ exports[`TopMenuNavContainer added to dom successfully 1`] = `
                   <span
                     className="from">
                     Alec kerr
+                  </span>
+                </span>
+                <span
+                  className="message">
+                  This was made from a test file.
+                </span>
+              </a>
+            </li>
+            <li
+              className="">
+              <a
+                className="">
+                <span
+                  className="photo">
+                  <img
+                    className="img-circle"
+                    src="http://bit.ly/2cfaQ21" />
+                </span>
+                <span
+                  className="subject">
+                  <span
+                    className="time">
+                    just now
+                  </span>
+                  <span
+                    className="from">
+                    John Wayne
                   </span>
                 </span>
                 <span

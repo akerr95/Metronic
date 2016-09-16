@@ -99,7 +99,9 @@ UserIcon.defaultProps = {
 };
 
 export const Notice = ({data, style})=>(
-    <span className={style.notice}>{data.notifyCount}</span>
+    <span className={style.notice} style={data.notifyCount===0?{display:"none"}:null}>
+        {data.notifyCount}
+    </span>
 );
 Notice.propTypes = {
     data: React.PropTypes.object.isRequired,
@@ -117,7 +119,7 @@ export const ActionDropDown = ({data,callback, passedState, styles})=>(
             callback);
     }} className={styles.ulClassName}>
         {PureFunc.populateElement(data.header)}
-        <Slider data ={PureFunc.populateElement(data.body)}/>
+        <Slider data ={data.body}/>
     </ul>
 );
 ActionDropDown.propTypes = {
@@ -185,14 +187,14 @@ ActionDropDownError.defaultProps = {
 export const Slider = ({data, styles})=> (
     <div className={styles.slider}>
         <ul className={styles.ul}>
-            {data}
+            {PureFunc.populateElement(data)}
         </ul>
         <div className={styles.bar}></div>
         <div className={styles.rail}></div>
     </div>
 );
 Slider.propTypes = {
-    data: React.PropTypes.array.isRequired,
+    data: React.PropTypes.object.isRequired,
     styles: React.PropTypes.object,
 };
 Slider.defaultProps = {
@@ -212,7 +214,7 @@ export const ActionDropDownTask = ({data, styles})=>(
            <span className={styles.percent}>{data.percent + '%'}</span>
        </span>
        <span className={styles.progress}>
-           <span className={styles.progressbar}>
+           <span className={styles.progressbar} style={{width:data.percent+'%'}}>
                <span className={styles.sr}></span>
            </span>
        </span>
@@ -301,7 +303,7 @@ export const Icon = ({data,styles,passedState,callback})=>(
     }} className={styles.liClassName + PureFunc.isOpen(data.iconName,passedState)}>
         <a className={styles.aClassName}>
             <i className={data.iconName}></i>
-            <Notice/>
+            <Notice data={data.notice}/>
         </a>
         <ActionDropDown data={data.actionDropDown} passedState={passedState} callback={callback}/>
     </li>
@@ -315,6 +317,7 @@ Icon.propTypes = {
 Icon.defaultProps ={
     data:{iconName:"icon-plus",triggerName:"fire",actionDropDown:{
         header:new Map([[{},ActionDropDownHeader]]),
+        notice:{notifyCount:2},
         body:new Map([
         [{data:{
             errorMessage:"1 min",

@@ -21,23 +21,48 @@ let calendar = "icon-calendar";
 let user = "icon-user";
 let envelop = "icon-envelope-open";
 let bell = "icon-bell";
-let inboxes = [{
-    key: envelop, imgLocation: "http://bit.ly/2cbi5bL", time: "just now",
+let inboxes = [
+    {
+    imgLocation: "http://bit.ly/2cbi5bL", time: "just now",
+    sender: "Alec kerr",
+    message: "This was made from a test file."
+},{
+    imgLocation: "http://bit.ly/2cbi5bL", time: "just now",
+    sender: "Alec kerr",
+    message: "This was made from a test file."
+},{
+    imgLocation: "http://bit.ly/2cbi5bL", time: "just now",
     sender: "Alec kerr",
     message: "This was made from a test file."
 }];
-let task =[{
-    key:calendar,
+let task =[
+    {
     desc:"Metronic V1.1",
-    percent:40
+    percent:10
+},{
+    desc:"Metronic V1.1",
+    percent:100
+},{
+    desc:"Metronic V1.1",
+    percent:50
 }];
-let notify =[{
-    key:bell,
+let notify =[
+    {
     time:"just now",
     iconName:"icon-plus",
-    message:"This was a message generated from some serve ....jokes"
+    message: `This is a test...`
+},{
+    time:"just now",
+    iconName:"icon-plus",
+    message: `This is a test...`
+},{
+    time:"just now",
+    iconName:"icon-plus",
+    message: `This is a test...`
 }];
-let icons = [{
+let icons = [
+    {
+    key:"inbox",
     iconName: envelop,
     actionDropDown:{},
     styles:{
@@ -45,6 +70,7 @@ let icons = [{
         aClassName: "dropdown-toggle",
     }
 },{
+    key:"tasks",
     iconName: calendar,
     actionDropDown:{},
     styles:{
@@ -52,6 +78,7 @@ let icons = [{
         aClassName: "dropdown-toggle",
     }
 },{
+    key:"notifications",
     iconName: bell,
     actionDropDown:{},
     styles:{
@@ -73,20 +100,20 @@ let iconProfiles =[{
     stringName: " My Profile",
     href: "#"
 }];
-let headers =[{key: envelop,
-    pending: 2,
+let headers =[{key:"inbox",
+    pending: 0,
     subject: "Test",
     heading: "Notifications",
     actionMessage: "view all"
 },{
-    key: calendar,
-    pending: 1,
+    key:"tasks",
+    pending: 0,
     subject: "Test1",
     heading: "Notifications",
     actionMessage: "view all"
 },{
-    key: bell,
-    pending: 2,
+    key:"notifications",
+    pending: 0,
     subject: "Test2",
     heading: "Notifications",
     actionMessage: "view all"
