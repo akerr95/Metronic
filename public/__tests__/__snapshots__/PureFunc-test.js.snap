@@ -1,0 +1,232 @@
+exports[`Pure functions suite test TopMenuData generates TopMenuNav 1`] = `
+Object {
+  "icons": Array [
+    Array [
+      Object {
+        "data": Object {
+          "actionDropDown": Object {
+            "body": Array [
+              Array [
+                Object {
+                  "data": Object {
+                    "desc": "Metronic v1.1",
+                    "percent": "10"
+                  }
+                },
+                [Function ActionDropDownTask]
+              ],
+              Array [
+                Object {
+                  "data": Object {
+                    "desc": "Metronic v1.1",
+                    "percent": "20"
+                  }
+                },
+                [Function ActionDropDownTask]
+              ],
+              Array [
+                Object {
+                  "data": Object {
+                    "desc": "Metronic v1.1",
+                    "percent": "30"
+                  }
+                },
+                [Function ActionDropDownTask]
+              ]
+            ],
+            "header": Array [
+              Array [
+                Object {
+                  "data": Object {
+                    "actionMessage": "view all",
+                    "heading": "Notifications",
+                    "pending": 2,
+                    "subject": "Test"
+                  }
+                },
+                [Function ActionDropDownHeader]
+              ]
+            ]
+          },
+          "iconName": "icon-bell",
+          "key": "tasks",
+          "notice": Object {
+            "notifyCount": 3
+          }
+        },
+        "styles": Object {
+          "aClassName": "dropdown-toggle",
+          "liClassName": "dropdown dropdown-extended nav-dropdown dropdown-task "
+        }
+      },
+      [Function Icon]
+    ],
+    Array [
+      Object {
+        "data": Object {
+          "actionDropDown": Object {
+            "body": Array [
+              Array [
+                Object {
+                  "data": Object {
+                    "imgLocation": "http://bit.ly/2cfaQ21",
+                    "message": "This was made from a test file.",
+                    "sender": "Alec kerr",
+                    "time": "just now"
+                  }
+                },
+                [Function ActionDropDownInbox]
+              ],
+              Array [
+                Object {
+                  "data": Object {
+                    "imgLocation": "http://bit.ly/2cfaQ21",
+                    "message": "This was made from a test file.",
+                    "sender": "Alec kerr",
+                    "time": "just now"
+                  }
+                },
+                [Function ActionDropDownInbox]
+              ],
+              Array [
+                Object {
+                  "data": Object {
+                    "imgLocation": "http://bit.ly/2cfaQ21",
+                    "message": "This was made from a test file.",
+                    "sender": "Alec kerr",
+                    "time": "just now"
+                  }
+                },
+                [Function ActionDropDownInbox]
+              ]
+            ],
+            "header": Array [
+              Array [
+                Object {
+                  "data": Object {
+                    "actionMessage": "view all",
+                    "heading": "Notifications",
+                    "pending": 2,
+                    "subject": "Test"
+                  }
+                },
+                [Function ActionDropDownHeader]
+              ]
+            ]
+          },
+          "iconName": "icon-envelope-open",
+          "key": "inbox",
+          "notice": Object {
+            "notifyCount": 3
+          }
+        },
+        "styles": Object {
+          "aClassName": "dropdown-toggle",
+          "liClassName": "dropdown dropdown-extended nav-dropdown dropdown-inbox "
+        }
+      },
+      [Function Icon]
+    ],
+    Array [
+      Object {
+        "data": Object {
+          "actionDropDown": Object {
+            "body": Array [
+              Array [
+                Object {
+                  "data": Object {
+                    "iconName": "icon-plus",
+                    "message": "This was made from a test file.",
+                    "time": "1 min"
+                  }
+                },
+                [Function ActionDropDownNotify]
+              ],
+              Array [
+                Object {
+                  "data": Object {
+                    "iconName": "icon-plus",
+                    "message": "This was made from a test file.",
+                    "time": "1 min"
+                  }
+                },
+                [Function ActionDropDownNotify]
+              ],
+              Array [
+                Object {
+                  "data": Object {
+                    "iconName": "icon-plus",
+                    "message": "This was made from a test file.",
+                    "time": "1 min"
+                  }
+                },
+                [Function ActionDropDownNotify]
+              ]
+            ],
+            "header": Array [
+              Array [
+                Object {
+                  "data": Object {
+                    "actionMessage": "view all",
+                    "heading": "Notifications",
+                    "pending": 2,
+                    "subject": "Test"
+                  }
+                },
+                [Function ActionDropDownHeader]
+              ]
+            ]
+          },
+          "iconName": "icon-calendar",
+          "key": "notifications",
+          "notice": Object {
+            "notifyCount": 3
+          }
+        },
+        "styles": Object {
+          "aClassName": "dropdown-toggle",
+          "liClassName": "dropdown dropdown-extended nav-dropdown dropdown-notification"
+        }
+      },
+      [Function Icon]
+    ]
+  ],
+  "stateKeys": Array [
+    "icon-bell",
+    "icon-envelope-open",
+    "icon-calendar",
+    "icon-options-vertical"
+  ],
+  "userProfile": Object {
+    "profileMenu": Object {
+      "iconProfiles": Array [
+        Array [
+          Object {
+            "data": Object {
+              "href": "#",
+              "iconName": "icon-test",
+              "stringName": "My Profile"
+            }
+          },
+          [Function IconProfile]
+        ],
+        Array [
+          Object {
+            "data": Object {
+              "href": "#",
+              "iconName": "icon-test",
+              "stringName": "My Profile"
+            }
+          },
+          [Function IconProfile]
+        ]
+      ]
+    },
+    "userIcon": Object {
+      "iconName": "icon-options-vertical",
+      "imgLocation": "http://bit.ly/2cqW9ue",
+      "stringName": "Alec Kerr"
+    }
+  }
+}
+`;
