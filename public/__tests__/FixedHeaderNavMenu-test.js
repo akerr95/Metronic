@@ -38,18 +38,19 @@ const elementContent = node => {
 };
 
 
+
 describe("ActionDropDownTask", ()=> {
 
 
     var custom = {
-        styles: {task: "Test1", desc: "Test2", percent: "Test3", progress: "Test4", progressbar: "Test5", sr: "Test6"},
+        classStyles: {task: "Test1", desc: "Test2", percent: "Test3", progress: "Test4", progressbar: "Test5", sr: "Test6"},
         data: {desc: "Metronic V1.0", percent: 40}
     };
     const defaultComponent = renderer.create(
         <FixedHeader.ActionDropDownTask/>
     );
     const customComponent = renderer.create(
-        <FixedHeader.ActionDropDownTask data={custom.data} styles={custom.styles}/>
+        <FixedHeader.ActionDropDownTask data={custom.data} classStyles={custom.classStyles}/>
     );
 
 
@@ -63,25 +64,35 @@ describe("ActionDropDownTask", ()=> {
         expect(tree).not.toEqual(defaultTree);
         expect(tree).toMatchSnapshot();
     });
+});
+describe("Slider",()=>{
 
-    describe("Slider", ()=> {
+        let data =new PureFunc.TopMenuData();
+        data.addHeader([{
+            key:"notifications",
+            pending:0,
+            subject:"pending",
+            heading: "Notifications",
+            actionMessage: "view all"}]).addNotifications([{
+            time: "1 min",
+            iconName: "icon-plus",
+            message: "This was made from a test file.",
+        }]);
+        let mergedData = data.makeActionDropDown(data.getHeader("notifications"),data.getNotifications());
 
-        let testdata = new Map([[{},FixedHeader.Notice],[{},FixedHeader.Notice]]);
         const defaultComponent = renderer.create(
-            <FixedHeader.Slider data={testdata}/>
+            <FixedHeader.Slider data ={mergedData.body}/>
         );
 
         it("added to the dom successfully", ()=> {
             let tree = defaultComponent.toJSON();
             expect(tree).toMatchSnapshot();
         });
-    });
-
 });
 describe("ActionDropDownInbox", ()=> {
 
     var custom = {
-        styles: {photo: "Test1", subject: "Test3", img: "Test2", time: "Test4", from: "Test5", message: "Test6"},
+        classStyles: {photo: "Test1", subject: "Test3", img: "Test2", time: "Test4", from: "Test5", message: "Test6"},
         data: {imgLocation: "test.png", time: "just now", sender: "alec", message: "default message"}
     };
 
@@ -89,7 +100,7 @@ describe("ActionDropDownInbox", ()=> {
         <FixedHeader.ActionDropDownInbox/>
     );
     const customComponent = renderer.create(
-        <FixedHeader.ActionDropDownInbox data={custom.data} styles={custom.styles}/>
+        <FixedHeader.ActionDropDownInbox data={custom.data} classStyles={custom.classStyles}/>
     );
 
     it("added to the dom successfully", ()=> {
@@ -105,14 +116,14 @@ describe("ActionDropDownInbox", ()=> {
 });
 describe("ActionDropDownNotify", ()=> {
     var custom = {
-        styles: {time: "Test1", details: "Test2", label: "Test3"},
+        classStyles: {time: "Test1", details: "Test2", label: "Test3"},
         data: {time: "just now", iconName: "icon-arrow", message: "default message"},
     };
     const defaultComponent = renderer.create(
         <FixedHeader.ActionDropDownNotify/>
     );
     const customComponent = renderer.create(
-        <FixedHeader.ActionDropDownNotify data={custom.data} styles={custom.styles}/>
+        <FixedHeader.ActionDropDownNotify data={custom.data} classStyles={custom.classStyles}/>
     );
 
     it("added to the dom successfully", ()=> {
@@ -126,14 +137,13 @@ describe("ActionDropDownNotify", ()=> {
         expect(tree).toMatchSnapshot();
     });
 });
-
 describe("ActionDropDownError", ()=> {
     var custom = {
-        styles: {err: "err", solution: "sol"},
+        classStyles: {err: "err", solution: "sol"},
         data: {errorMessage: "test1", solution: "test2"}
     };
     const defaultComponent = renderer.create(
-        <FixedHeader.ActionDropDownError data={custom.data} styles={custom.styles}/>
+        <FixedHeader.ActionDropDownError data={custom.data} classStyles={custom.classStyles}/>
     );
 
     it("added to the dom successfully", ()=> {
@@ -143,7 +153,7 @@ describe("ActionDropDownError", ()=> {
 });
 describe("Divider", ()=> {
     const custom = {
-        styles: {
+        classStyles: {
             liClassName: "Alec"
         }
     };
@@ -151,7 +161,7 @@ describe("Divider", ()=> {
         <FixedHeader.Divider/>
     );
     const customComponent = renderer.create(
-        <FixedHeader.Divider styles={custom.styles}/>
+        <FixedHeader.Divider classStyles={custom.classStyles}/>
     );
     it("successfully added into dom", ()=> {
         let tree = defaultComponent.toJSON();
@@ -169,14 +179,14 @@ describe("ActionDropDownHeader", ()=> {
 
     let custom = {
         data: {pending: 12, actionMessage: "view all", subject: "New", heading: "notifications"},
-        styles: {liClassName: "external", head: "", bold: "bold", aClassName: "hide"}
+        classStyles: {liClassName: "external", head: "", bold: "bold", aClassName: "hide"}
     };
 
     const defaultComponent = renderer.create(
         <FixedHeader.ActionDropDownHeader/>
     );
     const customComponent = renderer.create(
-        <FixedHeader.ActionDropDownHeader data={custom.data} styles={custom.styles}/>
+        <FixedHeader.ActionDropDownHeader data={custom.data} classStyles={custom.classStyles}/>
     );
 
     it("added to the dom successfully", ()=> {
@@ -190,16 +200,22 @@ describe("ActionDropDownHeader", ()=> {
         expect(tree).not.toEqual(defaultTree);
     });
 });
+
 describe("ActionDropDown", ()=> {
-    let data = {
-        triggerName: "icon-fire",
-        header: new Map([[{}, FixedHeader.ActionDropDownHeader]]),
-        body: new Map([[{}, FixedHeader.Notice]])
-    };
-    let state =new Map([["icon-fire",false]]);
-    let callback= jest.fn();
+    let data = new PureFunc.TopMenuData();
+    data.addHeader([{key:"notifications",pending:0,subject:"test",heading:"notifications",actionMessage:"view all"}]);
+    data.addNotifications([{time:"just now",iconName:"icon-plus",message:"this is a test..."}]);
+
+    let header = data.getHeader("notifications");
+    let body = data.getNotifications();
+    let componentData = data.makeActionDropDown(header,body);
+    let state = new Map([["icon-plus",true]]);
+    let callback =jest.fn();
     const defaultComponent = renderer.create(
-        <FixedHeader.ActionDropDown data={data} passedState={state} callback={callback}/>
+        <FixedHeader.ActionDropDown data={componentData} passedState={state} callback={callback}/>
+    );
+    const noCallbackComponent = renderer.create(
+        <FixedHeader.ActionDropDown data={componentData} passedState={state}/>
     );
     it("added to the dom successfully", ()=> {
         let tree = defaultComponent.toJSON();
@@ -207,8 +223,13 @@ describe("ActionDropDown", ()=> {
         expect(tree).toMatchSnapshot();
         expect(callback).toBeCalled();
     });
+    it("testing default callBack", ()=> {
+        let tree = noCallbackComponent.toJSON();
+        tree.props.onMouseLeave();
+    });
 
 });
+
 describe("Notice", ()=> {
 
     const defaultComponent = renderer.create(
@@ -221,21 +242,30 @@ describe("Notice", ()=> {
 });
 describe("ProfileMenu", ()=> {
 
-    let iconProfiles = new Map([
-        [{href: "#", iconName: "icon-plus", stringName: "My profile"}, FixedHeader.IconProfile],
-        [{href: "#", iconName: "icon-plus", stringName: "My profile"}, FixedHeader.IconProfile],
-        [{}, FixedHeader.Divider],
-        [{href: "#", iconName: "icon-plus", stringName: "My profile"}, FixedHeader.IconProfile],
+   let data = new PureFunc.TopMenuData();
+    data.addIconProfile([{href: "#", iconName: "icon-plus", stringName: "My profile"},
+       {href: "#", iconName: "icon-key", stringName: "My profile"},
+        {divider:true},
+        {href: "#", iconName: "icon-Lock", stringName: "My profile"},
     ]);
 
-    let data = {triggerName: "icon-plus", iconProfiles: iconProfiles};
-    let passedState = new Map([["test", false]]);
 
-    const defaultComponent = renderer.create(<FixedHeader.ProfileMenu data={data} passedState={passedState}/>);
+    let mergedData ={iconProfiles:data.getIconProfile()};
+    let passedState = new Map([["test", false]]);
+    let callback =jest.fn();
+
+    const defaultComponent = renderer.create(<FixedHeader.ProfileMenu data={mergedData} passedState={passedState} callback={callback}/>);
+    const noCallbackComponent = renderer.create(<FixedHeader.ProfileMenu data={mergedData} passedState={passedState}/>);
 
     it("added to the dom successfully", ()=> {
         let tree = defaultComponent.toJSON();
         expect(tree).toMatchSnapshot();
+        tree.props.onMouseLeave();
+        expect(callback).toBeCalled()
+    });
+    it("testing default callBack", ()=> {
+        let tree = noCallbackComponent.toJSON();
+        tree.props.onMouseLeave();
     });
 
 });
@@ -250,14 +280,38 @@ describe("IconProfile", ()=> {
     });
 });
 describe("Icon", ()=> {
+
+    let data  = new PureFunc.TopMenuData();
+    data.addHeader([{
+        key:"notifications",pending:0,subject:"test",heading:"notifications",actionMessage:"view all"
+    }]).addNotifications([{
+        time:"just now",iconName:"icon-plus",message:"this is a test..."
+    }]).addIcon([{
+        iconName: "icon-calendar",
+        key:"notifications",
+        notice:{},
+        actionDropDown: {},
+        classStyles: {
+            liClassName: "dropdown dropdown-extended nav-dropdown dropdown-notification",
+            aClassName: "dropdown-toggle"
+        }
+    }]);
+
+    let icons= data.generate().icons;
+    let mergedData;
+    for(let [data] of icons){
+        mergedData = data.data;
+    }
     let state = new Map([["test", false], ["test1", false]]);
     const callback =jest.fn();
     const defaultComponent = renderer.create(
-        <FixedHeader.Icon callback={callback} passedState={state}/>
+        <FixedHeader.Icon data={mergedData} callback={callback} passedState={state}/>
+    );
+    const noCallbackComponent = renderer.create(
+        <FixedHeader.Icon data={mergedData} passedState={state}/>
     );
 
     it("added to the dom successfully", ()=> {
-
         let tree = defaultComponent.toJSON();
         expect(tree).toMatchSnapshot();
     });
@@ -266,6 +320,10 @@ describe("Icon", ()=> {
         let tree = defaultComponent.toJSON();
         tree.props.onClick();
         expect(callback).toBeCalled();
+    });
+    it("called callback function ",()=>{
+        let tree = noCallbackComponent.toJSON();
+        tree.props.onClick();
     });
 
 
@@ -316,7 +374,7 @@ describe("UserProfile",()=>{
     });
 });
 describe("TopMenuNavContainer", ()=> {
-    let inboxes = [
+    let inbox = [
         {
             imgLocation: "http://bit.ly/2cfaQ21", time: "just now",
             sender: "Alec kerr",
@@ -329,7 +387,7 @@ describe("TopMenuNavContainer", ()=> {
         }];
     let icons = [{
         key:"inbox",
-        iconName: "icon-test",
+        iconName: "icon-bell",
         actionDropDown:{}
     }];
     let userIcon = {
@@ -337,12 +395,14 @@ describe("TopMenuNavContainer", ()=> {
         stringName: "Alec Kerr",
         iconName: "icon-options-vertical"
     };
-    let iconProfiles =[{
-        iconName: "icon-test",
+    let iconProfiles =[
+        {
+        iconName: "icon-lock",
         stringName: "My Profile",
         href: "#"
-    },{
-        iconName: "icon-test",
+    },{divider:true},
+        {
+        iconName: "icon-key",
         stringName: "My Profile",
         href: "#"
     }];
@@ -354,7 +414,7 @@ describe("TopMenuNavContainer", ()=> {
     }];
     var testdata = new PureFunc.TopMenuData();
     testdata.addHeader(headers).
-    addInboxes(inboxes).
+    addInbox(inbox).
     addIcon(icons).
     hasUserProfile(true).
     hasProfileMenu(true).
@@ -366,7 +426,6 @@ describe("TopMenuNavContainer", ()=> {
 
     it("added to dom successfully", ()=> {
         let tree = defaultComponent.toJSON();
-        tree.children[0].children[0].props.onClick();
         expect(tree).toMatchSnapshot();
     });
 
