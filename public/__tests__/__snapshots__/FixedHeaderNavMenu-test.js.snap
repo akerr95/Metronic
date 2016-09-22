@@ -8,7 +8,7 @@ exports[`ActionDropDown added to the dom successfully 1`] = `
       className="">
       <span
         className="bold">
-        1 Default 
+        1 test 
       </span>
       notifications
     </h3>
@@ -21,11 +21,25 @@ exports[`ActionDropDown added to the dom successfully 1`] = `
     className="slimScrollDiv">
     <ul
       className="dropdown-menu-list">
-      <span
-        className="badge badge-default"
-        style={null}>
-        7
-      </span>
+      <li
+        className="">
+        <a
+          className="">
+          <span
+            className="time">
+            just now
+          </span>
+          <span
+            className="details">
+            <span
+              className="label label-sm label-icon label-success edited-label">
+              <i
+                className="icon-plus" />
+            </span>
+            this is a test...
+          </span>
+        </a>
+      </li>
     </ul>
     <div
       className="slimScrollBar" />
@@ -196,29 +210,6 @@ exports[`ActionDropDownNotify has custom Props 1`] = `
 </li>
 `;
 
-exports[`ActionDropDownTask Slider added to the dom successfully 1`] = `
-<div
-  className="slimScrollDiv">
-  <ul
-    className="dropdown-menu-list">
-    <span
-      className="badge badge-default"
-      style={null}>
-      7
-    </span>
-    <span
-      className="badge badge-default"
-      style={null}>
-      7
-    </span>
-  </ul>
-  <div
-    className="slimScrollBar" />
-  <div
-    className="slimScrollRail" />
-</div>
-`;
-
 exports[`ActionDropDownTask added to the dom successfully 1`] = `
 <li
   className="">
@@ -302,11 +293,20 @@ exports[`Icon added to the dom successfully 1`] = `
   <a
     className="dropdown-toggle">
     <i
-      className="icon-plus" />
+      className="icon-calendar"
+      style={
+        Object {
+          "transform": "scale(1)"
+        }
+      } />
     <span
       className="badge badge-default"
-      style={null}>
-      7
+      style={
+        Object {
+          "transform": "scale(1)"
+        }
+      }>
+      1
     </span>
   </a>
   <ul
@@ -318,7 +318,7 @@ exports[`Icon added to the dom successfully 1`] = `
         className="">
         <span
           className="bold">
-          1 Default 
+          1 test 
         </span>
         notifications
       </h3>
@@ -331,21 +331,22 @@ exports[`Icon added to the dom successfully 1`] = `
       className="slimScrollDiv">
       <ul
         className="dropdown-menu-list">
-        <li>
-          <a>
-            <span>
+        <li
+          className="">
+          <a
+            className="">
+            <span
+              className="time">
+              just now
+            </span>
+            <span
+              className="details">
               <span
-                className="error">
-                1 min
+                className="label label-sm label-icon label-success edited-label">
+                <i
+                  className="icon-plus" />
               </span>
-              <ul>
-                <li
-                  className="divider" />
-              </ul>
-              <span
-                className="solution">
-                Include your own Action Drop Down element
-              </span>
+              this is a test...
             </span>
           </a>
         </li>
@@ -374,7 +375,7 @@ exports[`IconProfile added to the dom successfully 1`] = `
 exports[`Notice added to the dom successfully 1`] = `
 <span
   className="badge badge-default"
-  style={null}>
+  style={undefined}>
   7
 </span>
 `;
@@ -387,8 +388,8 @@ exports[`ProfileMenu added to the dom successfully 1`] = `
     <a
       href="#">
       <i
-        className="icon-lock">
-        Lock
+        className="icon-plus">
+        My profile
       </i>
     </a>
   </li>
@@ -396,8 +397,8 @@ exports[`ProfileMenu added to the dom successfully 1`] = `
     <a
       href="#">
       <i
-        className="icon-lock">
-        Lock
+        className="icon-key">
+        My profile
       </i>
     </a>
   </li>
@@ -407,12 +408,44 @@ exports[`ProfileMenu added to the dom successfully 1`] = `
     <a
       href="#">
       <i
-        className="icon-lock">
-        Lock
+        className="icon-Lock">
+        My profile
       </i>
     </a>
   </li>
 </ul>
+`;
+
+exports[`Slider added to the dom successfully 1`] = `
+<div
+  className="slimScrollDiv">
+  <ul
+    className="dropdown-menu-list">
+    <li
+      className="">
+      <a
+        className="">
+        <span
+          className="time">
+          1 min
+        </span>
+        <span
+          className="details">
+          <span
+            className="label label-sm label-icon label-success edited-label">
+            <i
+              className="icon-plus" />
+          </span>
+          This was made from a test file.
+        </span>
+      </a>
+    </li>
+  </ul>
+  <div
+    className="slimScrollBar" />
+  <div
+    className="slimScrollRail" />
+</div>
 `;
 
 exports[`TopMenuNavContainer added to dom successfully 1`] = `
@@ -426,10 +459,19 @@ exports[`TopMenuNavContainer added to dom successfully 1`] = `
       <a
         className="dropdown-toggle">
         <i
-          className="icon-test" />
+          className="icon-bell"
+          style={
+            Object {
+              "transform": "scale(1)"
+            }
+          } />
         <span
           className="badge badge-default"
-          style={null}>
+          style={
+            Object {
+              "transform": "scale(1)"
+            }
+          }>
           2
         </span>
       </a>
@@ -540,16 +582,18 @@ exports[`TopMenuNavContainer added to dom successfully 1`] = `
           <a
             href="#">
             <i
-              className="icon-test">
+              className="icon-lock">
               My Profile
             </i>
           </a>
         </li>
+        <li
+          className="divider" />
         <li>
           <a
             href="#">
             <i
-              className="icon-test">
+              className="icon-key">
               My Profile
             </i>
           </a>

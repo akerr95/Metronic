@@ -3,6 +3,8 @@
  * Fixed Header nav Menu is always situated at the top of a navigation header.
  */
 import React from "react";
+import {iconConfig,userConfig} from "../Extra Functionality/MyReactMotionPresets.js";
+import {Motion, spring} from "react-motion"
 import * as PureFunc from './PureFunctions.js';
 /************************
  * State-Full Components*
@@ -21,17 +23,17 @@ export class TopMenuNavContainer extends React.Component {
     render() {
         let stateMap =PureFunc.ConvertArrToMap(this.state.elementBool);
         return (
-            <TopMenuNav data={this.props.data} passedState={stateMap} callback={this._handleChange}/>
+            <TopMenuNav  data={this.props.data} passedState={stateMap} callback={this._handleChange}/>
         )
     }
 }
 TopMenuNavContainer.propTypes={
    data:React.PropTypes.object,
-   styles:React.PropTypes.object
+   classStyles:React.PropTypes.object
 };
 TopMenuNavContainer.defaultProps ={
     data:{},
-    styles:{}
+    classStyles:{}
 };
 /***************************
  * Pure Stateless Components*
@@ -53,16 +55,16 @@ IconProfile.defaultProps = {
 };
 
 
-export const ProfileMenu = ({data,passedState, callback, styles})=>(
+export const ProfileMenu = ({data,passedState, callback, classStyles})=>(
     <ul onMouseLeave={()=>{PureFunc.IconTriggered(data.triggerName,
-        passedState,callback);}} className={styles.ulClassName}>
+        passedState,callback);}} className={classStyles.ulClassName}>
         {PureFunc.populateElement(data.iconProfiles)}
     </ul>
 );
 ProfileMenu.propTypes = {
     data: React.PropTypes.object,
     passedState: React.PropTypes.object.isRequired,
-    styles: React.PropTypes.object,
+    classStyles: React.PropTypes.object,
     callback: React.PropTypes.func
 };
 ProfileMenu.defaultProps = {
@@ -70,20 +72,20 @@ ProfileMenu.defaultProps = {
         [{},IconProfile],
         [{iconName:"icon-plus",href:"#",stringName:"tester"},IconProfile]
     ])},
-    styles: {ulClassName: "dropdown-menu dropdown-menu-default"},
+    classStyles: {ulClassName: "dropdown-menu dropdown-menu-default"},
     callback:()=>{console.error("No Callback Provided")}
 };
 
-export const UserIcon = ({data, styles})=>(
-    <a className={styles.aClassName}>
-        <img className={styles.imgClassName} src={data.imgLocation} alt="Image of User"/>
-        <span className={styles.spanClassName}>{data.stringName}</span>
+export const UserIcon = ({data, classStyles,style})=>(
+    <a className={classStyles.aClassName}>
+        <img style={style} className={classStyles.imgClassName} src={data.imgLocation} alt="Image of User"/>
+        <span className={classStyles.spanClassName}>{data.stringName}</span>
         <i className={data.iconName}></i>
     </a>
 );
 UserIcon.propTypes = {
     data: React.PropTypes.object,
-    styles: React.PropTypes.object
+    classStyles: React.PropTypes.object
 };
 UserIcon.defaultProps = {
     data: {
@@ -91,33 +93,33 @@ UserIcon.defaultProps = {
         stringName: "Alec",
         iconName: "icon-lock"
     },
-    styles: {
+    classStyles: {
         aClassName: "dropdown-toggle",
         imgClassName: "img-circle",
         spanClassName: "username"
     }
 };
 
-export const Notice = ({data, style})=>(
-    <span className={style.notice} style={data.notifyCount===0?{display:"none"}:null}>
+export const Notice = ({data, classStyles,style})=>(
+    <span style={style} className={classStyles.notice}>
         {data.notifyCount}
     </span>
 );
 Notice.propTypes = {
     data: React.PropTypes.object.isRequired,
-    style: React.PropTypes.object
+    classStyles: React.PropTypes.object
 };
 Notice.defaultProps = {
     data: {notifyCount: 7},
-    style: {notice: "badge badge-default"}
+    classStyles: {notice: "badge badge-default"}
 };
 
-export const ActionDropDown = ({data,callback, passedState, styles})=>(
+export const ActionDropDown = ({data,callback, passedState, classStyles})=>(
     <ul onMouseLeave={function () {
         PureFunc.IconTriggered(data.triggerName,
             passedState,
             callback);
-    }} className={styles.ulClassName}>
+    }} className={classStyles.ulClassName}>
         {PureFunc.populateElement(data.header)}
         <Slider data ={data.body}/>
     </ul>
@@ -125,50 +127,50 @@ export const ActionDropDown = ({data,callback, passedState, styles})=>(
 ActionDropDown.propTypes = {
     data: React.PropTypes.object,
     passedState: React.PropTypes.object.isRequired,
-    styles: React.PropTypes.object,
+    classStyles: React.PropTypes.object,
     callback: React.PropTypes.func
 };
 ActionDropDown.defaultProps = {
     data: {header: <div></div>, body: <div></div>,triggerName: "icon-fire"},
-    styles: {ulClassName: "dropdown-menu"},
+    classStyles: {ulClassName: "dropdown-menu"},
     callback:()=>{console.error("No Callback Provided")}
 };
 
-export const ActionDropDownHeader = ({data, styles})=>(
-    <li className={styles.liClassName}>
-        <h3 className={styles.head}>
-            <span className={styles.bold}>{data.pending + " " + data.subject + " "}</span>
+export const ActionDropDownHeader = ({data, classStyles})=>(
+    <li className={classStyles.liClassName}>
+        <h3 className={classStyles.head}>
+            <span className={classStyles.bold}>{data.pending + " " + data.subject + " "}</span>
             {data.heading}
         </h3>
-        <a className={styles.aClassName}>{data.actionMessage}</a>
+        <a className={classStyles.aClassName}>{data.actionMessage}</a>
     </li>
 );
 ActionDropDownHeader.propTypes = {
     data: React.PropTypes.object,
-    styles: React.PropTypes.object
+    classStyles: React.PropTypes.object
 };
 ActionDropDownHeader.defaultProps = {
     data: {pending:1, subject: "Default", heading: "notifications" ,actionMessage:"view all"},
-    styles: {head: "", bold: "bold", liClassName: "external", aClassName: ""}
+    classStyles: {head: "", bold: "bold", liClassName: "external", aClassName: ""}
 };
 
-export const Divider = ({styles})=>(
-    <li className={styles.liClassName}></li>
+export const Divider = ({classStyles})=>(
+    <li className={classStyles.liClassName}></li>
 );
 Divider.propTypes = {
-    styles: React.PropTypes.object
+    classStyles: React.PropTypes.object
 };
 Divider.defaultProps = {
-    styles: {liClassName: "divider"}
+    classStyles: {liClassName: "divider"}
 };
 
-export const ActionDropDownError = ({data, styles})=> (
+export const ActionDropDownError = ({data, classStyles})=> (
     <li>
         <a>
     <span>
-                <span className={styles.err}>{data.errorMessage}</span>
+                <span className={classStyles.err}>{data.errorMessage}</span>
                 <ul><Divider/></ul>
-                <span className={styles.solution}>{data.solution}</span>
+                <span className={classStyles.solution}>{data.solution}</span>
         </span>
                 </a>
     </li>
@@ -178,27 +180,27 @@ ActionDropDownError.propTypes = {
         errorMessage: React.PropTypes.string.isRequired,
         solution: React.PropTypes.string.isRequired
     }),
-    styles: React.PropTypes.object
+    classStyles: React.PropTypes.object
 };
 ActionDropDownError.defaultProps = {
-    styles: {err: "error", solution: "solution"}
+    classStyles: {err: "error", solution: "solution"}
 };
 
-export const Slider = ({data, styles})=> (
-    <div className={styles.slider}>
-        <ul className={styles.ul}>
+export const Slider = ({data, classStyles})=> (
+    <div className={classStyles.slider}>
+        <ul className={classStyles.ul}>
             {PureFunc.populateElement(data)}
         </ul>
-        <div className={styles.bar}></div>
-        <div className={styles.rail}></div>
+        <div className={classStyles.bar}></div>
+        <div className={classStyles.rail}></div>
     </div>
 );
 Slider.propTypes = {
     data: React.PropTypes.object.isRequired,
-    styles: React.PropTypes.object,
+    classStyles: React.PropTypes.object,
 };
 Slider.defaultProps = {
-    styles: {
+    classStyles: {
         slider: "slimScrollDiv",
         ul: "dropdown-menu-list",
         bar: "slimScrollBar",
@@ -206,16 +208,16 @@ Slider.defaultProps = {
     }
 };
 
-export const ActionDropDownTask = ({data, styles})=>(
-<li className={styles.liClassName}>
-    <a className={styles.aClassName}>
-       <span className={styles.task}>
-           <span className={styles.desc}>{data.desc}</span>
-           <span className={styles.percent}>{data.percent + '%'}</span>
+export const ActionDropDownTask = ({data, classStyles})=>(
+<li className={classStyles.liClassName}>
+    <a className={classStyles.aClassName}>
+       <span className={classStyles.task}>
+           <span className={classStyles.desc}>{data.desc}</span>
+           <span className={classStyles.percent}>{data.percent + '%'}</span>
        </span>
-       <span className={styles.progress}>
-           <span className={styles.progressbar} style={{width:data.percent+'%'}}>
-               <span className={styles.sr}></span>
+       <span className={classStyles.progress}>
+           <span className={classStyles.progressbar} style={{width:data.percent+'%'}}>
+               <span className={classStyles.sr}></span>
            </span>
        </span>
     </a>
@@ -223,11 +225,11 @@ export const ActionDropDownTask = ({data, styles})=>(
 );
 ActionDropDownTask.propTypes = {
     data: React.PropTypes.object,
-    styles: React.PropTypes.object
+    classStyles: React.PropTypes.object
 };
 ActionDropDownTask.defaultProps = {
     data: {desc: "Metronic Default V1.0", percent: 40},
-    styles: {
+    classStyles: {
         liClassName:"",
         aClassName:"",
         task: "task",
@@ -239,22 +241,22 @@ ActionDropDownTask.defaultProps = {
     },
 };
 
-export const ActionDropDownInbox = ({data, styles})=>(
-    <li className={styles.liClassName}>
-        <a className={styles.aClassName}>
-        <span className={styles.photo}><img src={data.imgLocation} className={styles.img }/></span>
-        <span className={styles.subject}>
-            <span className={styles.time}>{data.time}</span>
-            <span className={styles.from}>{data.sender}</span>
+export const ActionDropDownInbox = ({data, classStyles})=>(
+    <li className={classStyles.liClassName}>
+        <a className={classStyles.aClassName}>
+        <span className={classStyles.photo}><img src={data.imgLocation} className={classStyles.img }/></span>
+        <span className={classStyles.subject}>
+            <span className={classStyles.time}>{data.time}</span>
+            <span className={classStyles.from}>{data.sender}</span>
         </span>
-        <span className={styles.message}>{data.message}</span>
+        <span className={classStyles.message}>{data.message}</span>
 </a>
 </li>
 
 );
 ActionDropDownInbox.propTypes = {
     data: React.PropTypes.object,
-    styles: React.PropTypes.object
+    classStyles: React.PropTypes.object
 };
 ActionDropDownInbox.defaultProps = {
     data: {
@@ -263,7 +265,7 @@ ActionDropDownInbox.defaultProps = {
         time: "just now",
         message: "Default message.",
     },
-    styles: {
+    classStyles: {
         liClassName:"",
         aClassName:"",
         photo: "photo",
@@ -275,12 +277,12 @@ ActionDropDownInbox.defaultProps = {
     }
 };
 
-export const ActionDropDownNotify = ({data, styles})=>(
-    <li className={styles.liClassName}>
-        <a className={styles.aClassName}>
-            <span className={styles.time}>{data.time}</span>
-            <span className={styles.details}>
-                <span className={styles.label}>
+export const ActionDropDownNotify = ({data, classStyles})=>(
+    <li className={classStyles.liClassName}>
+        <a className={classStyles.aClassName}>
+            <span className={classStyles.time}>{data.time}</span>
+            <span className={classStyles.details}>
+                <span className={classStyles.label}>
                     <i className={data.iconName}></i>
                 </span>
                 {data.message}
@@ -290,28 +292,38 @@ export const ActionDropDownNotify = ({data, styles})=>(
 );
 ActionDropDownNotify.propTypes = {
     data: React.PropTypes.object,
-    styles: React.PropTypes.object
+    classStyles: React.PropTypes.object
 };
 ActionDropDownNotify.defaultProps = {
     data: {time: "just now", message: "this is a default message", iconName: "fa fa-plus"},
-    styles: {liClassName:"",aClassName:"",time: "time", details: "details", label: "label label-sm label-icon label-success edited-label"}
+    classStyles: {liClassName:"",aClassName:"",time: "time", details: "details", label: "label label-sm label-icon label-success edited-label"}
 };
 
-export const Icon = ({data,styles,passedState,callback})=>(
-    <li  onClick={()=>{
-        PureFunc.IconTriggered(data.iconName,passedState,callback);
-    }} className={styles.liClassName + PureFunc.isOpen(data.iconName,passedState)}>
-        <a className={styles.aClassName}>
-            <i className={data.iconName}></i>
-            <Notice data={data.notice}/>
-        </a>
-        <ActionDropDown data={data.actionDropDown} passedState={passedState} callback={callback}/>
-    </li>
+export const Icon = ({data,classStyles,passedState,callback})=>(
+
+            <li  onClick={()=>{
+                PureFunc.IconTriggered(data.iconName,passedState,callback);
+            }} className={classStyles.liClassName + PureFunc.isOpen(data.iconName,passedState)}>
+                <a className={classStyles.aClassName}>
+
+                    <Motion style={iconConfig.mySpring(data.iconName,passedState)}>
+                        {({val})=>(
+                            <i style={{transform:`scale(${val})`}} className={data.iconName}></i>
+                        )}
+                    </Motion>
+                    <Motion style={iconConfig.mySpring(data.iconName,passedState)}>
+                        {({val})=>(
+                    <Notice style={{transform:`scale(${val})`}}  data={data.notice}/>)}
+                </Motion>
+                </a>
+                <ActionDropDown data={data.actionDropDown} passedState={passedState} callback={callback}/>
+            </li>
+
 );
 Icon.propTypes = {
     data: React.PropTypes.object,
     passedState: React.PropTypes.object.isRequired,
-    styles: React.PropTypes.object,
+    classStyles: React.PropTypes.object,
     callback: React.PropTypes.func
 };
 Icon.defaultProps ={
@@ -326,34 +338,35 @@ Icon.defaultProps ={
     ])
     }},
     callback:()=>{console.log("Me gusta");} ,
-    styles:{
+    classStyles:{
         liClassName: "dropdown dropdown-extended nav-dropdown ",
         aClassName: "dropdown-toggle",
     }
 };
 
-export const UserProfile = ({data,passedState,styles,callback})=>(
+export const UserProfile = ({data,passedState,classStyles,callback})=>(
     <li onClick={()=>{
         PureFunc.IconTriggered(data.userIcon.iconName,passedState,callback);
-    }} className={styles.liClassName + PureFunc.isOpen(data.userIcon.iconName,passedState)}>
-        <UserIcon data={data.userIcon}/>
+    }} className={classStyles.liClassName + PureFunc.isOpen(data.userIcon.iconName,passedState)}>
+                <UserIcon data={data.userIcon}/>
+
         <ProfileMenu data={data.profileMenu} passedState={passedState} callback={callback}/>
     </li>
 );
 UserProfile.propTypes = {
     data: React.PropTypes.object,
     passedState: React.PropTypes.object.isRequired,
-    styles: React.PropTypes.object,
+    classStyles: React.PropTypes.object,
     callback: React.PropTypes.func
 };
 UserProfile.defaultProps ={
-    styles: {liClassName:"dropdown dropdown-user nav-dropdown "},
+    classStyles: {liClassName:"dropdown dropdown-user nav-dropdown "},
     callback:()=>{console.log("No callback passed")}
 };
 
-export const TopMenuNav =({data,passedState,styles,callback})=>(
-    <div className={styles.divClassName}>
-        <ul className={styles.ulClassName}>
+export const TopMenuNav =({data,passedState,classStyles,callback})=>(
+    <div className={classStyles.divClassName}>
+        <ul className={classStyles.ulClassName}>
             {PureFunc.populateElement(data.icons,passedState,callback)}
             <UserProfile data={data.userProfile}  passedState={passedState} callback={callback}/>
         </ul>
@@ -362,12 +375,12 @@ export const TopMenuNav =({data,passedState,styles,callback})=>(
 TopMenuNav.propTypes ={
     data: React.PropTypes.object,
     passedState: React.PropTypes.object.isRequired,
-    styles: React.PropTypes.object,
+    classStyles: React.PropTypes.object,
     callback: React.PropTypes.func
 };
 TopMenuNav.defaultProps ={
     data:{icons:new Map([[{},Divider]])},
-    styles: {divClassName:"top-menu",ulClassName:"nav pull-right navbar-nav"},
+    classStyles: {divClassName:"top-menu",ulClassName:"nav pull-right navbar-nav"},
     callback: ()=>{console.log("No callback provided.");}
 };
 

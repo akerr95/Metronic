@@ -63,16 +63,22 @@ describe("Pure functions suite test", ()=> {
     describe("populateElement", ()=> {
         function createData(amount) {
             let myMap = new Map();
+
             for (let i = 0; i < amount; i += 1) {
-                myMap.set({href: "test1", iconName: "icon-plus", stringName: "tester"}, FixedHeader.IconProfile);
+                let data ={key:0,notifyCount:2};
+                data.key = i;
+                myMap.set({data},FixedHeader.Notice);
             }
             return myMap;
         }
 
 
         it("returns a 4 elements for 4 data types", ()=> {
-            let result = PureFunc.populateElement(createData(4));
-            expect(result.length).toEqual(4);
+            let amnt = 4;
+            let result = PureFunc.populateElement(createData(amnt));
+            expect(result.length).toEqual(amnt);
+            expect(result[0].hasOwnProperty("type")).toBe(true);
+
         });
     });
     describe("isOpen", ()=> {
@@ -118,30 +124,20 @@ describe("Pure functions suite test", ()=> {
 
         let topMenuData = new PureFunc.TopMenuData();
         it("returns new object data", ()=> {
+
+            expect(topMenuData.constructor).toMatchSnapshot();
             expect(topMenuData).toBeDefined();
         });
         it("added task elements to topMenuData ", ()=> {
             let result = topMenuData.addTasks([
-                {desc: "Metronic v1.1", percent: "10"},
-                {desc: "Metronic v1.1", percent: "20"},
-                {desc: "Metronic v1.1", percent: "30"}
+                {desc: "Metronic v1.1", percent: "10"}
                 ]);
             expect(result).toBeDefined();
-            expect(result.tasks.size).toEqual(3);
+            expect(result.tasks).toMatchSnapshot();
         });
         it("added inbox elements to topMenuData", ()=> {
-            let result = topMenuData.addInboxes([
+            let result = topMenuData.addInbox([
                 {
-                imgLocation: "http://bit.ly/2cfaQ21",
-                time: "just now",
-                sender: "Alec kerr",
-                message: "This was made from a test file."
-            },{
-                imgLocation: "http://bit.ly/2cfaQ21",
-                time: "just now",
-                sender: "Alec kerr",
-                message: "This was made from a test file."
-            },{
                 imgLocation: "http://bit.ly/2cfaQ21",
                 time: "just now",
                 sender: "Alec kerr",
@@ -149,24 +145,16 @@ describe("Pure functions suite test", ()=> {
             }
             ]);
             expect(result).toBeDefined();
-            expect(result.inboxes.size).toEqual(3);
+            expect(result.inbox).toMatchSnapshot();
         });
         it("added notification elements to topMenuData", ()=> {
-            let result = topMenuData.addNotifies([{
-                time: "1 min",
-                iconName: "icon-plus",
-                message: "This was made from a test file.",
-            },{
-                time: "1 min",
-                iconName: "icon-plus",
-                message: "This was made from a test file.",
-            },{
+            let result = topMenuData.addNotifications([{
                 time: "1 min",
                 iconName: "icon-plus",
                 message: "This was made from a test file.",
             }]);
             expect(result).toBeDefined();
-            expect(result.notifies.size).toEqual(3);
+            expect(result.notifications).toMatchSnapshot();
         });
         it("added header element to topMenuData", ()=> {
             let result = topMenuData.addHeader([
@@ -190,15 +178,23 @@ describe("Pure functions suite test", ()=> {
                 actionMessage: "view all"
             }]);
             expect(result).toBeDefined();
-            expect(result.header.size).toEqual(3);
+            expect(result.header).toMatchSnapshot();
+        });
+        it("returns correct ActionDropDown",()=>{
+            let header = topMenuData.getHeader("notifications");
+            let body = topMenuData.getInbox();
+            let result = topMenuData.makeActionDropDown(header,body);
+
+            expect(result).toMatchSnapshot();
         });
         it("added Icon element to topMenuData", ()=> {
+
             let result = topMenuData.addIcon([{
                 iconName: "icon-bell",
                 key:"tasks",
                 notice:{},
                 actionDropDown: {},
-                styles: {
+                classStyles: {
                     liClassName: "dropdown dropdown-extended nav-dropdown dropdown-task ",
                     aClassName: "dropdown-toggle"
                 }
@@ -207,7 +203,7 @@ describe("Pure functions suite test", ()=> {
                 key:"inbox",
                 notice:{},
                 actionDropDown: {},
-                styles: {
+                classStyles: {
                     liClassName: "dropdown dropdown-extended nav-dropdown dropdown-inbox ",
                     aClassName: "dropdown-toggle"
                 }
@@ -216,13 +212,13 @@ describe("Pure functions suite test", ()=> {
                 key:"notifications",
                 notice:{},
                 actionDropDown: {},
-                styles: {
+                classStyles: {
                     liClassName: "dropdown dropdown-extended nav-dropdown dropdown-notification",
                     aClassName: "dropdown-toggle"
                 }
             }]);
             expect(result).toBeDefined();
-            expect(result.icons.size).toEqual(3);
+            expect(result.icons).toMatchSnapshot();
             expect(result.stateKeys.length).toEqual(3);
         });
         it("added UserIcon element to topMenuData", ()=> {
@@ -232,26 +228,36 @@ describe("Pure functions suite test", ()=> {
                 iconName: "icon-options-vertical"
             });
             expect(result).toBeDefined();
-            expect(result.userIcon).toBeDefined();
+            expect(result.userIcon).toMatchSnapshot();
         });
         it("added IconProfile element to topMenuData", ()=> {
             let result = topMenuData.addIconProfile([{
                 iconName: "icon-test",
                 stringName: "My Profile",
                 href: "#"
-            },{
-                iconName: "icon-test",
-                stringName: "My Profile",
-                href: "#"
             }
             ]);
             expect(result).toBeDefined();
-            expect(result.iconProfiles.size).toEqual(2);
+            expect(result.iconProfiles).toMatchSnapshot();
+        });
+        it("added IconProfile element with divider to topMenuData", ()=> {
+            let result = topMenuData.addIconProfile([{
+                iconName: "icon-test",
+                stringName: "My Profile",
+                href: "#"
+            },{divider:true}
+            ]);
+            expect(result).toBeDefined();
+            expect(result.iconProfiles).toMatchSnapshot();
         });
         it("added ProfileMenu element to topMenuData", ()=> {
             let result = topMenuData.hasProfileMenu(true);
             expect(result).toBeDefined();
             expect(result.profileMenu).toBeTruthy();
+        });
+        it("created correct icons",()=>{
+            let result = topMenuData._makeIcons();
+            expect(result).toMatchSnapshot();
         });
         it("added UserProfile element to topMenuData", ()=> {
             let result = topMenuData.hasUserProfile(true);
@@ -260,7 +266,7 @@ describe("Pure functions suite test", ()=> {
         });
         it("generates TopMenuNav", ()=> {
             let result = topMenuData.generate();
-            expect(result).toMatchSnapshot();
+            expect(typeof result).toEqual("object")
         });
     });
 });

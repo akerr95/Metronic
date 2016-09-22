@@ -16,10 +16,12 @@ export function IconTriggered(triggerName, iconState, fn) {
 }
 export function populateElement(elements,passedState,callback) {
     let result = [];
-    for (let [{data, styles},element] of elements) {
+
+    for (let [{data, classStyles},element] of elements) {
         result.push(React.createElement(element, {
+            key:data.key,
             data: data,
-            styles: styles,
+            classStyles: classStyles,
             callback: callback,
             passedState: passedState
         }));
@@ -29,6 +31,14 @@ export function populateElement(elements,passedState,callback) {
 export function isOpen(elClassName,elState,customClass){
     customClass = customClass ||{};
     return elState.get(elClassName) ? customClass.first||"isOpen": customClass.second || "isClosed";
+}
+
+export function getState(key,state){
+    if(state.has(key)){
+        return state.get(key);
+    }else{
+        return null
+    }
 }
 export function ConvertMapToArr(stateMap) {
     let iconStateParameters = [];
@@ -51,11 +61,11 @@ export function CreateBooleanState(states) {
     return {elementBool: iconStateParameters};
 }
 
-export function TopMenuData(){
+export function TopMenuData(prevData=undefined){
     this.stateKeys=[];
     this.tasks =new Map();
-    this.inboxes =new Map();
-    this.notifies =new Map();
+    this.inbox =new Map();
+    this.notifications =new Map();
     this.header =new Map();
     this.icons =new Map();
     this.userIcon ={};
@@ -63,28 +73,54 @@ export function TopMenuData(){
     this.profileMenu=false;
     this.userProfile=false;
 
+    this.getTasks=()=>{
+        return this.tasks;
+    };
+    this.getInbox=()=>{
+        return this.inbox;
+    };
+    this.getNotifications=()=>{
+        return this.notifications;
+    };
+    this.getHeader=(key)=>{
+        return this._determineHeader(key);
+    };
+    this.getIconProfile = ()=>{
+        return this.iconProfiles;
+    };
     this.addTasks =(data)=>{
         data.map((data)=>{
+            if(!data.hasOwnProperty("key")){
+                data.key = data.desc;
+            }
             this.tasks.set({data},FixedHeader.ActionDropDownTask);
         });
         return this;
     };
-    this.addInboxes =(data)=>{
+    this.addInbox =(data)=>{
         data.map((data)=>{
-            this.inboxes.set({data},FixedHeader.ActionDropDownInbox);
+            if(!data.hasOwnProperty("key")){
+                data.key = data.sender;
+            }
+            this.inbox.set({data},FixedHeader.ActionDropDownInbox);
         });
         return this;
     };
-    this.addNotifies =(data)=>{
+    this.addNotifications =(data)=>{
         data.map((data)=>{
-            this.notifies.set({data},FixedHeader.ActionDropDownNotify);
+            if(!data.hasOwnProperty("key")){
+                let uniqueKey = data.time.slice(0,1) + data.iconName;
+                data.key =uniqueKey;
+            }
+
+            this.notifications.set({data},FixedHeader.ActionDropDownNotify);
         });
         return this;
     };
     this.addHeader =(data)=>{
         data.map((dataEntry)=>{
-            let {key,...data} = dataEntry;
-            this.header.set(key,{data,fn:FixedHeader.ActionDropDownHeader});
+
+            this.header.set(dataEntry.key,{data:dataEntry,fn:FixedHeader.ActionDropDownHeader});
         });
         return this;
     };
@@ -102,8 +138,16 @@ export function TopMenuData(){
         return this;
     };
     this.addIconProfile =(data)=>{
-        data.map((data)=>{
+        data.map((data,i)=>{
+            if(!data.hasOwnProperty("key") && data.divider === undefined) {
+                data.key = data.iconName;
+            }else if(data.divider){
+                data.key = "divider"+i;
+                return this.iconProfiles.set({data},FixedHeader.Divider);
+            }
             this.iconProfiles.set({data},FixedHeader.IconProfile);
+
+
         });
         return this;
     };
@@ -115,30 +159,45 @@ export function TopMenuData(){
         this.userProfile=data;
         return this;
     };
+    this.makeActionDropDown=(tempHeader,tempBody)=>{
+        tempHeader.data.pending = tempBody.size; //total amount of notifications
+        return{header:new Map([[{data:tempHeader.data},tempHeader.fn]]),
+               body:tempBody};
+    };
     this.generate=()=>{
-        return {icons:this._makeIcons(),userProfile:this._makeUserProfile(),stateKeys:this.stateKeys};
-
+        let obj = {icons:this._makeIcons(),userProfile:this._makeUserProfile(),stateKeys:this.stateKeys};
+        this._purge();
+        return obj
     };
 
     this._makeIcons=()=>{
         let icons = new Map();
         for(let [key,value] of this.icons){
-            let {actionDropDown,notice,styles,...rest} = value.data;
+            let {classStyles,...data} = value.data;
             let tempHeader = this._determineHeader(key);
             let tempBody = this._determineDropDown(key);
-            notice={
-              notifyCount:tempBody.size
+            data.actionDropDown=this.makeActionDropDown(tempHeader,tempBody);
+            data.notice={
+                notifyCount:tempBody.size
             };
-            actionDropDown={
-                header:new Map([[{data:tempHeader.data},tempHeader.fn]]),
-                body:tempBody};
-            rest.actionDropDown=actionDropDown;
-            rest.notice=notice;
-            icons.set({data:rest,styles:styles},FixedHeader.Icon);
+            icons.set({data:data,classStyles:classStyles},FixedHeader.Icon);
         }
 
         return icons;
 
+    };
+    //TODO write test for purge
+    this._purge=()=>{
+        this.stateKeys=[];
+        this.tasks =new Map();
+        this.inbox =new Map();
+        this.notifications =new Map();
+        this.header =new Map();
+        this.icons =new Map();
+        this.userIcon ={};
+        this.iconProfiles=new Map();
+        this.profileMenu=false;
+        this.userProfile=false;
     };
     this._determineHeader = (key)=>{
         if(this.header.has(key)){
@@ -147,10 +206,10 @@ export function TopMenuData(){
     };
     this._determineDropDown=(key)=>{
         if(key==="notifications"){
-            return this.notifies;
+            return this.notifications;
         }
         if(key==="inbox"){
-            return this.inboxes;
+            return this.inbox;
         }
         if(key==="tasks"){
             return this.tasks;
