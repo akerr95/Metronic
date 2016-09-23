@@ -3,7 +3,7 @@
  * Fixed Header nav Menu is always situated at the top of a navigation header.
  */
 import React from "react";
-import {iconConfig,userConfig} from "../Extra Functionality/MyReactMotionPresets.js";
+import {presets,ICON,NOTICE, USERPROFILE} from "../Extra Functionality/MyReactMotionPresets.js";
 import {Motion, spring} from "react-motion"
 import * as PureFunc from './PureFunctions.js';
 /************************
@@ -78,9 +78,9 @@ ProfileMenu.defaultProps = {
 
 export const UserIcon = ({data, classStyles,style})=>(
     <a className={classStyles.aClassName}>
-        <img style={style} className={classStyles.imgClassName} src={data.imgLocation} alt="Image of User"/>
-        <span className={classStyles.spanClassName}>{data.stringName}</span>
-        <i className={data.iconName}></i>
+            <img style={style} className={classStyles.imgClassName} src={data.imgLocation} alt="Image of User"/>
+            <span style={style}  className={classStyles.spanClassName}>{data.stringName}</span>
+        <i style={style} className={data.iconName}></i>
     </a>
 );
 UserIcon.propTypes = {
@@ -306,14 +306,15 @@ export const Icon = ({data,classStyles,passedState,callback})=>(
             }} className={classStyles.liClassName + PureFunc.isOpen(data.iconName,passedState)}>
                 <a className={classStyles.aClassName}>
 
-                    <Motion style={iconConfig.mySpring(data.iconName,passedState)}>
-                        {({val})=>(
-                            <i style={{transform:`scale(${val})`}} className={data.iconName}></i>
+                    <Motion style={presets.genScale({iconName:data.iconName,state:passedState},ICON)}>
+                        {({scale})=>(
+                            <i style={{transform:`scale(${scale})`}} className={data.iconName}></i>
                         )}
-                    </Motion>
-                    <Motion style={iconConfig.mySpring(data.iconName,passedState)}>
-                        {({val})=>(
-                    <Notice style={{transform:`scale(${val})`}}  data={data.notice}/>)}
+                </Motion>
+                    <Motion style={presets.genScale({iconName:data.iconName,state:passedState},NOTICE)}>
+                        {({scale})=>(
+                    <Notice style={{transform:`scale(${scale})`}}  data={data.notice}/>
+                    )}
                 </Motion>
                 </a>
                 <ActionDropDown data={data.actionDropDown} passedState={passedState} callback={callback}/>
@@ -348,8 +349,12 @@ export const UserProfile = ({data,passedState,classStyles,callback})=>(
     <li onClick={()=>{
         PureFunc.IconTriggered(data.userIcon.iconName,passedState,callback);
     }} className={classStyles.liClassName + PureFunc.isOpen(data.userIcon.iconName,passedState)}>
-                <UserIcon data={data.userIcon}/>
+        <Motion style={presets.genScale({iconName:data.userIcon.iconName,state:passedState},USERPROFILE)}>
+            {({scale})=>(
+                <UserIcon style={{transform:`scale(${scale})`}} data={data.userIcon}/>
+            )}
 
+        </Motion>
         <ProfileMenu data={data.profileMenu} passedState={passedState} callback={callback}/>
     </li>
 );

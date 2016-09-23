@@ -2,14 +2,38 @@
  * Created by akerr on 9/21/16.
  */
 import {spring} from "react-motion"
-export const iconConfig = {
-    x: 1,
-    stiffness: 300,
-    damping: 40,
-    mySpring: function (iconName,state) {
-        return {val: spring(this.iconStyle(iconName,state)?this.x+0.25:this.x, {stiffness: this.stiffness, damping: this.damping})};
+export const ICON = {
+    scale: 1,
+    factor:0.35,
+    extra: {
+        stiffness: 200,
+        damping: 10
+    }
+};
+export const NOTICE = {
+    scale: 1,
+    factor:0.2,
+    extra: {
+        stiffness: 110,
+        damping: 5
+    }
+};
+export const USERPROFILE = {
+    scale: 1,
+    factor:0.2,
+    extra: {
+        stiffness: 110,
+        damping: 5
+    }
+};
+export const presets= {
+    genScale: function (subject,element) {
+        return {scale: spring(this.clicked(subject.iconName,subject.state)?element.scale+element.factor:element.scale,element.extra)};
     },
-    iconStyle(iconName,state){
+    genOpacity:function(subject,element){
+        return {opacity: spring(this.clicked(subject.iconName,subject.state)?element.opacity+element.factor:element.opacity,element.extra)};
+    },
+    clicked: function (iconName,state){
         let isClicked=false;
         if(state.has(iconName)){
             isClicked =state.get(iconName);
@@ -18,18 +42,3 @@ export const iconConfig = {
     }
 };
 
-export const userConfig ={
-    opacity:0.5,
-    stiffness:300,
-    damping:40,
-    mySpring:function(iconName,state){
-        return {val:spring(this.iconStyle(iconName,state)?this.opacity+0.5:this.x, {stiffness: this.stiffness, damping: this.damping})};
-    },
-    iconStyle(iconName,state){
-        let isClicked=false;
-        if(state.has(iconName)){
-            isClicked =state.get(iconName);
-        }
-        return isClicked;
-    }
-};

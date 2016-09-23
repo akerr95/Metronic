@@ -1,4 +1,13 @@
-exports[`iconConfig returns config for spring with false val 1`] = `
+exports[`Presets Presets genOpacity should return an object with opacity 1`] = `
+Object {
+  "damping": 40,
+  "precision": 0.01,
+  "stiffness": 300,
+  "val": undefined
+}
+`;
+
+exports[`Presets Presets genScale should return an object with scale 1`] = `
 Object {
   "damping": 40,
   "precision": 0.01,
@@ -7,21 +16,10 @@ Object {
 }
 `;
 
-exports[`iconConfig returns config for spring with true val 1`] = `
+exports[`Presets Presets should be defined 1`] = `
 Object {
-  "damping": 40,
-  "precision": 0.01,
-  "stiffness": 300,
-  "val": 1.25
-}
-`;
-
-exports[`iconConfig returns object and matches snapshot 1`] = `
-Object {
-  "damping": 40,
-  "iconStyle": [Function iconStyle],
-  "mySpring": [Function mySpring],
-  "stiffness": 300,
-  "x": 1
+  "clicked": [Function clicked],
+  "genOpacity": [Function genOpacity],
+  "genScale": [Function genScale]
 }
 `;

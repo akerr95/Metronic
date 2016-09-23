@@ -1,36 +1,30 @@
 /**
  * Created by akerr on 9/21/16.
  */
-import {iconConfig} from '../js/Extra Functionality/MyReactMotionPresets.js';
+import {presets,ICON} from '../js/Extra Functionality/MyReactMotionPresets.js';
 
 
-describe("iconConfig",()=>{
-    it("returns object and matches snapshot",()=>{
-        let result = iconConfig;
-
-        expect(result).toBeDefined();
+describe("Presets",()=>{
+    it("Presets should be defined",()=>{
+        let result = presets;
+        expect(result).not.toBeUndefined();
         expect(result).toMatchSnapshot();
     });
+    it("Presets genScale should return an object with scale",()=>{
+        let iconName = "test-1";
+        let state = new Map([[iconName,false]]);
+        let result = presets.genScale({iconName,state},ICON);
 
-    it("returns config for spring with true val",()=>{
-        let iconName = "icon-example";
-        let state = new Map([["icon-example",true],["icon-exam",false]]);
-        let result = iconConfig.mySpring(iconName,state);
-        expect(result.hasOwnProperty("val")).toBeTruthy();
-        expect(result.val).toMatchSnapshot();
+        expect(result.hasOwnProperty("scale")).toBeTruthy();
+        expect(result.scale).toMatchSnapshot();
     });
-    it("returns config for spring with false val",()=>{
-        let iconName = "icon-example";
-        let state = new Map([["icon-example",false],["icon-exam",false]]);
-        let result = iconConfig.mySpring(iconName,state);
-        expect(result.hasOwnProperty("val")).toBeTruthy();
-        expect(result.val).toMatchSnapshot();
-    });
-    it("returns object with value",()=>{
-        let iconName = "icon-example";
-        let state = new Map([["icon-example",true],["icon-exam",false]]);
-        let result = iconConfig.iconStyle(iconName,state);
-        expect(result).toBeTruthy();
+    it("Presets genOpacity should return an object with opacity",()=>{
+        let iconName = "test-1";
+        let state = new Map([[iconName,false]]);
+        let result = presets.genOpacity({iconName,state},ICON);
 
+        expect(result.hasOwnProperty("opacity")).toBeTruthy();
+        expect(result.opacity).toMatchSnapshot();
     });
+
 });
